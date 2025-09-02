@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import HomeScreen from "./src/screens/HomeScreen"; // HomeScreen file
+import ConverterScreen from "./src/screens/ConverterScreen";
+import ETAScreen from "./src/screens/ETAScreen";
+import TemperatureScreen from "./src/screens/TemperatureScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{
+        headerStyle: { backgroundColor: "#2d5ed1ff" },
+        headerTintColor: "#b8b8b8ff",
+        headerTitleStyle: { fontWeight: "bold" },
+        // center title
+      }} initialRouteName="⚓  Home">
+        <Stack.Screen name="⚓  Home" component={HomeScreen} />
+        <Stack.Screen name="Converter" component={ConverterScreen} />
+        <Stack.Screen name="Estimated Time of Arrival" component={ETAScreen} />
+        <Stack.Screen name="Temperature" component={TemperatureScreen} />
+      </Stack.Navigator>
+    </NavigationContainer >
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

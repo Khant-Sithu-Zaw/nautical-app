@@ -16,6 +16,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.kstz.nauticaltools",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -24,6 +26,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "229032a8-88af-418a-b9f0-99278d32d4b8"
+      }
     }
   }
 }
