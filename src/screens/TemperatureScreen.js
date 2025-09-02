@@ -1,73 +1,88 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from "react-native";
+import * as Location from 'expo-location';
 export default function TemperatureScreen() {
-    const [temperature, setTemperature] = useState("");
-    const [unit, setUnit] = useState("C"); // default Celsius
-    const [result, setResult] = useState(null);
+    const [temperature, setTemperature] = useState(""); // input value
+    const [unit, setUnit] = useState("Celsius"); // default Celsius
+    const [loading, setLoading] = useState(true);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const API_KEY = "d879ad9b52b8db7ddfdacee48910a504";
 
-    const convertTemperature = () => {
+    //setting default temperature to current location temperature
+    useEffect(() => {
+        (async () => {
+            // Ask for permission
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") {
+                setErrorMsg("Permission to access location was denied");
+                setLoading(false);
+                return;
+            }
+
+            // Get current location
+            let location = await Location.getCurrentPositionAsync({});
+            const { latitude, longitude } = location.coords;
+
+            try {
+                // Fetch temperature from OpenWeatherMap API
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
+                );
+                const data = await response.json();
+                setTemperature(data.main.temp.toString()); // Current temperature in °C
+            } catch (error) {
+                setErrorMsg("Failed to fetch temperature");
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
+
+    const toggleUnit = () => {
+        Keyboard.dismiss();
         let temp = parseFloat(temperature);
-        if (isNaN(temp)) {
-            setResult("Invalid input");
-            return;
-        }
+        if (isNaN(temp)) return;
 
-        let converted = "";
-        if (unit === "C") {
+        if (unit === "Celsius") {
+            // Convert C → F
             let fahrenheit = (temp * 9) / 5 + 32;
-            let kelvin = temp + 273.15;
-            converted = `${fahrenheit.toFixed(2)} °F | ${kelvin.toFixed(2)} K`;
-        } else if (unit === "F") {
+            setTemperature(fahrenheit.toFixed(2).toString());
+            setUnit("Fahrenheit");
+        } else {
+            // Convert F → C
             let celsius = ((temp - 32) * 5) / 9;
-            let kelvin = (temp - 32) * 5 / 9 + 273.15;
-            converted = `${celsius.toFixed(2)} °C | ${kelvin.toFixed(2)} K`;
-        } else if (unit === "K") {
-            let celsius = temp - 273.15;
-            let fahrenheit = (temp - 273.15) * 9 / 5 + 32;
-            converted = `${celsius.toFixed(2)} °C | ${fahrenheit.toFixed(2)} °F`;
+            setTemperature(celsius.toFixed(2).toString());
+            setUnit("Celsius");
         }
-        setResult(converted);
     };
+    if (loading) {
+        return (
+            <View style={[styles.container, { backgroundColor: "#1E3D59", justifyContent: "center", alignItems: "center" }]}>
+                <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>
+                    💧 Fetching temperature...
+                </Text>
 
+            </View>
+        );
+    }
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Temperature Converter</Text>
+            <Text style={styles.title}>🌡 Temperature Converter</Text>
 
             <TextInput
                 style={styles.input}
-                placeholder="Enter temperature"
                 keyboardType="numeric"
-                value={temperature}
+                value={temperature ?? ""}
                 onChangeText={setTemperature}
             />
 
-            <View style={styles.buttonRow}>
-                <TouchableOpacity
-                    style={[styles.unitButton, unit === "C" && styles.activeButton]}
-                    onPress={() => setUnit("C")}
-                >
-                    <Text style={styles.buttonText}>Celsius</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.unitButton, unit === "F" && styles.activeButton]}
-                    onPress={() => setUnit("F")}
-                >
-                    <Text style={styles.buttonText}>Fahrenheit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.unitButton, unit === "K" && styles.activeButton]}
-                    onPress={() => setUnit("K")}
-                >
-                    <Text style={styles.buttonText}>Kelvin</Text>
-                </TouchableOpacity>
-            </View>
+            <Text style={styles.label}>Unit: {unit}</Text>
 
-            <TouchableOpacity style={styles.convertButton} onPress={convertTemperature}>
-                <Text style={styles.buttonText}>Convert</Text>
+            <TouchableOpacity style={styles.button} onPress={toggleUnit}>
+                <Text style={styles.buttonText}>
+                    {unit === "Celsius" ? "Change to Fahrenheit" : "Change to Celsius"}
+                </Text>
             </TouchableOpacity>
-
-            {result && <Text style={styles.result}>Converted: {result}</Text>}
         </View>
     );
 }
@@ -75,10 +90,9 @@ export default function TemperatureScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
         alignItems: "center",
-        padding: 20,
-        backgroundColor: "#f8f8f8",
+        padding: 10,
+        backgroundColor: "#f0f8ff",
     },
     title: {
         fontSize: 22,
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     input: {
-        width: "80%",
+        width: "60%",
         borderWidth: 1,
         borderColor: "#ccc",
         borderRadius: 8,
@@ -94,35 +108,20 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         backgroundColor: "#fff",
         textAlign: "center",
+        fontSize: 18,
     },
-    buttonRow: {
-        flexDirection: "row",
-        justifyContent: "center",
+    label: {
+        fontSize: 16,
         marginBottom: 15,
+        fontWeight: "600",
     },
-    unitButton: {
-        padding: 10,
-        marginHorizontal: 5,
-        backgroundColor: "#ddd",
-        borderRadius: 8,
-    },
-    activeButton: {
-        backgroundColor: "#4CAF50",
-    },
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
-    convertButton: {
-        marginTop: 10,
+    button: {
         padding: 12,
         backgroundColor: "#2196F3",
         borderRadius: 8,
     },
-    result: {
-        marginTop: 20,
-        fontSize: 18,
+    buttonText: {
+        color: "#fff",
         fontWeight: "bold",
-        color: "#333",
     },
 });

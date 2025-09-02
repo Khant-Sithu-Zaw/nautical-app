@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, Keyboard } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 export default function ETAScreen() {
     const [speed, setSpeed] = useState("");
@@ -21,6 +21,7 @@ export default function ETAScreen() {
         setShow(false);
     };
     const calculateETA = () => {
+        Keyboard.dismiss();
         if (!speed || !distance || !hours) return;
 
         const etaHours = parseFloat(distance) / parseFloat(speed);
