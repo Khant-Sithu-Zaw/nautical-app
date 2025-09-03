@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import styles from "../style/styles";
 
 export default function ConverterScreen() {
     const [knots, setKnots] = useState("");
@@ -11,7 +12,7 @@ export default function ConverterScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>🔁 Nautical Conversion</Text>
-
+            <Text style={styles.label}>❶ Knots → Kilometers per hour</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter speed in knots"
@@ -19,10 +20,10 @@ export default function ConverterScreen() {
                 value={knots}
                 onChangeText={setKnots}
             />
-            <Text style={styles.ans}>
+            <Text style={styles.result}>
                 {knots !== "" ? `${knots} knots = ${knotsToKmh(knots)} km/h` : " "}
             </Text>
-
+            <Text style={styles.label}>❷ NauticalMile → Kilometers </Text>
             <TextInput
                 style={styles.input}
                 placeholder="Enter distance in NM"
@@ -30,17 +31,14 @@ export default function ConverterScreen() {
                 value={nm}
                 onChangeText={setNm}
             />
-            {/* {nm !== "" && <Text style={styles.ans}>{nm} NM = {nmToKm(nm)} km</Text>} */}
-            <Text style={styles.ans}>
+            {/* {nm !== "" && <Text style={styles.result}>{nm} NM = {nmToKm(nm)} km</Text>} */}
+            <Text style={styles.result}>
                 {nm !== "" ? `${nm} NM = ${nmToKm(nm)} km` : " "}
             </Text>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: "#f0f8ff" },
-    title: { fontSize: 20, fontWeight: "bold", marginVertical: 10 },
-    input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginVertical: 5 },
-    ans: { paddingLeft: 10 },
-});
+
+
+// });

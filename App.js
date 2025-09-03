@@ -23,7 +23,7 @@ export default function App() {
         <Stack.Screen name="Converter" component={ConverterScreen} />
         <Stack.Screen name="Estimated Time of Arrival" component={ETAScreen} />
         <Stack.Screen name="Temperature" component={TemperatureScreen} />
-        <Stack.Screen name="AnchorDrag" component={AnchorDragScreen} />
+        <Stack.Screen name="Anchor Dragging" component={AnchorDragScreen} />
       </Stack.Navigator>
     </NavigationContainer >
   );

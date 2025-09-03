@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from "react-native";
-import * as Location from 'expo-location';
+// import * as Location from 'expo-location';
+import styles from "../style/styles";
 export default function TemperatureScreen() {
     const [temperature, setTemperature] = useState("37"); // input value
     const [unit, setUnit] = useState("Celsius"); // default Celsius
@@ -82,53 +83,9 @@ export default function TemperatureScreen() {
                     {unit === "Celsius" ? "Change to Fahrenheit" : "Change to Celsius"}
                 </Text>
             </TouchableOpacity>
-
+            <Text style={styles.txt}>Fun Fact :<Text style={styles.fact}> Normal Body Temperature of Human is 37 °C (98.6 °F)</Text></Text>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        padding: 10,
-        backgroundColor: "#f0f8ff",
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 20,
-        width: "100%",
-        textAlign: "left",
-    },
-    input: {
-        width: "60%",
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 8,
-        padding: 10,
-        marginBottom: 15,
-        backgroundColor: "#fff",
-        textAlign: "center",
-        fontSize: 18,
-    },
-    label: {
-        fontSize: 16,
-        marginBottom: 15,
-        fontWeight: "600",
-    },
-    button: {
-        padding: 12,
-        backgroundColor: "#2196F3",
-        borderRadius: 8,
-    },
-    buttonText: {
-        color: "#fff",
-        fontWeight: "bold",
-    },
-    txt: {
-        marginTop: 20,
-        display: "flex",
-    }
 
-});

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, Keyboard } from "react-native";
+import styles from "../style/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 export default function ETAScreen() {
     const [speed, setSpeed] = useState("");
@@ -22,7 +23,7 @@ export default function ETAScreen() {
     };
     const calculateETA = () => {
         Keyboard.dismiss();
-        if (!speed || !distance || !hours) return;
+        if (!speed || !distance || !(hours && minutes)) return;
 
         const etaHours = parseFloat(distance) / parseFloat(speed);
 
@@ -128,13 +129,3 @@ export default function ETAScreen() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20, backgroundColor: "#e6f7ff" },
-    title: { fontSize: 20, fontWeight: "bold", marginVertical: 10 },
-    input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginVertical: 5 },
-    button: { backgroundColor: "#0077b6", padding: 12, borderRadius: 8, marginVertical: 10, alignItems: "center" },
-    buttonText: { color: "#fff", fontWeight: "bold" },
-    timeContainer: { display: "flex", flexDirection: "row", alignItems: "center", marginBottom: 10 },
-    timeInput: { borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 10, marginVertical: 5, marginHorizontal: 5, width: 60, textAlign: "center" },
-});
