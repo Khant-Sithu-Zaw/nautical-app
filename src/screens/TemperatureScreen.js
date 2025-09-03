@@ -2,41 +2,40 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard } from "react-native";
 import * as Location from 'expo-location';
 export default function TemperatureScreen() {
-    const [temperature, setTemperature] = useState(""); // input value
+    const [temperature, setTemperature] = useState("37"); // input value
     const [unit, setUnit] = useState("Celsius"); // default Celsius
-    const [loading, setLoading] = useState(true);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const API_KEY = "d879ad9b52b8db7ddfdacee48910a504";
+
+    // const API_KEY = "d879ad9b52b8db7ddfdacee48910a504";
 
     //setting default temperature to current location temperature
-    useEffect(() => {
-        (async () => {
-            // Ask for permission
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== "granted") {
-                setErrorMsg("Permission to access location was denied");
-                setLoading(false);
-                return;
-            }
+    // useEffect(() => {
+    //     (async () => {
+    //         // Ask for permission
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== "granted") {
+    //             setErrorMsg("Permission to access location was denied");
+    //             setLoading(false);
+    //             return;
+    //         }
 
-            // Get current location
-            let location = await Location.getCurrentPositionAsync({});
-            const { latitude, longitude } = location.coords;
+    //         // Get current location
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         const { latitude, longitude } = location.coords;
 
-            try {
-                // Fetch temperature from OpenWeatherMap API
-                const response = await fetch(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
-                );
-                const data = await response.json();
-                setTemperature(data.main.temp.toString()); // Current temperature in °C
-            } catch (error) {
-                setErrorMsg("Failed to fetch temperature");
-            } finally {
-                setLoading(false);
-            }
-        })();
-    }, []);
+    //         try {
+    //             // Fetch temperature from OpenWeatherMap API
+    //             const response = await fetch(
+    //                 `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
+    //             );
+    //             const data = await response.json();
+    //             setTemperature(data.main.temp.toString()); // Current temperature in °C
+    //         } catch (error) {
+    //             setErrorMsg("Failed to fetch temperature");
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     })();
+    // }, []);
 
     const toggleUnit = () => {
         Keyboard.dismiss();
@@ -55,19 +54,19 @@ export default function TemperatureScreen() {
             setUnit("Celsius");
         }
     };
-    if (loading) {
-        return (
-            <View style={[styles.container, { backgroundColor: "#1E3D59", justifyContent: "center", alignItems: "center" }]}>
-                <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>
-                    💧 Fetching temperature...
-                </Text>
+    // if (loading) {
+    //     return (
+    //         <View style={[styles.container, { backgroundColor: "#1E3D59", justifyContent: "center", alignItems: "center" }]}>
+    //             <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>
+    //                 💧 Fetching temperature...
+    //             </Text>
 
-            </View>
-        );
-    }
+    //         </View>
+    //     );
+    // }
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>🌡 Temperature Converter</Text>
+            <Text style={styles.title}>🌡Temperature Converter</Text>
 
             <TextInput
                 style={styles.input}
@@ -83,6 +82,7 @@ export default function TemperatureScreen() {
                     {unit === "Celsius" ? "Change to Fahrenheit" : "Change to Celsius"}
                 </Text>
             </TouchableOpacity>
+
         </View>
     );
 }
@@ -98,6 +98,8 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         marginBottom: 20,
+        width: "100%",
+        textAlign: "left",
     },
     input: {
         width: "60%",
@@ -124,4 +126,9 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "bold",
     },
+    txt: {
+        marginTop: 20,
+        display: "flex",
+    }
+
 });

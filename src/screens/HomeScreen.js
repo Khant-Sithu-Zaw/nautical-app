@@ -19,6 +19,9 @@ export default function HomeScreen({ navigation }) {
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Temperature")}>
                 <Text style={styles.buttonText}>Temperature</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AnchorDrag")}>
+                <Text style={styles.buttonText}>Turning Circle</Text>
+            </TouchableOpacity>
         </View>
     );
 }

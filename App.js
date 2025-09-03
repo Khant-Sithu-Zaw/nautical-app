@@ -6,6 +6,7 @@ import HomeScreen from "./src/screens/HomeScreen"; // HomeScreen file
 import ConverterScreen from "./src/screens/ConverterScreen";
 import ETAScreen from "./src/screens/ETAScreen";
 import TemperatureScreen from "./src/screens/TemperatureScreen";
+import AnchorDragScreen from "./src/screens/AnchorDragScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Converter" component={ConverterScreen} />
         <Stack.Screen name="Estimated Time of Arrival" component={ETAScreen} />
         <Stack.Screen name="Temperature" component={TemperatureScreen} />
+        <Stack.Screen name="AnchorDrag" component={AnchorDragScreen} />
       </Stack.Navigator>
     </NavigationContainer >
   );
