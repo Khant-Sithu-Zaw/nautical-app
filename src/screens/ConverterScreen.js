@@ -21,7 +21,9 @@ export default function ConverterScreen() {
                 onChangeText={setKnots}
             />
             <Text style={styles.result}>
-                {knots !== "" ? `${knots} knots = ${knotsToKmh(knots)} km/h` : " "}
+                {knots !== "" && !isNaN(Number(knots))
+                    ? `${knots} knots = ${knotsToKmh(knots)} km/h`
+                    : " "}
             </Text>
             <Text style={styles.label}>❷ NauticalMile → Kilometers </Text>
             <TextInput
@@ -33,7 +35,9 @@ export default function ConverterScreen() {
             />
             {/* {nm !== "" && <Text style={styles.result}>{nm} NM = {nmToKm(nm)} km</Text>} */}
             <Text style={styles.result}>
-                {nm !== "" ? `${nm} NM = ${nmToKm(nm)} km` : " "}
+                {nm !== "" && !isNaN(Number(nm))
+                    ? `${nm} NM = ${nmToKm(nm)} km`
+                    : " "}
             </Text>
         </View>
     );

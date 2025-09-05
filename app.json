@@ -1,16 +1,21 @@
 {
   "expo": {
-    "name": "nautical-app",
-    "slug": "nautical-app",
+    "name": "Seaman Toolkit",
+    "slug": "seaman-toolkit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/appicon.png",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#6b98ae"
     },
     "ios": {
       "supportsTablet": true
@@ -19,7 +24,7 @@
       "package": "com.kstz.nauticaltools",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/appicon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
@@ -29,8 +34,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "229032a8-88af-418a-b9f0-99278d32d4b8"
+        "projectId": "cee23e57-0d07-4507-a0b6-907b0e4cecdf"
       }
-    }
+    },
+    "owner": "khant_sithu_zaw"
   }
 }

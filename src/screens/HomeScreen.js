@@ -1,27 +1,39 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, TextInput, FlatList } from "react-native";
 import styles from "../style/styles";
+import { screens } from "../utils/constants";
 export default function HomeScreen({ navigation }) {
+
+    const [searchText, setSearchText] = useState("");
+    const filteredScreens = screens.filter(screen =>
+        screen.name.toLowerCase().includes(searchText.toLowerCase())
+    );
     return (
         <View style={styles.homeContainer}>
-            <Text style={styles.homeTitle}> Nautical Tools </Text>
 
-            <TouchableOpacity
-                style={styles.screenButton}
-                onPress={() => navigation.navigate("Converter")}
-            >
-                <Text style={styles.buttonText}>Nautical Converter</Text>
-            </TouchableOpacity>
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Search ..."
+                placeholderTextColor="#dddddfff"
+                value={searchText}
+                onChangeText={setSearchText}
+                autoFocus={false}
+            />
 
-            <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate("Estimated Time of Arrival")}>
-                <Text style={styles.buttonText}>ETA Calculator</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate("Temperature")}>
-                <Text style={styles.buttonText}>Temperature</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.screenButton} onPress={() => navigation.navigate("Anchor Dragging")}>
-                <Text style={styles.buttonText}>Anchor Dragging</Text>
-            </TouchableOpacity>
+            <FlatList
+                style={{ width: "80%" }}
+                data={filteredScreens}
+                keyExtractor={(item) => item.route}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        style={styles.screenButton}
+                        onPress={() => navigation.navigate(item.route)}
+                    >
+                        <Text style={styles.buttonText}>{item.name}</Text>
+                    </TouchableOpacity>
+                )}
+            />
+
         </View>
     );
 }

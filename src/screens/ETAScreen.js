@@ -12,6 +12,7 @@ export default function ETAScreen() {
     const [minutes, setMinutes] = useState(currentTime.getMinutes().toString().padStart(2, "0"));
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [show, setShow] = useState(false);
+    const [error, setError] = useState("");
     const onChange = (event, changedDate) => {
         if (event.type === "set") {
             // user pressed OK
@@ -22,13 +23,25 @@ export default function ETAScreen() {
         setShow(false);
     };
     const calculateETA = () => {
+        setError("");
         Keyboard.dismiss();
-        if (!speed || !distance || !(hours && minutes)) return;
+        if (isNaN(Number(hours)) ||
+            isNaN(Number(minutes)) ||
+            isNaN(Number(speed)) ||
+            isNaN(Number(distance))) {
+
+            setEta(null);
+            setArrivalTime("");
+            setError("Please enter numbers only.");
+            return;
+        }
+
 
         const etaHours = parseFloat(distance) / parseFloat(speed);
 
         if (!isNaN(etaHours)) {
             // calculate days and hours from ETA
+
             const etaDays = Math.floor(etaHours / 24);
             const etaWholeHours = Math.floor(etaHours % 24);
             const etaMinutes = Math.round((etaHours - Math.floor(etaHours)) * 60);
@@ -44,8 +57,11 @@ export default function ETAScreen() {
 
             // start from selected date
             const depart = new Date(selectedDate); // or selectedDate if that's your state
-            depart.setHours(parseInt(hours));
-            depart.setMinutes(parseInt(minutes));
+            if (hours == "") setHours("0");
+            if (minutes == "") setMinutes("0");
+
+            depart.setHours(parseInt(hours, 10) || 0);
+            depart.setMinutes(parseInt(minutes, 10) || 0);
 
             // add ETA
             depart.setDate(depart.getDate() + etaDays);
@@ -56,7 +72,6 @@ export default function ETAScreen() {
             const arrival = `${depart.getDate().toString().padStart(2, "0")}/${(depart.getMonth() + 1).toString().padStart(2, "0")
                 }/${depart.getFullYear()} ${depart.getHours().toString().padStart(2, "0")}:${depart.getMinutes().toString().padStart(2, "0")
                 }`;
-
             setArrivalTime(arrival);
         }
     };
@@ -83,7 +98,7 @@ export default function ETAScreen() {
                 </Text>
             </View>
             <View style={styles.timeContainer}>
-                <Text>Departure </Text>
+                <Text>Departure :</Text>
                 <TextInput
                     style={styles.timeInput}
                     placeholder="00"
@@ -93,7 +108,7 @@ export default function ETAScreen() {
                     maxLength={2}
 
                 />
-                <Text>Hour:</Text>
+                <Text>Hour</Text>
                 <TextInput
                     style={styles.timeInput}
                     placeholder="00"
@@ -126,6 +141,7 @@ export default function ETAScreen() {
 
             {eta && <Text>Duration: {eta}</Text>}
             {arrivalTime && <Text>Arrival Time: {arrivalTime}</Text>}
+            {error && <Text style={styles.errorTxt}>{error}</Text>}
         </View>
     );
 }

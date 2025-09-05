@@ -76,7 +76,7 @@ export default function TemperatureScreen() {
                 onChangeText={setTemperature}
             />
 
-            <Text style={styles.label}>Unit: {unit}</Text>
+            <Text style={styles.label}>Current Unit: {unit}</Text>
 
             <TouchableOpacity style={styles.button} onPress={toggleUnit}>
                 <Text style={styles.buttonText}>

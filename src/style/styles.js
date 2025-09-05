@@ -2,15 +2,25 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     homeContainer: {
-        flex: 1,
+        flex: 1, // fill the screen
+        width: "100%",
         backgroundColor: "#1E3D59", // deep sea blue
-        justifyContent: "",
         alignItems: "center",
         paddingVertical: 30,
+        height: "100%"
+    },
+    searchInput: {
+        borderWidth: 0,
+        borderBottomWidth: 1,
+        borderRadius: 8,
+        color: "#FFF",
+        padding: 5,
+        marginBottom: 20,
+        width: "80%",
     },
     homeTitle: {
         fontSize: 26,
-        marginBottom: 30,
+        marginBottom: 10,
         color: "#FFFFFF",
         fontWeight: "bold",
     },
@@ -23,7 +33,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexWrap: "wrap",
         flexDirection: "row",
-
         alignItems: "center",
         marginBottom: 10,
         width: "100%",
@@ -60,13 +69,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         borderRadius: 12,
         marginVertical: 10,
-        width: "85%",
         alignItems: "center",
         shadowColor: "#000",
         shadowOpacity: 0.2,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 4,
         elevation: 3,
+        width: "100%",
     },
     button: {
         backgroundColor: "#0077b6",
@@ -107,6 +116,15 @@ const styles = StyleSheet.create({
         width: 60,
         textAlign: "center"
     },
+    errorTxt: {
+        color: "red",
+        fontWeight: "bold",
+    },
+    answer: {
+        fontWeight: "bold",
+        fontSize: 18
+    }
+
 });
 
 export default styles;

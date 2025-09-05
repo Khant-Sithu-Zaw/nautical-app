@@ -8,16 +8,17 @@ import ETAScreen from "./src/screens/ETAScreen";
 import TemperatureScreen from "./src/screens/TemperatureScreen";
 import AnchorDragScreen from "./src/screens/AnchorDragScreen";
 
+// import EngineScreen from "./src/screens/EngineScreen"; // optional
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
         headerStyle: { backgroundColor: "#2d5ed1ff" },
         headerTintColor: "#b8b8b8ff",
         headerTitleStyle: { fontWeight: "bold" },
-        // center title
       }} initialRouteName="⚓  Home">
         <Stack.Screen name="⚓  Home" component={HomeScreen} />
         <Stack.Screen name="Converter" component={ConverterScreen} />
@@ -26,5 +27,6 @@ export default function App() {
         <Stack.Screen name="Anchor Dragging" component={AnchorDragScreen} />
       </Stack.Navigator>
     </NavigationContainer >
+
   );
 }

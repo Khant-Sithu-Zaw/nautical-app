@@ -39,7 +39,7 @@ export default function AnchorDragScreen() {
                 <Text style={styles.buttonText}>Calculate Radius</Text>
             </TouchableOpacity>
 
-            {radius && <Text>Calculated Radius: {radius}</Text>}
+            {radius && <Text style={styles.answer}>Calculated Radius: {radius}</Text>}
         </View>
     )
 }
