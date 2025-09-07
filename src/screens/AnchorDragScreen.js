@@ -24,6 +24,7 @@ export default function AnchorDragScreen() {
                     placeholder="Length(m) of Vessel"
                     keyboardType="numeric"
                     onChangeText={setLengthOverall}
+                    placeholderTextColor="#9b9898ff"
                 />
             </View>
             <View style={styles.innerColumn}>
@@ -33,6 +34,7 @@ export default function AnchorDragScreen() {
                     placeholder="Counts of Shackle"
                     keyboardType="numeric"
                     onChangeText={setShackle}
+                    placeholderTextColor="#9b9898ff"
                 />
             </View>
             <TouchableOpacity style={styles.button} onPress={calculateRadius}>

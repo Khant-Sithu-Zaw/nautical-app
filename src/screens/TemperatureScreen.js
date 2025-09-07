@@ -73,7 +73,9 @@ export default function TemperatureScreen() {
                 style={styles.input}
                 keyboardType="numeric"
                 value={temperature ?? ""}
+                placeholder="Enter Temperature"
                 onChangeText={setTemperature}
+                placeholderTextColor="#9b9898ff"
             />
 
             <Text style={styles.label}>Current Unit: {unit}</Text>

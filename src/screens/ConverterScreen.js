@@ -19,6 +19,7 @@ export default function ConverterScreen() {
                 keyboardType="numeric"
                 value={knots}
                 onChangeText={setKnots}
+                placeholderTextColor="#9b9898ff"
             />
             <Text style={styles.result}>
                 {knots !== "" && !isNaN(Number(knots))
@@ -32,6 +33,7 @@ export default function ConverterScreen() {
                 keyboardType="numeric"
                 value={nm}
                 onChangeText={setNm}
+                placeholderTextColor="#9b9898ff"
             />
             {/* {nm !== "" && <Text style={styles.result}>{nm} NM = {nmToKm(nm)} km</Text>} */}
             <Text style={styles.result}>

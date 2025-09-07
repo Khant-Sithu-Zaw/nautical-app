@@ -14,9 +14,9 @@ export default function HomeScreen({ navigation }) {
             <TextInput
                 style={styles.searchInput}
                 placeholder="Search ..."
-                placeholderTextColor="#dddddfff"
                 value={searchText}
                 onChangeText={setSearchText}
+                placeholderTextColor="#ccc"
                 autoFocus={false}
             />
 

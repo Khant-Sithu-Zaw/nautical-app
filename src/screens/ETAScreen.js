@@ -106,7 +106,7 @@ export default function ETAScreen() {
                     value={hours}
                     onChangeText={setHours}
                     maxLength={2}
-
+                    placeholderTextColor="#9b9898ff"
                 />
                 <Text>Hour</Text>
                 <TextInput
@@ -116,23 +116,26 @@ export default function ETAScreen() {
                     value={minutes}
                     onChangeText={setMinutes}
                     maxLength={2}
+                    placeholderTextColor="#9b9898ff"
                 />
                 <Text>Mins</Text>
             </View>
 
             <TextInput
                 style={styles.input}
-                placeholder="Speed (knots)"
+                placeholder="Enter Speed (knots)"
                 keyboardType="numeric"
                 value={speed}
                 onChangeText={setSpeed}
+                placeholderTextColor="#9b9898ff"
             />
             <TextInput
                 style={styles.input}
-                placeholder="Distance (Nautical Miles)"
+                placeholder="Enter Distance (NM)"
                 keyboardType="numeric"
                 value={distance}
                 onChangeText={setDistance}
+                placeholderTextColor="#9b9898ff"
             />
 
             <TouchableOpacity style={styles.button} onPress={calculateETA}>
