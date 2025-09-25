@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     , card: {
         backgroundColor: "#fff",
         position: "absolute",
-        top: verticalScale(-50),
+        top: verticalScale(-90),
         left: 0,
         right: 0,
         boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
@@ -361,14 +361,13 @@ const styles = StyleSheet.create({
         position: "relative",
     },
     textInput: {
-
         fontSize: moderateScale(12),
         borderColor: "#205E95",
         borderWidth: moderateScale(1),
         backgroundColor: "#fff",
         borderRadius: moderateScale(10),
         paddingHorizontal: scale(10),
-        paddingVertical: verticalScale(6),
+        paddingVertical: verticalScale(5),
     },
     inputUnit: {
         width: "70%",
@@ -377,18 +376,20 @@ const styles = StyleSheet.create({
     },
     inputIcon: {
         width: "30%",
-        fontSize: moderateScale(12),
-        color: "#205E95",
         backgroundColor: "#205E95",
         borderTopRightRadius: moderateScale(10),
         borderBottomRightRadius: moderateScale(10),
-        paddingVertical: verticalScale(6),
-        textAlign: "center",
-        borderColor: "#205E95",
         borderWidth: moderateScale(1),
-        color: "#fff",
+        borderColor: "#205E95",
 
     },
+    inputIconText: {
+        color: "#fff",
+        paddingVertical: verticalScale(5.5),
+        fontSize: moderateScale(12),
+        textAlign: "center",
+    },
+
     btn: {
         backgroundColor: "#477DAD",
         padding: moderateScale(10),
@@ -425,7 +426,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(14),
         fontWeight: "bold",
         color: "#205E95",
-        marginBottom: verticalScale(20),
+        marginBottom: verticalScale(15),
 
     },
     homeBanner: {

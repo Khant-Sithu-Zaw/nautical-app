@@ -1,34 +1,48 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
 import styles from "../style/styles";
 import Layout from "../components/Layout";
 export default function ConverterScreen() {
     const [fah, setFah] = useState("");
     const [cel, setCel] = useState("");
-
+    const temperatureRegex = /^-?\d*\.?\d*$/;
+    const numberRegex = /^\d*\.?\d*$/;
     const [knots, setKnots] = useState("");
     const [kmh, setKmh] = useState("");
 
     const [nm, setNm] = useState("");
     const [km, setKm] = useState("");
+    function formatNumber(value) {
+        const num = parseFloat(value);
+        if (isNaN(num)) return "";
+
+        // If number is too large or too small, use scientific notation
+        if (Math.abs(num) >= 1e6 || (Math.abs(num) > 0 && Math.abs(num) < 1e-2)) {
+            return num.toExponential(2); // e.g., "1.23e+08"
+        }
+
+        // Otherwise, round to 2 decimal places
+        return num.toFixed(2);
+    }
+
     // Temperature
     const handleFahChange = (value) => {
-        if (isNaN(Number(value))) return; // Prevent non-numeric input
+
         setFah(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setCel(((num - 32) * 5 / 9).toFixed(2));
+            setCel(formatNumber((num - 32) * 5 / 9));
         } else {
             setCel("");
         }
     };
 
     const handleCelChange = (value) => {
-        if (isNaN(Number(value))) return;
+
         setCel(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setFah((num * 9 / 5 + 32).toFixed(2));
+            setFah(formatNumber((num * 9 / 5) + 32));
         } else {
             setFah("");
         }
@@ -36,22 +50,23 @@ export default function ConverterScreen() {
 
     // Speed
     const handleKnotsChange = (value) => {
-        if (isNaN(Number(value))) return;
+
         setKnots(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setKmh((num * 1.852).toFixed(2));
+            setKmh(formatNumber((num * 1.852).toFixed(3)));
+
         } else {
             setKmh("");
         }
     };
 
     const handleKmhChange = (value) => {
-        if (isNaN(Number(value))) return;
+
         setKmh(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setKnots((num / 1.852).toFixed(2));
+            setKnots(formatNumber((num / 1.852).toFixed(3)));
         } else {
             setKnots("");
         }
@@ -59,22 +74,24 @@ export default function ConverterScreen() {
 
     // Distance
     const handleNmChange = (value) => {
-        if (isNaN(Number(value))) return;
+
         setNm(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setKm((num * 1.852).toFixed(2));
+            setKm(formatNumber((num * 1.852).toFixed(3)));
+
         } else {
             setKm("");
         }
     };
 
     const handleKmChange = (value) => {
-        if (isNaN(Number(value))) return;
+
         setKm(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            setNm((num / 1.852).toFixed(2));
+            setNm(formatNumber((num / 1.852).toFixed(3)));
+
         } else {
             setNm("");
         }
@@ -103,26 +120,55 @@ export default function ConverterScreen() {
                         <TextInput
                             style={[styles.textInput, styles.inputUnit]}
                             placeholder="Fahrenheit"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={fah}
-                            onChangeText={handleFahChange}
+                            onChangeText={(text) => {
+                                // Allow only - and numbers with optional decimal
+                                if (temperatureRegex.test(text)) {
+                                    handleFahChange(text);
+                                }
+                            }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>℉</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setFah("");
+                                setCel("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>℉</Text>
+                        </TouchableOpacity>
+
                     </View>
                     <View style={[styles.rhtSideInput, styles.flexBox]}>
 
                         <TextInput
                             style={[styles.textInput, styles.inputUnit]}
                             placeholder="Celsius"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={cel}
-                            onChangeText={handleCelChange}
+                            onChangeText={(text) => {
+                                // Allow only - and numbers with optional decimal
+                                if (temperatureRegex.test(text)) {
+                                    handleCelChange(text);
+                                }
+                            }}
+
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>℃</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setCel("");
+                                setFah("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>℃</Text>
+                        </TouchableOpacity>
+
                     </View>
                     <Text style={styles.coverterTitle}>❷ Speed Conversion</Text>
                     <View style={[styles.rhtSideInput, styles.flexBox]}>
@@ -132,23 +178,51 @@ export default function ConverterScreen() {
                             placeholder="Knots"
                             keyboardType="numeric"
                             value={knots}
-                            onChangeText={handleKnotsChange}
+
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKnotsChange(text);
+                                }
+                            }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>kn</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setKnots("");
+                                setKmh("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>kn</Text>
+                        </TouchableOpacity>
+
                     </View>
                     <View style={[styles.rhtSideInput, styles.flexBox]}>
                         <TextInput
                             style={[styles.textInput, styles.inputUnit]}
                             placeholder="Km/hour"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={kmh}
-                            onChangeText={handleKmhChange}
+
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKmhChange(text);
+                                }
+                            }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>km/h</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setKmh("");
+                                setKnots("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>km/h</Text>
+                        </TouchableOpacity>
+
                     </View>
                     <Text style={styles.coverterTitle}>❸ Distance Conversion</Text>
                     <View style={[styles.rhtSideInput, styles.flexBox]}>
@@ -156,26 +230,53 @@ export default function ConverterScreen() {
                         <TextInput
                             style={[styles.textInput, styles.inputUnit]}
                             placeholder="N Miles"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={nm}
-                            onChangeText={handleNmChange}
+
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleNmChange(text);
+                                }
+                            }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>NM</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setNm("");
+                                setKm("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>NM</Text>
+                        </TouchableOpacity>
+
                     </View>
                     <View style={[styles.rhtSideInput, styles.flexBox]}>
 
                         <TextInput
                             style={[styles.textInput, styles.inputUnit]}
                             placeholder="Kilometers"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={km}
-                            onChangeText={handleKmChange}
+
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKmChange(text);
+                                }
+                            }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={9}
+                            maxLength={8}
                         />
-                        <Text style={styles.inputIcon}>km</Text>
+                        <TouchableOpacity
+                            style={styles.inputIcon}
+                            onPress={() => {
+                                setKm("");
+                                setNm("");
+                            }}
+                        >
+                            <Text style={styles.inputIconText}>km</Text>
+                        </TouchableOpacity>
                     </View>
                 </ View>
             </ View>}
