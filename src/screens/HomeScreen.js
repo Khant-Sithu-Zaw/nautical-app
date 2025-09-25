@@ -4,7 +4,6 @@ import styles from "../style/styles";
 import { screens } from "../utils/constants";
 import { useContext, useRef } from "react";
 import { SearchContext } from "../context/SearchContext";
-import Footer from "../components/Footer";
 import Carousel from "react-native-reanimated-carousel";
 import { verticalScale, } from '../utils/scale';
 const { width } = Dimensions.get("window");
