@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         color: "#636060ff",
     },
     icon: {
-        marginRight: scale(2),
+        marginHorizontal: scale(2),
     },
 
     dropdown: {
@@ -441,6 +441,17 @@ const styles = StyleSheet.create({
     inDevText: {
         color: "#fff", textAlign: "center", fontWeight: "bold",
         fontSize: moderateScale(30),
+    },
+    clearBtn: {
+        position: "absolute",
+        right: scale(6),
+        top: "7%", // percentage must be a string
+        transform: [{ translateY: verticalScale(-7) }], // adjust with number, not %
+        fontSize: moderateScale(12),
+    }
+    , emojiTxt: {
+
+        fontSize: moderateScale(10),
     }
 });
 

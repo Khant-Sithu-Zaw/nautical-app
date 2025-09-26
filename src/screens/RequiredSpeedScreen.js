@@ -91,7 +91,7 @@ export default function RequiredSpeedScreen() {
                         <View style={styles.leftInput}>
                             <Text style={styles.label}>Current Time</Text>
                         </View>
-                        <View style={styles.rightInput}>
+                        <View style={[styles.rightInput, styles.relativeHolder]}>
                             <TouchableOpacity
                                 style={styles.dateInput}
                                 onPress={() => showPicker("current")}
@@ -99,14 +99,20 @@ export default function RequiredSpeedScreen() {
                                 <Text style={styles.dateText}>
                                     {currentTime ? currentTime.toLocaleString() : "Datetime not selected"}
                                 </Text>
+
                             </TouchableOpacity>
+                            {currentTime && (
+                                <TouchableOpacity style={styles.clearBtn} onPress={() => setCurrentTime(null)}>
+                                    <Text style={styles.emojiTxt}>❌</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
 
                         {/* Arrival Time */}
                         <View style={styles.leftInput}>
                             <Text style={styles.label}>Arrival Time</Text>
                         </View>
-                        <View style={styles.rightInput}>
+                        <View style={[styles.rightInput, styles.relativeHolder]}>
 
                             <TouchableOpacity
                                 style={styles.dateInput}
@@ -115,7 +121,13 @@ export default function RequiredSpeedScreen() {
                                 <Text style={styles.dateText}>
                                     {arrivalTime ? arrivalTime.toLocaleString() : "Datetime not selected"}
                                 </Text>
+
                             </TouchableOpacity>
+                            {arrivalTime && (
+                                <TouchableOpacity style={styles.clearBtn} onPress={() => setArrivalTime(null)}>
+                                    <Text style={styles.emojiTxt}>❌</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
 
                         {/* Distance */}
@@ -153,13 +165,14 @@ export default function RequiredSpeedScreen() {
                         mode="datetime"
                         onConfirm={handleDateTimeConfirm}
                         onCancel={hidePicker}
-                        minimumDate={
-                            activePicker === "arrival" && currentTime ? currentTime : undefined
-                        }
-                        maximumDate={
-                            activePicker === "current" && arrivalTime ? arrivalTime : undefined
-                        }
+                        {...(activePicker === "arrival" && currentTime
+                            ? { minimumDate: currentTime }
+                            : {})}
+                        {...(activePicker === "current" && arrivalTime
+                            ? { maximumDate: arrivalTime }
+                            : {})}
                     />
+
                 </View>
             }
         />

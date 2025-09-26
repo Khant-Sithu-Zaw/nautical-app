@@ -136,11 +136,15 @@ export default function ETAScreen() {
                             style={styles.dateInput}
                             onPress={() => setIsPickerVisible(true)}
                         >
+                            <Text style={[styles.emojiTxt, styles.icon]}>
+                                ⏱️
+                            </Text>
                             <Text style={styles.dateText}>
                                 {selectedTime
                                     ? selectedTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false })
                                     : "Select Time"}
                             </Text>
+
                         </TouchableOpacity>
                         <DateTimePickerModal
                             isVisible={isPickerVisible}
