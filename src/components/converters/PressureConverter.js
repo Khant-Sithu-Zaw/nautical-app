@@ -116,6 +116,7 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
                     placeholder="Bar"
                     keyboardType="decimal-pad"
                     value={bar}
+                    placeholderTextColor="#9b9898ff"
                     maxLength={8}
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleBarChange(text);
@@ -133,6 +134,7 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
                     placeholder="lb/inch²"
                     keyboardType="decimal-pad"
                     value={psi}
+                    placeholderTextColor="#9b9898ff"
                     maxLength={8}
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handlePsiChange(text);
@@ -150,6 +152,7 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
                     placeholder="atmosphere"
                     keyboardType="decimal-pad"
                     value={atm}
+                    placeholderTextColor="#9b9898ff"
                     maxLength={8}
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleAtmChange(text);
@@ -168,6 +171,7 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={mmHg}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleMmHgChange(text);
                     }}
@@ -184,6 +188,7 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
                     placeholder="kiloPascal"
                     keyboardType="decimal-pad"
                     value={kPa}
+                    placeholderTextColor="#9b9898ff"
                     maxLength={8}
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleKPaChange(text);

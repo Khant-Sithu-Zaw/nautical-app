@@ -94,6 +94,7 @@ export default function FuelConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={liters}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleLitersChange(text);
                     }}
@@ -111,6 +112,7 @@ export default function FuelConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={cubicMeters}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleCubicMetersChange(text);
                     }}
@@ -128,6 +130,7 @@ export default function FuelConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={gallonsUS}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleGallonsUSChange(text);
                     }}
@@ -145,6 +148,7 @@ export default function FuelConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={barrels}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleBarrelsChange(text);
                     }}

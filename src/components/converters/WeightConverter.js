@@ -119,6 +119,7 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={metricTon}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleMetricTonChange(text);
                     }}
@@ -136,6 +137,7 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={longTon}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleLongTonChange(text);
                     }}
@@ -153,6 +155,7 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={shortTon}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleShortTonChange(text);
                     }}
@@ -170,6 +173,7 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={kilogram}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleKilogramChange(text);
                     }}
@@ -187,6 +191,7 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={pound}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handlePoundChange(text);
                     }}

@@ -83,6 +83,7 @@ export default function LengthConverter({ numberRegex, formatNumber }) {
                     keyboardType="number-pad"
                     value={meter}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleMeterChange(text);
                     }}
@@ -99,6 +100,7 @@ export default function LengthConverter({ numberRegex, formatNumber }) {
                     keyboardType="number-pad"
                     value={fathom}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleFathomChange(text);
                     }}
@@ -115,6 +117,7 @@ export default function LengthConverter({ numberRegex, formatNumber }) {
                     keyboardType="number-pad"
                     value={feet}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleFeetChange(text);
                     }}
@@ -130,6 +133,7 @@ export default function LengthConverter({ numberRegex, formatNumber }) {
                     keyboardType="number-pad"
                     value={cable}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleCableChange(text);
                     }}

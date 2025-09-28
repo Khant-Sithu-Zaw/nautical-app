@@ -88,6 +88,7 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={kW}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleKWChange(text);
                     }}
@@ -105,6 +106,7 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={hp}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleHPChange(text);
                     }}
@@ -122,6 +124,7 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={joules}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleJoulesChange(text);
                     }}
@@ -139,6 +142,7 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
                     keyboardType="decimal-pad"
                     value={btu}
                     maxLength={8}
+                    placeholderTextColor="#9b9898ff"
                     onChangeText={(text) => {
                         if (numberRegex.test(text)) handleBTUChange(text);
                     }}
