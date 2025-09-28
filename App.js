@@ -10,6 +10,7 @@ import RequiredSpeedScreen from "./src/screens/RequiredSpeedScreen";
 import AnchorDragScreen from "./src/screens/AnchorDragScreen";
 import HomeTabs from "./src/components/HomeTabs";
 import { useFonts } from "expo-font";
+import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
 
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
@@ -57,7 +58,7 @@ export default function App() {
           <Stack.Screen name="ETA Calculator" component={ETAScreen} />
           <Stack.Screen name="Speed Calculator" component={RequiredSpeedScreen} />
           <Stack.Screen name="Anchor Dragging" component={AnchorDragScreen} />
-          {/* <Stack.Screen name="Time Converter" component={TimeConversionScreen} /> */}
+          <Stack.Screen name="Fuel Cost Calculator" component={FuelConsumptionScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SearchContext.Provider>

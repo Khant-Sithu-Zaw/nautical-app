@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Keyboard, Image, Button } from
 import styles from "../style/styles";
 import Layout from "../components/Layout";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { handleNumberChange } from "../utils/constants";
 
 export default function RequiredSpeedScreen() {
     const [speed, setSpeed] = useState("");
@@ -138,9 +139,13 @@ export default function RequiredSpeedScreen() {
                             <TextInput
                                 style={styles.textInput}
                                 placeholder="Enter distance in NM"
-                                keyboardType="numeric"
+                                keyboardType="decimal-pad"
                                 value={distance}
-                                onChangeText={setDistance}
+                                maxLength={8}
+                                onChangeText={(text) => {
+                                    const cleaned = handleNumberChange(text, "Distance");
+                                    setDistance(cleaned);
+                                }}
                                 placeholderTextColor="#9b9898ff"
                             />
                         </View>

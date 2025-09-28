@@ -35,7 +35,7 @@ const dropdownStyles = StyleSheet.create({
         borderBottomColor: "#eee",
     },
     optionText: {
-        fontSize: moderateScale(14),
+        fontSize: moderateScale(12),
         color: "#205E95"
     },
 });

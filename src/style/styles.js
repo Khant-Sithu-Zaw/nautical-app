@@ -137,11 +137,7 @@ const styles = StyleSheet.create({
         width: scale(24),
         height: verticalScale(24)
     }
-    , flatList: {
-        width: "80%",
-        display: "flex",
-
-    },
+    ,
     screenButton: {
         width: scale(240),
         backgroundColor: "#6f9abf",
@@ -151,7 +147,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: "#fff",
-        fontSize: moderateScale(16),
+        fontSize: moderateScale(14),
         textAlign: "center",
     },
 
@@ -159,11 +155,35 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         flex: 1,
+        position: "relative",
+    },
+    extraOptionalContent: {
+        position: "absolute",
+        bottom: verticalScale(220),
+        left: 0,
+        right: 0,
+        alignItems: "center",
 
     },
     bannerContainer: {
         width: "100%",
-        zIndex: -1,
+
+    },
+    bannerContent: {
+        paddingTop: verticalScale(40),
+        backgroundColor: "#3C78AD",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingBottom: verticalScale(100),
+    },
+    bannerText: {
+        fontSize: moderateScale(14),
+        paddingHorizontal: scale(20),
+        textAlign: "center",
+        color: "#fff",
+        fontWeight: "bold",
+        lineHeight: moderateScale(25),
+        letterSpacing: moderateScale(0.5),
     },
     bannerImage: {
         width: "100%",
@@ -355,7 +375,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-
     }
     , relativeHolder: {
         position: "relative",
@@ -376,16 +395,16 @@ const styles = StyleSheet.create({
     },
     inputIcon: {
         width: "30%",
+        borderWidth: moderateScale(1),
         backgroundColor: "#205E95",
         borderTopRightRadius: moderateScale(10),
         borderBottomRightRadius: moderateScale(10),
-        borderWidth: moderateScale(1),
         borderColor: "#205E95",
-
+        justifyContent: "center",
+        paddingVertical: verticalScale(5.5),
     },
     inputIconText: {
         color: "#fff",
-        paddingVertical: verticalScale(5.5),
         fontSize: moderateScale(12),
         textAlign: "center",
     },
@@ -416,17 +435,17 @@ const styles = StyleSheet.create({
     , data: {
         fontWeight: "900"
     },
-    lftSideInput: {
+    SideInput: {
         width: "47%",
+        marginBottom: verticalScale(20),
     },
-    rhtSideInput: {
-        width: "47%",
-    },
+
     coverterTitle: {
-        fontSize: moderateScale(14),
+        fontSize: moderateScale(13),
         fontWeight: "bold",
         color: "#205E95",
-        marginBottom: verticalScale(15),
+        marginBottom: verticalScale(10),
+        width: "100%",
 
     },
     homeBanner: {
@@ -450,8 +469,38 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(12),
     }
     , emojiTxt: {
-
         fontSize: moderateScale(10),
+    }
+    , lftBox: {
+
+    },
+    rhtBox: {
+
+
+    },
+
+    aboutIcon: {
+        width: scale(50),
+        height: verticalScale(50),
+        resizeMode: "contain",
+        marginHorizontal: scale(2),
+
+    }, maxText: {
+        left: scale(20),
+    },
+    commentBoxIcon: {
+        position: "absolute",
+        bottom: verticalScale(3), // percentage must be a string
+        fontSize: moderateScale(10),
+    }, sendEmoji: {
+        right: scale(20),
+        fontSize: moderateScale(16),
+    },
+    aboutUsImg: {
+        width: scale(80),
+        height: verticalScale(80),
+        borderRadius: moderateScale(50),
+        resizeMode: "cover",
     }
 });
 

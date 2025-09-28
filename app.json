@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Seaman Toolkit",
+    "name": "Seafarer Toolbox",
     "slug": "seaman-toolkit",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,8 @@
       "backgroundColor": "#3C78AD"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kstz.nauticaltools"
     },
     "android": {
       "package": "com.kstz.nauticaltools",

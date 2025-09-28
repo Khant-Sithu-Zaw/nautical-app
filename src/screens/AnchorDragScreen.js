@@ -7,6 +7,7 @@ import {
     View, Text, TextInput, TouchableOpacity, Keyboard, Image, Modal,
     ScrollView,
 } from "react-native";
+import { handleNumberChange } from "../utils/constants";
 
 export default function AnchorDragScreen() {
     const [lengthOverall, setLengthOverall] = useState(""); // string
@@ -93,7 +94,10 @@ export default function AnchorDragScreen() {
                             placeholder="Enter LOA of Ship(m)"
                             keyboardType="numeric"
                             value={lengthOverall}
-                            onChangeText={setLengthOverall}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "LOA");
+                                setLengthOverall(cleaned);
+                            }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={5}
                         />

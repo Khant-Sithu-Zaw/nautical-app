@@ -5,6 +5,7 @@ import styles from "../style/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons } from "@expo/vector-icons"; // icon package
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { handleNumberChange } from "../utils/constants";
 
 
 export default function ETAScreen() {
@@ -92,7 +93,7 @@ export default function ETAScreen() {
             </View>}
             bodyContent={<View >
                 <View>
-                    <Text style={styles.contentTitle}>Estimated Time Arrival by conditions</Text>
+                    <Text style={styles.contentTitle}>🌍 Estimated Time Arrival by conditions</Text>
                     <View
                         style={
                             styles.titleLine
@@ -170,7 +171,11 @@ export default function ETAScreen() {
                             placeholder="Enter Speed (knots)"
                             keyboardType="numeric"
                             value={speed}
-                            onChangeText={setSpeed}
+                            maxLength={6}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "Speed");
+                                setSpeed(cleaned);
+                            }}
                             placeholderTextColor="#9b9898ff"
                         />
                     </View>
@@ -183,9 +188,14 @@ export default function ETAScreen() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="Enter Distance (NM)"
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             value={distance}
-                            onChangeText={setDistance}
+                            maxLength={8}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "Distance");
+                                setDistance(cleaned);
+                            }}
+
                             placeholderTextColor="#9b9898ff"
                         />
                     </View>
