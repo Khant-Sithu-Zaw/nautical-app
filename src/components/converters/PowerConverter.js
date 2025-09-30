@@ -120,7 +120,7 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
             <View style={[styles.SideInput, styles.flexBox]}>
                 <TextInput
                     style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Joules"
+                    placeholder="Joules/sec"
                     keyboardType="decimal-pad"
                     value={joules}
                     maxLength={8}

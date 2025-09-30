@@ -11,27 +11,16 @@ export const categoryOptions = [
     "Distance",
     "Length | Depth",
     "Weight",
-    "Fuel | Volume",
+    "Volume",
     "Pressure",
-    "Energy | Power"
+    "Energy | Power",
 ];
-export const fuelType = [
-    "Heavy Fuel Oil",
-    "Liquefied Natural Gas",
-    "Marine Gas Oil",
-    "Diesel"
-]
+
 export const fuelUnit = [
     "(MT/day)",
     "(kg/h)",
-    "(L/h)"
 ]
-export const densities = {
-    "Heavy Fuel Oil": 0.98,
-    "Marine Gas Oil": 0.86,
-    "Liquefied Natural Gas": 0.72,
-    "Diesel": 0.84
-};
+
 export const handleNumberChange = (text, fieldName = "Value") => {
     // Allow only numbers
     let cleaned = text.replace(/[^0-9]/g, "");

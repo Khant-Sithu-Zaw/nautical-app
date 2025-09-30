@@ -10,7 +10,7 @@ import DistanceConverter from "../components/converters/DistanceConverter";
 import LengthConverter from "../components/converters/LengthConverter";
 import { categoryOptions } from "../utils/constants";
 import WeightConverter from "../components/converters/WeightConverter";
-import FuelConverter from "../components/converters/FuelConverter";
+import VolumeConverter from "../components/converters/VolumeConverter";
 import PressureConverter from "../components/converters/PressureConverter";
 import PowerConverter from "../components/converters/PowerConverter";
 export default function ConverterScreen() {
@@ -115,8 +115,8 @@ export default function ConverterScreen() {
                             numberRegex={numberRegex}
                         />
                     )}
-                    {selectedCategory === "Fuel | Volume" && (
-                        <FuelConverter
+                    {selectedCategory === "Volume" && (
+                        <VolumeConverter
                             formatNumber={formatNumber}
                             numberRegex={numberRegex}
                         />

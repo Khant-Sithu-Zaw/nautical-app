@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import styles from "../../style/styles";
 
-export default function FuelConverter({ numberRegex, formatNumber }) {
+export default function VolumeConverter({ numberRegex, formatNumber }) {
     const [liters, setLiters] = useState("");
     const [cubicMeters, setCubicMeters] = useState("");
     const [gallonsUS, setGallonsUS] = useState("");

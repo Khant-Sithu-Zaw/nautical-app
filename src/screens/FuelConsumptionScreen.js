@@ -11,15 +11,11 @@ export default function FuelConsumptionScreen() {
     const [rate, setRate] = useState("");
     const [price, setPrice] = useState("");
     const [selectedUnit, setSelectedUnit] = useState("(kg/h)");
-    const [selectedType, setSelectedType] = useState("Disel");
     const [showCountModal, setShowCountModal] = useState(false);
-    const [showTypeModal, setShowTypeModal] = useState(false);
     const [cost, setCost] = useState(false);
     const [fuel, setFuel] = useState(false);
     const [voyage, setVoyage] = useState(false);
-    const getDensity = (fuelType) => {
-        return densities[fuelType] || 1;
-    };
+
     const calculateCost = () => {
         Keyboard.dismiss();
 
@@ -36,25 +32,21 @@ export default function FuelConsumptionScreen() {
         const timeHours = dist / spd; // voyage time in hours
         setVoyage(timeHours.toFixed(2));
 
-        const density = getDensity(selectedType); // kg/L
-        let rateLH = 0; // rate in L/h
+        let fuelMT = 0;
 
         if (selectedUnit === "(kg/h)") {
-            rateLH = rateVal / density; // kg/h → L/h
+            fuelMT = (rateVal * timeHours) / 1000; // kg/h → MT
         } else if (selectedUnit === "(MT/day)") {
-            rateLH = (rateVal * 1000) / (24 * density); // MT/day → L/h
-        } else if (selectedUnit === "(L/h)") {
-            rateLH = rateVal; // already in L/h
+            fuelMT = (rateVal / 24 * timeHours);   // MT/day → MT
         } else {
             alert("Selected unit not supported.");
             return;
         }
-
-        const fuelMT = (rateLH * timeHours * density) / 1000; // L/h → MT
         const totalCost = fuelMT * priceVal;
 
         setFuel(fuelMT.toFixed(2));
         setCost(totalCost.toFixed(2));
+
     };
 
     return (
@@ -172,38 +164,11 @@ export default function FuelConsumptionScreen() {
                                 placeholderTextColor="#9b9898ff"
                             />
                         </View>
-                        <View style={styles.leftInput}>
-                            <Text style={styles.label}>Fuel Type</Text>
-                        </View>
-                        <View style={styles.rightInput}>
-                            <TouchableOpacity style={[dropdownStyles.customPicker, { flexDirection: "row", justifyContent: "space-between", }]} onPress={() => setShowTypeModal(true)}>
-                                <Text style={[dropdownStyles.pickerText, { fontSize: moderateScale(12), color: selectedType ? "black" : "gray" }]}>
-                                    {selectedType || "Select Conversion Category "}
-                                </Text>
-                                <Text style={{ fontSize: scale(11) }}>▼</Text>
-                            </TouchableOpacity>
-
-                            {/* Modal */}
-                            <Modal visible={showTypeModal} transparent animationType="fade" onRequestClose={() => setShowTypeModal(false)}>
-                                <TouchableOpacity style={dropdownStyles.modalOverlay} onPress={() => setShowTypeModal(false)} activeOpacity={1}>
-                                    <View style={dropdownStyles.modalContent}>
-                                        <ScrollView>
-                                            {fuelType.map((opt, i) => (
-                                                <TouchableOpacity key={i} style={dropdownStyles.option} onPress={() => { setSelectedType(opt); setShowTypeModal(false); }}>
-                                                    <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </ScrollView>
-                                    </View>
-                                </TouchableOpacity>
-                            </Modal>
-
-                        </View>
                         {/* Button */}
                         <View style={styles.leftInput}></View>
                         <View style={styles.rightInput}>
                             <TouchableOpacity style={styles.btn} onPress={calculateCost}>
-                                <Text style={styles.btnText}>Calculate Fuel Cost</Text>
+                                <Text style={styles.btnText}>Generate Result</Text>
                             </TouchableOpacity>
                         </View>
                         {/* Result */}
