@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, TextInput, Modal, Image, Keyboard, Scroll
 import dropdownStyles from "../style/pickupstyle";
 import { scale, moderateScale } from '../utils/scale';
 import styles from "../style/styles";
-import { fuelUnit, fuelType, densities, handleNumberChange } from '../utils/constants';
+import { fuelUnit, handleNumberChange } from '../utils/constants';
 export default function FuelConsumptionScreen() {
     const [speed, setSpeed] = useState("");
     const [distance, setDistance] = useState("");

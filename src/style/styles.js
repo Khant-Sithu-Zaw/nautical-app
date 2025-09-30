@@ -387,6 +387,7 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(10),
         paddingHorizontal: scale(10),
         paddingVertical: verticalScale(5),
+        color: "#000"
     },
     inputUnit: {
         width: "70%",
