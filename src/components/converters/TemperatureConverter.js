@@ -89,7 +89,7 @@ export default function TemperatureConverter({ temperatureRegex, formatNumber, n
                         }
                     }}
                     placeholderTextColor="#9b9898ff"
-                    maxLength={7}
+                    maxLength={8}
                     textContentType="none"
                 />
                 <TouchableOpacity
@@ -120,7 +120,7 @@ export default function TemperatureConverter({ temperatureRegex, formatNumber, n
                         }
                     }}
                     placeholderTextColor="#9b9898ff"
-                    maxLength={7}
+                    maxLength={8}
                     textContentType="none"
                 />
                 <TouchableOpacity

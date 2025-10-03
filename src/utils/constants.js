@@ -20,7 +20,10 @@ export const fuelUnit = [
     "(MT/day)",
     "(kg/h)",
 ]
-
+export const pressureType = [
+    "Absolute Pressure",
+    "Gauge Pressure",
+]
 export const handleNumberChange = (text, fieldName = "Value") => {
     // Allow only numbers
     let cleaned = text.replace(/[^0-9]/g, "");

@@ -90,7 +90,7 @@ export default function AboutusScreen() {
                         {/* <Image source={require("../../assets/images/.png")}
                         /> */}
                     </View>
-                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(10) }]}>
+                    {/* <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(10) }]}>
 
                         <View style={styles.rhtBox}>
                             <View style={styles.rhtBox}>
@@ -103,7 +103,7 @@ export default function AboutusScreen() {
                             <Image source={require("../../assets/images/figmaIcon.png")} style={styles.aboutIcon} />
                         </View>
                         <Image source={require("../../assets/images/designer.jpg")} style={styles.aboutUsImg} />
-                    </View>
+                    </View> */}
                 </ View>
             }
             cardStyle={{ top: verticalScale(-76), paddingBottom: verticalScale(10), }}

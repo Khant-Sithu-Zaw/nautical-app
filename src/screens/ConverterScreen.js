@@ -54,7 +54,7 @@ export default function ConverterScreen() {
                     />
                 </View>
                 {/* Dropdown */}
-                <View style={{ alignItems: "center", marginBottom: verticalScale(20) }}>
+                <View style={{ alignItems: "center", marginBottom: verticalScale(12) }}>
 
                     <TouchableOpacity style={[dropdownStyles.customPicker, { alignItems: "center", flexDirection: "row", justifyContent: "space-between", width: scale(180) }]} onPress={() => setShowCountModal(true)}>
                         <Text style={[dropdownStyles.pickerText, { color: selectedCategory ? "black" : "gray" }]}>

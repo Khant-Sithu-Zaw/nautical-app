@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         left: moderateScale(-4),
         zIndex: 2,
     },
+
     headContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -239,14 +240,14 @@ const styles = StyleSheet.create({
     },
 
     leftArrow: {
-        left: scale(-15),
+        left: scale(-20),
     },
     rightArrow: {
-        right: scale(-15),
+        right: scale(-20),
     },
     arrowIcon: {
-        width: scale(50),          // white arrow
-        height: verticalScale(50),
+        width: scale(40),          // white arrow
+        height: verticalScale(40),
         resizeMode: "contain",
     },
     cardImage: {
@@ -472,13 +473,7 @@ const styles = StyleSheet.create({
     , emojiTxt: {
         fontSize: moderateScale(10),
     }
-    , lftBox: {
-
-    },
-    rhtBox: {
-
-
-    },
+    ,
 
     aboutIcon: {
         width: scale(50),

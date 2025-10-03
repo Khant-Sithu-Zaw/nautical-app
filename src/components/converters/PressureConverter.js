@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from "react-native";
+
 import styles from "../../style/styles";
+
 
 export default function PressureConverter({ numberRegex, formatNumber }) {
     const [bar, setBar] = useState("");

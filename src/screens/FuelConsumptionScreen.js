@@ -152,7 +152,7 @@ export default function FuelConsumptionScreen() {
                         <View style={styles.rightInput}>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder="USD per Metric Ton"
+                                placeholder="Price per Metric Ton"
                                 keyboardType="decimal-pad"
                                 value={price}
                                 maxLength={8}
