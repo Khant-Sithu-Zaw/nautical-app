@@ -13,8 +13,8 @@ export default function Footer({ navigation }) {
     const [activeTab, setActiveTab] = useState("home");
 
     const tabs = [
-        { key: "home", icon: homeIcon, iconActive: homeIconActive, screen: "Home" },
         { key: "learn", icon: learnIcon, iconActive: learnIconActive, screen: "LearnScreen" },
+        { key: "home", icon: homeIcon, iconActive: homeIconActive, screen: "Home" },
         { key: "aboutus", icon: profileIcon, iconActive: profileIconActive, screen: "AboutusScreen" },
     ];
 

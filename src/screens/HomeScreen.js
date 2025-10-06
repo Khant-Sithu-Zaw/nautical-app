@@ -1,100 +1,134 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Dimensions, Image, } from "react-native";
+import React, { useContext, useEffect, useState, useRef } from "react";
+import { View, Text, TouchableOpacity, Image, ScrollView, Animated, Easing } from "react-native";
 import styles from "../style/styles";
-import { screens } from "../utils/constants";
-import { useContext, useRef } from "react";
+import { screens, safetyTips } from "../utils/constants";
 import { SearchContext } from "../context/SearchContext";
-import Carousel from "react-native-reanimated-carousel";
-import { verticalScale, } from '../utils/scale';
-const { width } = Dimensions.get("window");
-export default function HomeScreen({ navigation }) {
 
+
+export default function HomeScreen({ navigation }) {
     const { searchText } = useContext(SearchContext);
-    const carouselRef = useRef(null);
+    const [randomTip, setRandomTip] = useState("");
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+    const translateY = useRef(new Animated.Value(10)).current;
+
+    const getRandomTip = () => {
+        const index = Math.floor(Math.random() * safetyTips.length);
+        setRandomTip(safetyTips[index]);
+    };
+
+    const animateTip = () => {
+        // Fade out first
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 400,
+                useNativeDriver: true,
+                easing: Easing.inOut(Easing.ease),
+            }),
+            Animated.timing(translateY, {
+                toValue: 10,
+                duration: 400,
+                useNativeDriver: true,
+                easing: Easing.inOut(Easing.ease),
+            }),
+        ]).start(() => {
+            getRandomTip();
+            // Reset position below for fade-in
+            translateY.setValue(10);
+            Animated.parallel([
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 900,
+                    useNativeDriver: true,
+                    easing: Easing.out(Easing.ease),
+                }),
+                Animated.timing(translateY, {
+                    toValue: 0,
+                    duration: 900,
+                    useNativeDriver: true,
+                    easing: Easing.out(Easing.ease),
+                }),
+            ]).start();
+        });
+    };
+
+    useEffect(() => {
+        getRandomTip();
+        // Fade in the first tip gently
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 800,
+                useNativeDriver: true,
+                easing: Easing.out(Easing.ease),
+            }),
+            Animated.timing(translateY, {
+                toValue: 0,
+                duration: 800,
+                useNativeDriver: true,
+                easing: Easing.out(Easing.ease),
+            }),
+        ]).start();
+
+        const interval = setInterval(animateTip, 30000); // every 60s
+        return () => clearInterval(interval);
+    }, []);
+
     const filteredScreens = screens.filter(screen =>
         screen.name.toLowerCase().includes(searchText.toLowerCase())
     );
-    // Split into chunks of 4
-    const chunkArray = (arr, size) =>
-        arr.reduce((acc, _, i) => {
-            if (i % size === 0) acc.push(arr.slice(i, i + size));
-            return acc;
-        }, []);
-
-    let chunkedData = chunkArray(filteredScreens, 4);
-
-    // If no results, insert one card with an empty array so renderCard works
-    if (chunkedData.length === 0) {
-        chunkedData = [[]];
-    }
-
-    // Render one card with up to 4 buttons
-    const renderCard = ({ item }) => (
-        <View style={[styles.card, { marginHorizontal: 10, top: 0, minHeight: verticalScale(500), position: "relative" }]}>
-            {item.length > 0 ? (
-                item.map((tool) => (
-                    <TouchableOpacity
-                        key={tool.route}
-                        style={styles.screenButton}
-                        onPress={() => navigation.navigate(tool.route)}
-                    >
-                        <Text style={styles.buttonText}>{tool.name}</Text>
-                    </TouchableOpacity>
-                ))
-            ) : (
-                <Text style={styles.notFoundText}>
-                    Oops.Not Found !!
-                </Text>
-            )}
-            <Image
-                source={require("../../assets/images/master.png")}
-                style={styles.cardImage}
-            />
-        </View>
-    );
     return (
+        <View >
+            <View style={styles.homeTop}>
+                <View style={[styles.flexBox, { justifyContent: "space-around" }]}>
+                    <Image
+                        source={require("../../assets/images/master.png")}
+                        style={styles.homeImage}
+                    />
+                    <Text style={styles.headerTitle}>Hello seafarers, Welcome!</Text>
+                </View>
+                <View style={styles.homeContainer}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                        <Text style={styles.title}>Safety Tip for you!
+                        </Text>
 
-        <View style={styles.homeContainer}>
-            <View style={styles.homeTop} />
-            <View >
-                <Carousel
-                    ref={carouselRef}
-                    width={width * 0.86}
-                    height={600}
-                    data={chunkedData}
-                    renderItem={renderCard}
-                    style={styles.carouselWrapper}
-                    customConfig={() => ({ type: "positive", viewCount: 1 })}
-                    loop={false}
-                    enabled={chunkedData.length > 1}
-                />
-
-                {chunkedData.length > 1 && (
-                    <View style={styles.carouselContent}>
-                        <TouchableOpacity
-                            style={styles.leftArrow}
-                            onPress={() => carouselRef.current?.prev()}
-                        >
-                            <Image
-                                source={require("../../assets/images/leftArrow.png")} // 👈 your left arrow image
-                                style={styles.arrowIcon}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.rightArrow}
-                            onPress={() => carouselRef.current?.next()}
-                        >
-                            <Image
-                                source={require("../../assets/images/rightArrow.png")} // 👈 your left arrow image
-                                style={styles.arrowIcon}
-                            />
-                        </TouchableOpacity>
                     </View>
+                    <Animated.Text
+                        style={[
+                            styles.homeContent,
+                            {
+                                opacity: fadeAnim,
+                                transform: [{ translateY }],
+                            },
+                        ]}
+                    >
+                        {randomTip}
+                    </Animated.Text>
+                </View>
+                {/* <Image
+                    source={require("../../assets/images/tips.png")}
+                    style={styles.homeBgImg}
+                /> */}
+            </View>
+            <View style={[styles.flexBox, styles.screenContainer]}>
+                {filteredScreens.length > 0 ? (
+                    filteredScreens.map((tool, index) => (
+                        <TouchableOpacity
+                            key={tool.route}
+                            style={styles.screenButton}
+                            onPress={() => navigation.navigate(tool.route)}
+                        >
+                            <Image
+                                source={tool.image}
+                                style={styles.btnIcon}
+                            />
+                            <Text style={styles.buttonText}>{tool.name}</Text>
+                        </TouchableOpacity>
+                    ))
+                ) : (
+                    <Text style={styles.notFoundText}>Oops. Not Found !!</Text>
                 )}
             </View>
-
-        </View >
+        </View>
     );
 }
-
-

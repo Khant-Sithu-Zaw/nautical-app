@@ -6,7 +6,6 @@ const radio = StyleSheet.create({
     radioContainer: {
         flexDirection: "row",
         alignItems: "center",
-        // marginVertical: verticalScale(5),
     },
     outerCircle: {
         height: verticalScale(20),

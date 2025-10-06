@@ -37,12 +37,11 @@ const styles = StyleSheet.create({
         left: moderateScale(-4),
         zIndex: 2,
     },
-
     headContainer: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        backgroundColor: "#477DAD",
+        backgroundColor: "#3C78AD",
         paddingTop: verticalScale(50),
         paddingBottom: verticalScale(30),
         paddingHorizontal: scale(15)
@@ -54,15 +53,16 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width: scale(18),
-        height: verticalScale(20),
+        width: scale(35),
+        height: verticalScale(35),
         resizeMode: "contain",
+        marginRight: scale(10)
 
     },
     headerTitle: {
         fontSize: moderateScale(15),
-        marginHorizontal: scale(15),
         color: "#fff",
+
     },
     searchWrapper: {
         width: "46%",
@@ -78,19 +78,17 @@ const styles = StyleSheet.create({
     searchBoxLine: {
         position: "absolute",
         bottom: -moderateScale(1),
-        left: 0,
-        right: 0,
+        left: scale(4),
         height: verticalScale(1),
         backgroundColor: "white",
-        width: "100%",
-        // width: scale(160)
+        width: "94%",
     }, searchIcon: {
         position: "absolute",
-        right: scale(10),
+        right: scale(5),
         top: "50%", // percentage must be a string
-        transform: [{ translateY: verticalScale(-7) }], // adjust with number, not %
-        width: scale(13),
-        height: verticalScale(13),
+        transform: [{ translateY: verticalScale(-14) }], // adjust with number, not %
+        width: scale(18),
+        height: verticalScale(18),
 
     },
     footer: {
@@ -98,8 +96,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#477DAD",
-        paddingTop: verticalScale(10),
-        paddingBottom: verticalScale(50),
+        paddingTop: verticalScale(18),
+        paddingBottom: verticalScale(65),
         position: "absolute",
         bottom: 0,
         left: 0,
@@ -118,10 +116,25 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     homeContainer: {
-        flex: 1,
-        alignItems: "center",
-        position: "relative",
-
+        borderRadius: moderateScale(20),
+        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+        padding: verticalScale(20),
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        marginVertical: verticalScale(20),
+        height: verticalScale(160),
+    },
+    homeContent: {
+        color: "#477DAD", fontSize: 14,
+        zIndex: 2
+    },
+    homeBgImg: {
+        width: scale(52),
+        height: verticalScale(52),
+        bottom: verticalScale(30),
+        position: "absolute",
+        resize: "contain",
+        right: scale(35),
+        zIndex: 1
     },
     tabActive: {
         backgroundColor: "#fff",
@@ -135,28 +148,28 @@ const styles = StyleSheet.create({
         flex: 3
     },
     tabImg: {
-        width: scale(24),
-        height: verticalScale(24)
+        width: scale(30),
+        height: verticalScale(30)
     }
     ,
     screenButton: {
-        width: scale(240),
-        backgroundColor: "#6f9abf",
+        width: "30%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         padding: moderateScale(10),
         borderRadius: moderateScale(20),
         marginVertical: verticalScale(8),
     },
     buttonText: {
-        color: "#fff",
-        fontSize: moderateScale(14),
+        color: "#205E95",
+        fontSize: moderateScale(12),
         textAlign: "center",
     },
 
     screenContainer: {
         width: "100%",
-        alignItems: "center",
-        flex: 1,
-        position: "relative",
+        paddingTop: verticalScale(20)
     },
     extraOptionalContent: {
         position: "absolute",
@@ -214,52 +227,25 @@ const styles = StyleSheet.create({
 
     homeTop: {
         width: "100%",
-        height: verticalScale(150), // Blue banner height
-        backgroundColor: "#477DAD",
-        position: "relative",
+        backgroundColor: "#3C78AD",
+        display: "flex",
+        paddingHorizontal: scale(20)
     },
 
-    carouselWrapper: {
+    btnIcon: {
+        width: scale(55),
+        height: verticalScale(55)
+    },
+    homeImage: {
 
-        alignSelf: "center",
-        height: verticalScale(600),             // same as carousel height
-        width: width * 0.86,     // same as carousel width
-        position: "relative",
-        marginTop: verticalScale(-140), // ✅ lifts carousel into the blue area
-    },
-    carouselContent: {
-        flexDirection: "row",
-        marginTop: verticalScale(10),
-        position: "absolute",
-        transform: [{ translateY: verticalScale(-60) }],
-        top: "40%", // adjust based on carousel height
-        zIndex: 10,
-        width: "86%",
-        justifyContent: "space-between",
-
-    },
-
-    leftArrow: {
-        left: scale(-20),
-    },
-    rightArrow: {
-        right: scale(-20),
-    },
-    arrowIcon: {
-        width: scale(40),          // white arrow
-        height: verticalScale(40),
-        resizeMode: "contain",
-    },
-    cardImage: {
-        position: "absolute",
-        bottom: verticalScale(5),
-        left: "50%", // center horizontally
-        transform: [{ translateX: scale(-88) }], // half of width (212 / 2 = 106) to center exactly
-        opactiy: 0.5,
-        width: scale(212), height: verticalScale(196), resizeMode: "contain"
+        width: scale(100), height: verticalScale(93), resizeMode: "contain",
+        marginRight: scale(20)
     },
     title: {
-        position: "relative",
+        color: "#477DAD",
+        marginBottom: verticalScale(10),
+        fontSize: moderateScale(16),
+        fontWeight: "bold"
     },
     contentTitle: {
         fontWeight: "bold",
@@ -376,6 +362,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        flexWrap: "wrap",
+        justifyContent: "center"
     }
     , relativeHolder: {
         position: "relative",
@@ -456,7 +444,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#3C78AD",
     },
     notFoundText: {
-        color: "#143880ff", textAlign: "center", marginTop: verticalScale(80),
+        color: "#205E95", textAlign: "center", marginTop: verticalScale(80),
         fontSize: moderateScale(16), fontWeight: "bold",
     },
     inDevText: {

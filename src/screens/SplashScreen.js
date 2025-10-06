@@ -44,7 +44,7 @@ export default function SplashScreen() {
     }, []);
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} className="flex w-100 h-100 justify-content-center align-items-center bg-thir position-relative">
             <Image
                 source={require("./../../assets/images/splash-logo.png")}
                 style={styles.splashLogo}
