@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { View, Image, Animated, Dimensions } from "react-native";
 import styles from "../style/styles";
+import splash from "../style/styles";
 import WaveBottom from "../components/WaveBottom";
 import { verticalScale, moderateScale } from '../utils/scale';
 

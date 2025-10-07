@@ -1,6 +1,6 @@
 // src/components/HomeHeader.js
 import React from "react";
-import { View, TextInput, Image, Text } from "react-native";
+import { View, TextInput, Image, Text, TouchableOpacity } from "react-native";
 import styles from "../style/styles";
 import { useContext } from "react";
 import { SearchContext } from "../context/SearchContext";
@@ -40,12 +40,19 @@ export default function HomeHeader() {
                         styles.searchBoxLine
                     }
                 />
-                <Image
-                    source={require("../../assets/images/searchIcon.png")}
-                    style={
-                        styles.searchIcon
-                    }
-                />
+                {searchText.length > 0 ? (
+                    <TouchableOpacity
+                        onPress={() => setSearchText("")}
+                        style={styles.crossWrapper}
+                    >
+                        <Text style={styles.emojiTxt}>❌</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <Image
+                        source={require("../../assets/images/searchIcon.png")}
+                        style={styles.searchIcon}
+                    />
+                )}
             </View>
 
         </View>

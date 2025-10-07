@@ -1,20 +1,20 @@
 // Layout.js
 import React from "react";
-import { View } from "react-native";
+import { View, } from "react-native";
 import styles from "../style/styles";
 import Card from "./Card";
-export default function Layout({ bannerContent, bodyContent, cardBackground, extraContent, cardStyle, }) {
+export default function Layout({ bannerContent, bodyContent, mainContent, cardBackground, extraContent, cardStyle, }) {
     return (
         <View style={styles.screenContainer}>
-            <View style={styles.bannerContainer}>
+            <View style={[styles.flexBox]}>
                 {bannerContent}
             </View>
 
             {/* Screen content */}
-            <View style={styles.content}>
-                <Card style={cardStyle} backgroundImage={cardBackground}>
-                    {bodyContent}
-                </Card>
+            <View style={[styles.layoutContent]}>
+
+                {mainContent}
+
             </View>
             <View style={styles.extraOptionalContent}>
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { View, Image, Text, Pressable } from "react-native";
 import Splash from "./src/screens/SplashScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -11,7 +12,7 @@ import AnchorDragScreen from "./src/screens/AnchorDragScreen";
 import HomeTabs from "./src/components/HomeTabs";
 import { useFonts } from "expo-font";
 import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
-
+import styles from "./src/style/styles";
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
 
@@ -42,11 +43,28 @@ export default function App() {
   return (
     <SearchContext.Provider value={{ searchText, setSearchText }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerStyle: { backgroundColor: "#3C78AD" },
-          headerTintColor: "#fff",
-          headerTitleStyle: { fontWeight: "bold" },
-        }}>
+        <Stack.Navigator
+          screenOptions={({ navigation }) => ({
+            headerStyle: { backgroundColor: "#3C78AD" },
+            headerTintColor: "#fff",
+            // 🔹 Custom back icon for all screens
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={({ pressed }) => [
+                  styles.backContainer,
+                  { opacity: pressed ? 0.6 : 1 },
+                ]}
+              >
+                <Image
+                  source={require("./assets/images/backIcon.png")}
+                  style={styles.backIcon}
+                  resizeMode="contain"
+                />
+              </Pressable>
+            ),
+          })}
+        >
 
           <Stack.Screen
             name="HomeTabs"

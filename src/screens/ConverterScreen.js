@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView, Modal } from "react-native";
+import { View, Text, Image, Pressable, ScrollView, Modal } from "react-native";
 import { scale, verticalScale, moderateScale } from '../utils/scale';
 import dropdownStyles from "../style/pickupstyle";
 import styles from "../style/styles";
@@ -13,136 +13,84 @@ import WeightConverter from "../components/converters/WeightConverter";
 import VolumeConverter from "../components/converters/VolumeConverter";
 import PressureConverter from "../components/converters/PressureConverter";
 import PowerConverter from "../components/converters/PowerConverter";
+import Card from "../components/Card";
+
 export default function ConverterScreen() {
 
-    const temperatureRegex = /^-?\d*\.?\d*$/;
-    const numberRegex = /^\d*\.?\d*$/;
+  const temperatureRegex = /^-?\d*\.?\d*$/;
+  const numberRegex = /^\d*\.?\d*$/;
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("Temperature");
+  const [showCountModal, setShowCountModal] = useState(false);
+  const [isPressed, setIsPressed] = React.useState(false);
 
-    const [selectedCategory, setSelectedCategory] = useState("Temperature");
-    const [showCountModal, setShowCountModal] = useState(false);
+  function formatNumber(value) {
+    const num = parseFloat(value);
+    if (isNaN(num)) return "";
 
-
-    function formatNumber(value) {
-        const num = parseFloat(value);
-        if (isNaN(num)) return "";
-
-        // If number is too large or too small, use scientific notation
-        if (Math.abs(num) >= 1e6 || (Math.abs(num) > 0 && Math.abs(num) < 1e-2)) {
-            return num.toExponential(2); // e.g., "1.23e+08"
-        }
-
-        // Otherwise, round to 2 decimal places
-        return num.toFixed(2);
+    // If number is too large or too small, use scientific notation
+    if (Math.abs(num) >= 1e6 || (Math.abs(num) > 0 && Math.abs(num) < 1e-2)) {
+      return num.toExponential(2); // e.g., "1.23e+08"
     }
 
+    // Otherwise, round to 2 decimal places
+    return num.toFixed(2);
+  }
 
-    return (
-        <Layout
-            bannerContent={<View>
-                <Image
-                    source={require("../../assets/images/conversion.jpg")}
-                    style={styles.bannerImage}
-                />
-            </View>}
-            bodyContent={<View >
-                <View>
-                    <Text style={styles.contentTitle}>🔄 Easy Unit Converter ToolBox</Text>
-                    <View
-                        style={
-                            styles.titleLine
-                        }
+
+  return (
+    <Layout
+      mainContent={
+        <ScrollView
+          contentContainerStyle={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+
+          {categoryOptions.length > 0 ? (
+            categoryOptions.map((tool, index) => (
+              <Pressable
+                key={index}
+                style={styles.flexItem}
+
+              >
+                {({ pressed }) => (
+                  <Card
+                    style={{
+                      backgroundColor: pressed ? "#3C78AD" : "#fff", // Blue while pressing
+                    }}
+                  >
+                    <Image
+                      source={tool.image}
+                      style={[
+                        styles.cardImage,
+                        { tintColor: pressed ? "#fff" : "#3C78AD" }, // Change image color while pressing
+                      ]}
+                      resizeMode="contain"
                     />
-                </View>
-                {/* Dropdown */}
-                <View style={{ alignItems: "center", marginBottom: verticalScale(12) }}>
-
-                    <TouchableOpacity style={[dropdownStyles.customPicker, { alignItems: "center", flexDirection: "row", justifyContent: "space-between", width: scale(180) }]} onPress={() => setShowCountModal(true)}>
-                        <Text style={[dropdownStyles.pickerText, { color: selectedCategory ? "black" : "gray" }]}>
-                            {selectedCategory || "Select Conversion Category "}
-                        </Text>
-                        <Text>▼</Text>
-                    </TouchableOpacity>
-
-                    {/* Modal */}
-                    <Modal visible={showCountModal} transparent animationType="fade" onRequestClose={() => setShowCountModal(false)}>
-                        <TouchableOpacity style={dropdownStyles.modalOverlay} onPress={() => setShowCountModal(false)} activeOpacity={1}>
-                            <View style={dropdownStyles.modalContent}>
-                                <ScrollView>
-                                    {categoryOptions.map((opt, i) => (
-                                        <TouchableOpacity key={i} style={dropdownStyles.option} onPress={() => { setSelectedCategory(opt); setShowCountModal(false); }}>
-                                            <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                        </TouchableOpacity>
-                                    ))}
-                                </ScrollView>
-                            </View>
-                        </TouchableOpacity>
-                    </Modal>
-                </View>
-                <ScrollView
-                    style={{ height: verticalScale(242), overflow: "hidden" }}
-                    showsVerticalScrollIndicator={true}
-                >
-                    {selectedCategory === "Temperature" && (
-                        <TemperatureConverter
-                            temperatureRegex={temperatureRegex}
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-
-                    {selectedCategory === "Speed" && (
-                        <SpeedConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-
-                        />
-                    )}
-
-                    {selectedCategory === "Distance" && (
-                        <DistanceConverter formatNumber={formatNumber}
-                            numberRegex={numberRegex} />
-                    )}
-
-                    {selectedCategory === "Length | Depth" && (
-                        <LengthConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-                    {selectedCategory === "Weight" && (
-                        <WeightConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-                    {selectedCategory === "Volume" && (
-                        <VolumeConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-                    {selectedCategory === "Pressure" && (
-                        <PressureConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-                    {selectedCategory === "Energy | Power" && (
-                        <PowerConverter
-                            formatNumber={formatNumber}
-                            numberRegex={numberRegex}
-                        />
-                    )}
-                </ScrollView>
-
-
-            </ View>}
-
-            cardStyle={{ top: verticalScale(-120) }}
-            cardBackground={require("../../assets/images/water.png")}
-
-        />
-    );
+                    <Text
+                      style={[
+                        styles.cardText,
+                        { color: pressed ? "#fff" : "#3C78AD" }, // Change text color while pressing
+                      ]}
+                    >
+                      {tool.name}
+                    </Text>
+                  </Card>
+                )}
+              </Pressable>
+            ))
+          ) : (
+            <Text>No categories available</Text>
+          )}
+        </ScrollView >
+      }
+    />
+  );
 }
 
 

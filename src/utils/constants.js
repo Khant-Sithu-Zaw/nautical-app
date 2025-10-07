@@ -7,14 +7,14 @@ export const screens = [
     { name: "Time Conversion", route: "", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
-    "Temperature",
-    "Speed",
-    "Distance",
-    "Length | Depth",
-    "Weight",
-    "Volume",
-    "Pressure",
-    "Energy | Power",
+    { name: "Temperature Converter", image: require("../../assets/images/temperature.png") },
+    { name: "Speed Converter", image: require("../../assets/images/speedIcon.png") },
+    { name: "Distance Converter", image: require("../../assets/images/distanceIcon.png") },
+    { name: "Length Converter", image: require("../../assets/images/depthIcon.png") },
+    { name: "Weight Converter", image: require("../../assets/images/weightIcon.png") },
+    { name: "Volume Converter", image: require("../../assets/images/volumeIcon.png") },
+    { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png") },
+    { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
 ];
 
 export const fuelUnit = [
