@@ -105,10 +105,7 @@ export default function HomeScreen({ navigation }) {
                         {randomTip}
                     </Animated.Text>
                 </View>
-                {/* <Image
-                    source={require("../../assets/images/tips.png")}
-                    style={styles.homeBgImg}
-                /> */}
+
             </View>
             <View style={[styles.flexBox, styles.screenContainer]}>
                 {filteredScreens.length > 0 ? (

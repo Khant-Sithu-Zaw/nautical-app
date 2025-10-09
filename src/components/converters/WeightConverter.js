@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import styles from "../../style/styles";
-
-export default function WeightConverter({ numberRegex, formatNumber }) {
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods";
+export default function WeightConverter() {
     const [metricTon, setMetricTon] = useState("");
     const [longTon, setLongTon] = useState("");
     const [shortTon, setShortTon] = useState("");
@@ -108,98 +110,163 @@ export default function WeightConverter({ numberRegex, formatNumber }) {
     };
 
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/weightIcon.png")}
+                        style={[
+                            styles.converterImage,
 
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            {/* Metric Ton */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Metric Ton"
-                    keyboardType="decimal-pad"
-                    value={metricTon}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleMetricTonChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>MT</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* Long Ton */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Long Ton"
-                    keyboardType="decimal-pad"
-                    value={longTon}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleLongTonChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>LT</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* Short Ton */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Short Ton"
-                    keyboardType="decimal-pad"
-                    value={shortTon}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleShortTonChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>ST</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* Kilogram */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Kilogram"
-                    keyboardType="decimal-pad"
-                    value={kilogram}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleKilogramChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>kg</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* Pound */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Pound"
-                    keyboardType="decimal-pad"
-                    value={pound}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handlePoundChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>lb</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                    ]}>Weight Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Metric Ton (MT)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={metricTon}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleMetricTonChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {metricTon.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Long Ton (LT)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={longTon}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleLongTonChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {longTon.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Short Ton (ST)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={shortTon}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleShortTonChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {shortTon.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Kilogram (kg)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={kilogram}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleKilogramChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {kilogram.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Pound (lb)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={pound}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handlePoundChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {pound.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            }
+        />
     );
 }

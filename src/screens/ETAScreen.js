@@ -1,55 +1,53 @@
 import Layout from "../components/Layout";
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Keyboard, Image, } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Keyboard,
+    Image,
+} from "react-native";
 import styles from "../style/styles";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Ionicons } from "@expo/vector-icons"; // icon package
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { handleNumberChange } from "../utils/constants";
-
-
+import { handleNumberChange } from "../utils/methods";
+import Card from "../components/Card";
 export default function ETAScreen() {
     const [speed, setSpeed] = useState("");
     const [distance, setDistance] = useState("");
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedTime, setSelectedTime] = useState(new Date());
-    const [isPickerVisible, setIsPickerVisible] = useState(false);
-
-
-    const [error, setError] = useState("");
-    const [eta, setEta] = useState(null);
+    const [dateTime, setDateTime] = useState(null);
+    const [isPickerVisible, setPickerVisible] = useState(false);
+    const [duration, setDuration] = useState(null);
     const [arrivalTime, setArrivalTime] = useState("");
 
-    const hours = selectedTime ? selectedTime.getHours().toString().padStart(2, "0") : "00";
-    const minutes = selectedTime ? selectedTime.getMinutes().toString().padStart(2, "0") : "00";
+    const showPicker = () => setPickerVisible(true);
+    const hidePicker = () => setPickerVisible(false);
 
-    const onChange = (event, date) => {
-        setShowDatePicker(false);
-        if (date) {
-            setSelectedDate(date);
-        }
+    const handleDateTimeConfirm = (date) => {
+        setDateTime(date);
+        hidePicker();
     };
 
     const calculateETA = () => {
         Keyboard.dismiss();
-        if (isNaN(Number(hours)) ||
-            isNaN(Number(minutes)) ||
-            isNaN(Number(speed)) ||
-            isNaN(Number(distance))) {
-
-            setEta(null);
-            setArrivalTime("");
-            setError("Please enter numbers only.");
+        if (!dateTime) {
+            alert("Please select Date & Time first!");
             return;
         }
+        if (!speed || !distance) {
+            alert("Please enter both speed and distance!");
+            return;
+        }
+        if (isNaN(Number(speed)) || isNaN(Number(distance))) {
+            setArrivalTime("");
+            setDuration("");
+            alert(`Please enter number only !`);
+            return;
 
+        }
 
         const etaHours = parseFloat(distance) / parseFloat(speed);
-
         if (!isNaN(etaHours)) {
-            // calculate days and hours from ETA
-
             const etaDays = Math.floor(etaHours / 24);
             const etaWholeHours = Math.floor(etaHours % 24);
             const etaMinutes = Math.round((etaHours - Math.floor(etaHours)) * 60);
@@ -61,166 +59,141 @@ export default function ETAScreen() {
                 etaDisplay = `${etaWholeHours} hour(s) ${etaMinutes} min(s)`;
             }
 
-            setEta(etaDisplay);
+            setDuration(etaDisplay);
 
-            // start from selected date
-            const depart = new Date(selectedDate); // or selectedDate if that's your state
-            if (hours == "") setHours("0");
-            if (minutes == "") setMinutes("0");
-
-            depart.setHours(parseInt(hours, 10) || 0);
-            depart.setMinutes(parseInt(minutes, 10) || 0);
-
-            // add ETA
+            const depart = new Date(dateTime);
             depart.setDate(depart.getDate() + etaDays);
             depart.setHours(depart.getHours() + etaWholeHours);
             depart.setMinutes(depart.getMinutes() + etaMinutes);
 
-            // format arrival in DD/MM/YYYY HH:MM
-            const arrival = `${depart.getDate().toString().padStart(2, "0")}/${(depart.getMonth() + 1).toString().padStart(2, "0")
-                }/${depart.getFullYear()} ${depart.getHours().toString().padStart(2, "0")}:${depart.getMinutes().toString().padStart(2, "0")
-                }`;
+            const arrival = `${depart
+                .getDate()
+                .toString()
+                .padStart(2, "0")}/${(depart.getMonth() + 1)
+                    .toString()
+                    .padStart(2, "0")}/${depart.getFullYear()} ${depart
+                        .getHours()
+                        .toString()
+                        .padStart(2, "0")}:${depart.getMinutes().toString().padStart(2, "0")}`;
+
             setArrivalTime(arrival);
         }
     };
+
     return (
         <Layout
-            bannerContent={<View>
-                <Image
-                    source={require("../../assets/images/containerShip.jpg")}
-                    style={styles.bannerImage}
-                />
-            </View>}
-            bodyContent={<View >
-                <View>
-                    <Text style={styles.contentTitle}>🌍 Estimated Time Arrival by conditions</Text>
-                    <View
-                        style={
-                            styles.titleLine
-                        }
-                    />
-                </View>
-                <View style={styles.inputForm}>
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            Departure Date
-                        </Text>
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    {/* Date & Time Input */}
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Date & Time</Text>
                     </View>
-                    <View style={styles.rightInput}>
-                        <TouchableOpacity
-                            style={styles.dateInput}
-                            onPress={() => setShowDatePicker(true)}
-                        >
-                            <Ionicons name="calendar-outline" size={15} color="#333" style={styles.icon} />
-                            <Text style={styles.dateText}>
-                                {selectedDate ? selectedDate.toDateString() : "Select Date"}
+
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TouchableOpacity style={styles.dateInput} onPress={showPicker}>
+                            <Image
+                                source={require("../../assets/images/calenderIcon.png")}
+                                style={styles.dateIcon}
+                            />
+                            <Text
+                                style={[
+                                    styles.dateText,
+                                    !dateTime && { color: "#9b9898ff" }, // apply placeholder color if no date
+                                ]}
+                            >
+                                {dateTime
+                                    ? dateTime.toLocaleString()
+                                    : "Datetime not selected"}
                             </Text>
                         </TouchableOpacity>
 
-                        {showDatePicker && (
-                            <DateTimePicker
-                                value={selectedDate || new Date()}
-                                mode="date"
-                                display="calendar"
-                                onChange={onChange}
-                            />
+                        {dateTime && (
+                            <TouchableOpacity onPress={() => setDateTime(null)}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
                         )}
                     </View>
-                    <View style={styles.leftInput}>
-                        <Text style={[styles.label]} >
-                            Departure Time
-                        </Text>
 
+                    {/* Distance Input */}
+
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Distance (NM)</Text>
                     </View>
-                    <View style={[styles.rightInput, styles.flexBox]}>
-                        <TouchableOpacity
-                            style={styles.dateInput}
-                            onPress={() => setIsPickerVisible(true)}
-                        >
-                            <Text style={[styles.emojiTxt, styles.icon]}>
-                                ⏱️
-                            </Text>
-                            <Text style={styles.dateText}>
-                                {selectedTime
-                                    ? selectedTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false })
-                                    : "Select Time"}
-                            </Text>
-
-                        </TouchableOpacity>
-                        <DateTimePickerModal
-                            isVisible={isPickerVisible}
-                            mode="time"
-                            is24Hour={true}
-                            onConfirm={(date) => {
-                                setSelectedTime(date);
-                                setIsPickerVisible(false);
-                            }}
-                            onCancel={() => setIsPickerVisible(false)}
-                        />
-
-                    </View>
-
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            Speed (knots)
-                        </Text>
-                    </View>
-                    <View style={styles.rightInput}>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Enter Speed (knots)"
-                            keyboardType="numeric"
+                            placeholder="Enter nautical miles"
+                            keyboardType="decimal-pad"
+                            value={distance}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "Distance");
+                                setDistance(cleaned);
+                            }}
+                            placeholderTextColor="#9b9898ff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {distance && (
+                            <TouchableOpacity onPress={() => setDistance("")}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Speed (knots)</Text>
+                    </View>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="Enter vessel speed"
+                            keyboardType="decimal-pad"
                             value={speed}
-                            maxLength={6}
                             onChangeText={(text) => {
                                 const cleaned = handleNumberChange(text, "Speed");
                                 setSpeed(cleaned);
                             }}
                             placeholderTextColor="#9b9898ff"
-                        />
-                    </View>
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            Distance (NM)
-                        </Text>
-                    </View>
-                    <View style={styles.rightInput}>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="Enter Distance (NM)"
-                            keyboardType="decimal-pad"
-                            value={distance}
                             maxLength={8}
-                            onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Distance");
-                                setDistance(cleaned);
-                            }}
-
-                            placeholderTextColor="#9b9898ff"
+                            textContentType="none"
                         />
+                        {speed && (
+                            <TouchableOpacity onPress={() => setSpeed("")}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
+                    <Card
+                        style={styles.cardExtend}>
+                        <Text
+                            style={[
+                                styles.cardText,
 
-                    <View style={styles.leftInput}>
+                            ]}
+                        >
+                            Estimated arrival time is here!
+                        </Text>
+                        <Text style={[
+                            styles.resultText,
+                        ]}> {arrivalTime || ""}
+                        </Text>
 
-                    </View>
-                    <View style={styles.rightInput}>
-                        <TouchableOpacity style={styles.btn} onPress={calculateETA}>
-                            <Text style={styles.btnText}>Calculate ETA</Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <Text style={[styles.resultText, styles.fontJacques]}>
-                        Duration : <Text style={styles.data}>{eta || "--"}</Text>
-                    </Text>
-                    {/* {arrivalTime && <View><Text style={[styles.resultText, styles.fontJacques, styles.data]}>{arrivalTime}</Text></View>} */}
-                    <Text style={[styles.resultText, styles.fontJacques]}>Your estimated arrival time is here.</Text>
-                    <Text style={[styles.resultText, styles.fontJacques]}>
-                        {arrivalTime || "--"}
-                    </Text>
-                </ View>
-            </ View>}
+                        <Text style={[
+                            styles.resultText,
+                        ]}> Duration takes  {duration || "--"}
+                        </Text>
+                    </Card>
+                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateETA}>
+                        <Text style={styles.calculateTxt}>Calculate ETA</Text>
+                    </TouchableOpacity>
+                    {/* DateTime Picker */}
+                    <DateTimePickerModal
+                        isVisible={isPickerVisible}
+                        mode="datetime"
+                        onConfirm={handleDateTimeConfirm}
+                        onCancel={hidePicker}
+                    />
+                </View>
+            }
         />
     );
-
 }

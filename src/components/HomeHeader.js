@@ -45,7 +45,7 @@ export default function HomeHeader() {
                         onPress={() => setSearchText("")}
                         style={styles.crossWrapper}
                     >
-                        <Text style={styles.emojiTxt}>❌</Text>
+                        <Text style={[styles.headerEmoji, styles.clrBtn]}>❌</Text>
                     </TouchableOpacity>
                 ) : (
                     <Image

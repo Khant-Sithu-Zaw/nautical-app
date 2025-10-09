@@ -97,6 +97,15 @@ const styles = StyleSheet.create({
         height: verticalScale(18),
 
     },
+    headerEmoji: {
+        top: "50%", // percentage must be a string
+        transform: [{ translateY: verticalScale(-20) }],
+        fontSize: moderateScale(11),
+        right: scale(5),
+    },
+    clrBtn: {
+        position: "absolute",
+    },
     // Header ends
 
     // Footer starts
@@ -211,6 +220,12 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(20),
         elevation: moderateScale(5), // for Android shadow
     },
+    cardExtend: {
+        width: "90%",
+        marginVertical: verticalScale(30),
+        borderRadius: moderateScale(10),
+    },
+
     cardImage: {
         width: scale(50),
         height: verticalScale(50)
@@ -226,10 +241,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         paddingHorizontal: scale(10),
+
     },
     backIcon: {
-        width: scale(11),
-        height: verticalScale(17),
+        width: scale(16),
+        height: verticalScale(23),
         marginRight: scale(8),
         tintColor: "#fff",
     },
@@ -238,11 +254,14 @@ const styles = StyleSheet.create({
     screenContainer: {
         width: "100%",
         paddingTop: verticalScale(15),
-        paddingHorizontal: scale(10)
+        paddingHorizontal: scale(10),
+        backgroundColor: "#fff",
+        height: "100%"
     },
 
     layoutContent: {
-        paddingVertical: verticalScale(28)
+        paddingVertical: verticalScale(28),
+
     },
 
     flexItem: {
@@ -259,7 +278,109 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         justifyContent: "center"
     },
+    converterImage: {
+        marginVertical: verticalScale(5),
+        width: scale(60),
+        height: verticalScale(60),
+        resizeMode: "contain",
+        marginHorizontal: "auto"
+    },
+    converterTitle: {
+        fontSize: moderateScale(18),
+        color: "#205E95",
+        marginBottom: verticalScale(10),
+        width: "100%",
+        fontFamily: 'JacquesFrancois',
+    },
+    leftItem: {
+        width: "50%",
+        paddingHorizontal: scale(20),
+        marginBottom: verticalScale(20)
+    },
 
+    label: {
+        fontSize: moderateScale(13),
+        color: "#205E95",
+        fontFamily: 'JacquesFrancois',
+    },
+    inputLabel: {
+        width: "40%",
+        paddingRight: scale(10),
+        paddingLeft: scale(17),
+    },
+    rightItem: {
+        width: "50%",
+        paddingRight: scale(20),
+        position: "relative",
+        marginBottom: verticalScale(20)
+    },
+    inputContainer: {
+        width: "60%",
+    },
+    textInput: {
+        fontSize: moderateScale(12),
+        borderColor: "#205E95",
+        borderWidth: moderateScale(1),
+        backgroundColor: "#fff",
+        borderRadius: moderateScale(6),
+        paddingHorizontal: scale(8),
+        paddingVertical: verticalScale(6),
+        color: "#000"
+    },
+
+    crossEmoji: {
+        top: "50%",
+        transform: [{ translateY: verticalScale(-31) }],
+        fontSize: moderateScale(7),
+        right: scale(-2),
+        zIndex: 10,
+        width: scale(28),
+        height: verticalScale(28),
+        textAlign: "center",
+        paddingTop: verticalScale(9)
+    },
+    //dateTime Input
+    dateInput: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderWidth: moderateScale(1),
+        borderColor: "#205E95",
+        borderRadius: moderateScale(6),
+        paddingVertical: verticalScale(6),
+        paddingHorizontal: scale(8),
+        backgroundColor: "#fff",
+        width: "100%",
+    },
+    dateText: {
+        fontSize: moderateScale(12),
+        color: "#636060ff",
+    },
+    dateIcon: {
+        width: scale(21),
+        height: verticalScale(21),
+        marginRight: scale(3)
+    },
+    resultText: {
+        color: "#205E95",
+        fontSize: moderateScale(16),
+        marginVertical: verticalScale(5),
+        textAlign: "center",
+        width: "100%",
+        fontFamily: 'JacquesFrancois',
+    },
+    calculateBtn: {
+        backgroundColor: "#477DADC7",
+        padding: moderateScale(10),
+        borderRadius: moderateScale(15),
+        width: "90%"
+    },
+    calculateTxt: {
+        fontSize: moderateScale(13),
+        textAlign: "center",
+        color: "#fff",
+        fontWeight: "bold",
+
+    }
 });
 
 export default styles;

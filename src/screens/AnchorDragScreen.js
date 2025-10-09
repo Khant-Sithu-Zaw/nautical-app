@@ -7,8 +7,9 @@ import {
     View, Text, TextInput, TouchableOpacity, Keyboard, Image, Modal,
     ScrollView,
 } from "react-native";
-import { handleNumberChange } from "../utils/constants";
-
+import { handleNumberChange } from "../utils/methods";
+import { countOptions, shackleLengthOptions } from "../utils/constants";
+import Card from "../components/Card";
 export default function AnchorDragScreen() {
     const [lengthOverall, setLengthOverall] = useState(""); // string
 
@@ -16,32 +17,9 @@ export default function AnchorDragScreen() {
 
     const NAUTICAL_MILE = 1852;
     const [shackleCount, setShackleCount] = useState(null);
-    const [shackleLength, setShackleLength] = useState(null);
+    const [shackleLength, setShackleLength] = useState("27.5 meters");
     const [showCountModal, setShowCountModal] = useState(false);
     const [showLengthModal, setShowLengthModal] = useState(false);
-
-    const shackleLengthOptions = [
-        "15 meters",
-        "20 meters",
-        "25 meters",
-        "27.5 meters",
-        "30 meters"
-    ];
-    const countOptions = [
-        "4 shackles",
-        "5 shackles",
-        "6 shackles",
-        "7 shackles",
-        "8 shackles",
-        "9 shackles",
-        "10 shackles",
-        "11 shackles",
-        "12 shackles",
-        "13 shackles",
-        "14 shackles",
-        "15 shackles",
-        "16 shackles",
-    ];
 
     const calculateRadius = () => {
         Keyboard.dismiss();
@@ -66,48 +44,37 @@ export default function AnchorDragScreen() {
 
     return (
         <Layout
-            bannerContent={<View>
-                <Image
-                    source={require("../../assets/images/anchorDrag.jpg")}
-                    style={styles.bannerImage}
-                />
-            </View>}
-            bodyContent={<View >
-                <View>
-                    <Text style={styles.contentTitle}>⛓️ Turning Circle Method Calculation</Text>
-                    <View
-                        style={
-                            styles.titleLine
-                        }
-                    />
-                </View>
-                <View style={styles.inputForm}>
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    {/* Distance Input */}
 
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            Length Overall
-                        </Text>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>LOA (meters)</Text>
                     </View>
-                    <View style={styles.rightInput}>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Enter LOA of Ship(m)"
-                            keyboardType="numeric"
+                            placeholder="Length of vessel"
+                            keyboardType="decimal-pad"
                             value={lengthOverall}
                             onChangeText={(text) => {
                                 const cleaned = handleNumberChange(text, "LOA");
                                 setLengthOverall(cleaned);
                             }}
                             placeholderTextColor="#9b9898ff"
-                            maxLength={5}
+                            maxLength={8}
+                            textContentType="none"
                         />
+                        {lengthOverall && (
+                            <TouchableOpacity onPress={() => setLengthOverall("")}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
                     </View>
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            Shackle Counts
-                        </Text>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Shackle Counts</Text>
                     </View>
-                    <View style={styles.rightInput}>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
                         <TouchableOpacity
                             style={dropdownStyles.customPicker}
                             onPress={() => setShowCountModal(true)}
@@ -115,7 +82,7 @@ export default function AnchorDragScreen() {
                             <Text
                                 style={[
                                     dropdownStyles.pickerText,
-                                    { color: shackleCount ? "black" : "gray" }
+                                    { color: shackleCount ? "black" : "#9b9898ff" }
                                 ]}
                             >
                                 {shackleCount || "Select Shackle Counts"}
@@ -151,13 +118,13 @@ export default function AnchorDragScreen() {
                                 </View>
                             </TouchableOpacity>
                         </Modal>
+
                     </View>
-                    <View style={styles.leftInput}>
-                        <Text style={styles.label} >
-                            1 Shackle(m)
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>1 Shackle(m)
                         </Text>
                     </View>
-                    <View style={styles.rightInput}>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
                         <TouchableOpacity
                             style={dropdownStyles.customPicker}
                             onPress={() => setShowLengthModal(true)}
@@ -165,13 +132,11 @@ export default function AnchorDragScreen() {
                             <Text
                                 style={[
                                     dropdownStyles.pickerText,
-                                    { color: shackleLength ? "black" : "gray" }
+                                    { color: shackleLength ? "black" : "#9b9898ff" }
                                 ]}
                             >
                                 {shackleLength || "Length of a shackle"}
                             </Text>
-
-
                         </TouchableOpacity>
                         {/* Modal */}
                         <Modal
@@ -204,19 +169,28 @@ export default function AnchorDragScreen() {
                             </TouchableOpacity>
                         </Modal>
                     </View>
-                    <View style={styles.leftInput}>
+                    <Card
+                        style={styles.cardExtend}>
+                        <Text
+                            style={[
+                                styles.cardText,
 
-                    </View>
-                    <View style={styles.rightInput}>
-                        <TouchableOpacity style={styles.btn} onPress={calculateRadius}>
-                            <Text style={styles.btnText}>Calculate</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={[styles.resultText, styles.fontJacques]}>
-                        Swing Circle Radius : <Text style={styles.data}>{radius || "--"} NM</Text>
-                    </Text>
-                </ View>
-            </ View>}
+                            ]}
+                        >
+                            Swing radius using Turning cirle
+                        </Text>
+                        <Text style={[
+                            styles.resultText,
+                        ]}> {radius || "--"} NM(s)
+                        </Text>
+                    </Card>
+
+
+                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateRadius}>
+                        <Text style={styles.calculateTxt}>Calculate Swing Radius</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         />
     );
 }

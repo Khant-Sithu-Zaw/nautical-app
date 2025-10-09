@@ -12,7 +12,7 @@ const radio = StyleSheet.create({
         width: scale(20),
         borderRadius: moderateScale(10),
         borderWidth: scale(2),
-        borderColor: "#333",
+        borderColor: "#3C78AD",
         alignItems: "center",
         justifyContent: "center",
         marginRight: scale(6),
@@ -21,7 +21,7 @@ const radio = StyleSheet.create({
         height: verticalScale(10),
         width: scale(10),
         borderRadius: moderateScale(5),
-        backgroundColor: "#333",
+        backgroundColor: "#205E95",
     }
     , radioText: {
         color: "#205E95",

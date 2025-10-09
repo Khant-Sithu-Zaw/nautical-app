@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import styles from "../../style/styles";
-
-export default function PowerConverter({ numberRegex, formatNumber }) {
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods"
+export default function PowerConverter() {
     const [kW, setKW] = useState("");
     const [hp, setHP] = useState("");
     const [joules, setJoules] = useState("");
@@ -79,78 +81,135 @@ export default function PowerConverter({ numberRegex, formatNumber }) {
     };
 
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/energyIcon.png")}
+                        style={[
+                            styles.converterImage,
 
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="kiloWatt"
-                    keyboardType="decimal-pad"
-                    value={kW}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleKWChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>kW</Text>
-                </TouchableOpacity>
-            </View>
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            {/* HP */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="🐎Power "
-                    keyboardType="decimal-pad"
-                    value={hp}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleHPChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>HP</Text>
-                </TouchableOpacity>
-            </View>
+                    ]}>Energy Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>KiloWatt (kW)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={kW}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKWChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {kW.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
 
-            {/* Joules */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Joules/sec"
-                    keyboardType="decimal-pad"
-                    value={joules}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleJoulesChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>J/s</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* BTU */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="BTU/hour"
-                    keyboardType="decimal-pad"
-                    value={btu}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleBTUChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>BTU</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Horse Power (Hp)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={hp}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleHPChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {hp.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Joules per second (j/s)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={joules}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleJoulesChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {joules.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>British Thermal Unit (BTU)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={btu}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleBTUChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {btu.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            }
+        />
     );
 }

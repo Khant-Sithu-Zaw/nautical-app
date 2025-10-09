@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import styles from "../../style/styles";
-
-export default function DistanceConverter({ numberRegex, formatNumber }) {
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods"
+export default function DistanceConverter() {
     const [nm, setNm] = useState("");
     const [km, setKm] = useState("");
     const [mile, setMile] = useState("");
@@ -55,70 +57,108 @@ export default function DistanceConverter({ numberRegex, formatNumber }) {
 
 
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/distanceIcon.png")}
+                        style={[
+                            styles.converterImage,
 
-            {/* NM input */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="N Miles"
-                    keyboardType="decimal-pad"
-                    value={nm}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleNmChange(text);
-                    }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity
-                    style={styles.inputIcon}
-                    onPress={resetAll}
-                >
-                    <Text style={styles.inputIconText}>NM</Text>
-                </TouchableOpacity>
-            </View>
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            {/* km input */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Kilometers"
-                    keyboardType="decimal-pad"
-                    value={km}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleKmChange(text);
-                    }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity
-                    style={styles.inputIcon}
-                    onPress={resetAll}
-                >
-                    <Text style={styles.inputIconText}>km</Text>
-                </TouchableOpacity>
-            </View>
+                    ]}>Distance Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Nautical Mile (NM)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={nm}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleNmChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {nm.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Kilometer (km)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={km}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKmChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {km.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Mile (mile)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={mile}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleMileChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {mile.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
 
-
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Miles"
-                    keyboardType="decimal-pad"
-                    value={mile}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleMileChange(text);
-                    }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity
-                    style={styles.inputIcon}
-                    onPress={resetAll}
-                >
-                    <Text style={styles.inputIconText}>mile</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                </View>
+            }
+        />
     );
 }

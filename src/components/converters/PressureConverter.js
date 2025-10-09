@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, Modal, ScrollView } from "react-native";
-
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods";
 import styles from "../../style/styles";
 
 
-export default function PressureConverter({ numberRegex, formatNumber }) {
+export default function PressureConverter() {
     const [bar, setBar] = useState("");
     const [psi, setPsi] = useState("");
     const [atm, setAtm] = useState("");
@@ -109,97 +111,163 @@ export default function PressureConverter({ numberRegex, formatNumber }) {
     };
 
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/pressureIcon.png")}
+                        style={[
+                            styles.converterImage,
 
-            {/* Bar */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Bar"
-                    keyboardType="decimal-pad"
-                    value={bar}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleBarChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>bar</Text>
-                </TouchableOpacity>
-            </View>
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            {/* psi */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="lb/inch²"
-                    keyboardType="decimal-pad"
-                    value={psi}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handlePsiChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>psi</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* atm */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="atmosphere"
-                    keyboardType="decimal-pad"
-                    value={atm}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleAtmChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>atm</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* mmHg */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="mmHg 🌡"
-                    keyboardType="decimal-pad"
-                    value={mmHg}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleMmHgChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>mHg</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* kPa */}
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="kiloPascal"
-                    keyboardType="decimal-pad"
-                    value={kPa}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleKPaChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>kPa</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                    ]}>Pressure Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Bar (bar)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={bar}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleBarChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {bar.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Pound per square inch (psi)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={psi}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handlePsiChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {psi.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Atmosphere (atm)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={atm}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleAtmChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {atm.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Millimeters of mercury (mmHg)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={mmHg}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleMmHgChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {mmHg.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>KiloPascal (kPa)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={kPa}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleKPaChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {kPa.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            }
+        />
     );
 }

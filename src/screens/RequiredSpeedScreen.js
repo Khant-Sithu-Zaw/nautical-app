@@ -3,12 +3,15 @@ import { View, Text, TextInput, TouchableOpacity, Keyboard, Image, Button } from
 import styles from "../style/styles";
 import Layout from "../components/Layout";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { handleNumberChange } from "../utils/constants";
+import { handleNumberChange } from "../utils/methods";
+import Card from "../components/Card";
+import { RadioButton } from "../components/RadioButton";
 
 export default function RequiredSpeedScreen() {
     const [speed, setSpeed] = useState("");
     const [distance, setDistance] = useState("");
-
+    const [currentDirection, setCurrentDirection] = useState("with");
+    const [currentSpeed, setCurrentSpeed] = useState("");
     // Two states for times
     const [currentTime, setCurrentTime] = useState(null);
     const [arrivalTime, setArrivalTime] = useState(null);
@@ -31,6 +34,7 @@ export default function RequiredSpeedScreen() {
         if (activePicker === "current") {
             // Prevent selecting after arrival time
             if (arrivalTime && date >= arrivalTime) {
+                hidePicker(); // ✅ ensure modal closes
                 alert("Current time must be before Arrival time!");
                 return;
             }
@@ -38,6 +42,7 @@ export default function RequiredSpeedScreen() {
         } else if (activePicker === "arrival") {
             // Prevent selecting before current time
             if (currentTime && date <= currentTime) {
+                hidePicker();
                 alert("Arrival time must be after Current time!");
                 return;
             }
@@ -49,6 +54,7 @@ export default function RequiredSpeedScreen() {
     const calculateSpeed = () => {
         Keyboard.dismiss();
         if (!currentTime || !arrivalTime || !distance) {
+            alert("Inputs can't be empty!");
             setSpeed("--");
             return;
         }
@@ -72,98 +78,156 @@ export default function RequiredSpeedScreen() {
 
     return (
         <Layout
-            bannerContent={
-                <View>
-                    <Image
-                        source={require("../../assets/images/shipSpeed.jpg")}
-                        style={styles.bannerImage}
-                    />
-                </View>
-            }
-            bodyContent={
-                <View>
-                    <View>
-                        <Text style={styles.contentTitle}>🚢 Required Speed to Travel Calculation</Text>
-                        <View style={styles.titleLine} />
+            mainContent={
+                <View style={[styles.flexBox]}>
+
+                    {/* Distance Input */}
+
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Distance (NM)</Text>
                     </View>
-                    <View style={styles.inputForm}>
-
-                        {/* Current Time */}
-                        <View style={styles.leftInput}>
-                            <Text style={styles.label}>Current Time</Text>
-                        </View>
-                        <View style={[styles.rightInput, styles.relativeHolder]}>
-                            <TouchableOpacity
-                                style={styles.dateInput}
-                                onPress={() => showPicker("current")}
-                            >
-                                <Text style={styles.dateText}>
-                                    {currentTime ? currentTime.toLocaleString() : "Datetime not selected"}
-                                </Text>
-
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="Enter nautical miles"
+                            keyboardType="decimal-pad"
+                            value={distance}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "Distance");
+                                setDistance(cleaned);
+                            }}
+                            placeholderTextColor="#9b9898ff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {distance && (
+                            <TouchableOpacity onPress={() => setDistance("")}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
-                            {currentTime && (
-                                <TouchableOpacity style={styles.clearBtn} onPress={() => setCurrentTime(null)}>
-                                    <Text style={styles.emojiTxt}>❌</Text>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-
-                        {/* Arrival Time */}
-                        <View style={styles.leftInput}>
-                            <Text style={styles.label}>Arrival Time</Text>
-                        </View>
-                        <View style={[styles.rightInput, styles.relativeHolder]}>
-
-                            <TouchableOpacity
-                                style={styles.dateInput}
-                                onPress={() => showPicker("arrival")}
-                            >
-                                <Text style={styles.dateText}>
-                                    {arrivalTime ? arrivalTime.toLocaleString() : "Datetime not selected"}
-                                </Text>
-
-                            </TouchableOpacity>
-                            {arrivalTime && (
-                                <TouchableOpacity style={styles.clearBtn} onPress={() => setArrivalTime(null)}>
-                                    <Text style={styles.emojiTxt}>❌</Text>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-
-                        {/* Distance */}
-                        <View style={styles.leftInput}>
-                            <Text style={styles.label}>Distance (NM)</Text>
-                        </View>
-                        <View style={styles.rightInput}>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Enter distance in NM"
-                                keyboardType="decimal-pad"
-                                value={distance}
-                                maxLength={8}
-                                onChangeText={(text) => {
-                                    const cleaned = handleNumberChange(text, "Distance");
-                                    setDistance(cleaned);
-                                }}
-                                placeholderTextColor="#9b9898ff"
+                        )}
+                    </View>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Sea Current</Text>
+                    </View>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} >
+                            <RadioButton
+                                label="With Ship"
+                                value="with"
+                                selectedValue={currentDirection}
+                                onSelect={setCurrentDirection}
+                            />
+                            <RadioButton
+                                label="Against Ship"
+                                value="against"
+                                selectedValue={currentDirection}
+                                onSelect={setCurrentDirection}
                             />
                         </View>
-
-                        {/* Button */}
-                        <View style={styles.leftInput}></View>
-                        <View style={styles.rightInput}>
-                            <TouchableOpacity style={styles.btn} onPress={calculateSpeed}>
-                                <Text style={styles.btnText}>Calculate Speed</Text>
+                    </View>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Current Speed</Text>
+                    </View>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="Differ STW & SOG (optional)"
+                            keyboardType="decimal-pad"
+                            value={currentSpeed}
+                            onChangeText={(text) => {
+                                const cleaned = handleNumberChange(text, "Current Speed");
+                                setCurrentSpeed(cleaned);
+                            }}
+                            placeholderTextColor="#9b9898ff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {currentSpeed && (
+                            <TouchableOpacity onPress={() => setDistance("")}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
-                        </View>
-
-                        {/* Result */}
-                        <Text style={[styles.resultText, styles.fontJacques]}>
-                            Required Speed : <Text style={styles.data}>{speed || "--"}</Text> knots
-                        </Text>
+                        )}
+                    </View>
+                    {/* Date & Time Input */}
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Departure Time</Text>
                     </View>
 
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TouchableOpacity style={styles.dateInput} onPress={() => showPicker("current")}
+                        >
+                            <Image
+                                source={require("../../assets/images/calenderIcon.png")}
+                                style={styles.dateIcon}
+                            />
+                            <Text
+                                style={[
+                                    styles.dateText,
+                                    !currentTime && { color: "#9b9898ff" }, // apply placeholder color if no date
+                                ]}
+                            >
+                                {currentTime
+                                    ? currentTime.toLocaleString()
+                                    : "Datetime not selected"}
+                            </Text>
+                        </TouchableOpacity>
+
+                        {currentTime && (
+                            <TouchableOpacity onPress={() => setCurrentTime(null)}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    {/* Date & Time Input */}
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Arrival Time</Text>
+                    </View>
+
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <TouchableOpacity style={styles.dateInput} onPress={() => showPicker("arrival")}
+                        >
+                            <Image
+                                source={require("../../assets/images/calenderIcon.png")}
+                                style={styles.dateIcon}
+                            />
+                            <Text
+                                style={[
+                                    styles.dateText,
+                                    !arrivalTime && { color: "#9b9898ff" }, // apply placeholder color if no date
+                                ]}
+                            >
+                                {arrivalTime
+                                    ? arrivalTime.toLocaleString()
+                                    : "Datetime not selected"}
+                            </Text>
+                        </TouchableOpacity>
+
+                        {arrivalTime && (
+                            <TouchableOpacity onPress={() => setArrivalTime(null)}>
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <Card
+                        style={styles.cardExtend}>
+                        <Text
+                            style={[
+                                styles.cardText,
+
+                            ]}
+                        >
+                            Required Speed to travel in time
+                        </Text>
+                        <Text style={[
+                            styles.resultText,
+                        ]}> {speed || "--"} Knot(s)
+                        </Text>
+                    </Card>
+
+
+                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateSpeed}>
+                        <Text style={styles.calculateTxt}>Calculate Speed</Text>
+                    </TouchableOpacity>
                     {/* DateTime Picker with restrictions */}
                     <DateTimePickerModal
                         isVisible={isPickerVisible}

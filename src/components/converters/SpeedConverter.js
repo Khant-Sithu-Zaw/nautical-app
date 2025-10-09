@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Image } from "react-native";
 import styles from "../../style/styles";
-
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods"
 export default function SpeedConverter({ numberRegex, formatNumber }) {
     const [knots, setKnots] = useState("");
     const [kmh, setKmh] = useState("");
@@ -87,66 +89,135 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
         }
     };
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/speedIcon.png")}
+                        style={[
+                            styles.converterImage,
 
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Knots"
-                    keyboardType="numeric"
-                    value={knots}
-                    onChangeText={(text) => { if (numberRegex.test(text)) handleKnotsChange(text); }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>kn</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Km/hour"
-                    keyboardType="decimal-pad"
-                    value={kmh}
-                    onChangeText={(text) => { if (numberRegex.test(text)) handleKmhChange(text); }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>km/h</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Mile/hour"
-                    keyboardType="decimal-pad"
-                    value={mph}
-                    onChangeText={(text) => { if (numberRegex.test(text)) handleMphChange(text); }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>mph</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Meter/sec"
-                    keyboardType="decimal-pad"
-                    value={ms}
-                    onChangeText={(text) => { if (numberRegex.test(text)) handleMsChange(text); }}
-                    placeholderTextColor="#9b9898ff"
-                    maxLength={8}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>m/s</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                    ]}>Speed Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Knots (KN)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={knots}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKnotsChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {knots.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Kilometer per hour (km/h)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={kmh}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleKmhChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {kmh.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Mile per hour (mph)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={mph}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleMphChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {mph.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Meter per second (ms)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={ms}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleMsChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {ms.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            }
+        />
     );
 }

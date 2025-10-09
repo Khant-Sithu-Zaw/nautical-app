@@ -6,7 +6,7 @@ const dropdownStyles = StyleSheet.create({
         borderColor: "#ccc",
         borderRadius: moderateScale(5),
         paddingVertical: verticalScale(6),
-        borderRadius: moderateScale(10),
+        borderRadius: moderateScale(6),
         paddingHorizontal: scale(10),
         backgroundColor: "#fff",
         borderColor: "#205E95",

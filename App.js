@@ -5,7 +5,7 @@ import Splash from "./src/screens/SplashScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SearchContext } from "./src/context/SearchContext";
-import ConverterScreen from "./src/screens/ConverterScreen";
+import ConverterStack from "./src/components/ConverterStack";
 import ETAScreen from "./src/screens/ETAScreen";
 import RequiredSpeedScreen from "./src/screens/RequiredSpeedScreen";
 import AnchorDragScreen from "./src/screens/AnchorDragScreen";
@@ -45,9 +45,18 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={({ navigation }) => ({
+            animation: "fade",
             headerStyle: { backgroundColor: "#3C78AD" },
             headerTintColor: "#fff",
-            // 🔹 Custom back icon for all screens
+            headerBackVisible: false,
+            headerBackImage: () => (
+              <Image
+                source={require("./assets/images/backIcon.png")}
+                style={styles.backIcon}
+                resizeMode="contain"
+              />
+            ),
+
             headerLeft: () => (
               <Pressable
                 onPress={() => navigation.goBack()}
@@ -69,10 +78,10 @@ export default function App() {
           <Stack.Screen
             name="HomeTabs"
             component={HomeTabs}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, }}
           />
 
-          <Stack.Screen name="Converter" component={ConverterScreen} />
+          <Stack.Screen name="Converter" component={ConverterStack} options={{ headerShown: false }} />
           <Stack.Screen name="ETA Calculator" component={ETAScreen} />
           <Stack.Screen name="Speed Calculator" component={RequiredSpeedScreen} />
           <Stack.Screen name="Anchor Dragging" component={AnchorDragScreen} />

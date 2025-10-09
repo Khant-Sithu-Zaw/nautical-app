@@ -25,25 +25,30 @@ export const pressureType = [
     "Absolute Pressure",
     "Gauge Pressure",
 ]
-export const handleNumberChange = (text, fieldName = "Value") => {
-    // Allow only numbers
-    let cleaned = text.replace(/[^0-9]/g, "");
-
-    // Prevent leading zeros like "000123"
-    if (cleaned.length > 1 && cleaned.startsWith("0")) {
-        cleaned = cleaned.replace(/^0+/, "");
-    }
-
-    // Convert to number for validation
-    const num = Number(cleaned);
-
-    if (num <= 0 && cleaned !== "") {
-        alert(`${fieldName} must be greater than 0.`);
-        return ""; // return empty if invalid
-    }
-
-    return cleaned; // return the valid cleaned value
-};
+export const shackleLengthOptions = [
+    "15 meters",
+    "20 meters",
+    "25 meters",
+    "27.5 meters",
+    "30 meters"
+];
+export const countOptions = [
+    "4 shackles",
+    "5 shackles",
+    "6 shackles",
+    "7 shackles",
+    "8 shackles",
+    "9 shackles",
+    "10 shackles",
+    "11 shackles",
+    "12 shackles",
+    "13 shackles",
+    "14 shackles",
+    "15 shackles",
+    "16 shackles",
+];
+export const temperatureRegex = /^-?\d*\.?\d*$/;
+export const numberRegex = /^\d*\.?\d*$/;
 export const safetyTips = [
     // ⚙️ General Safety
     "Always wear appropriate PPE (Personal Protective Equipment) before starting any job.",

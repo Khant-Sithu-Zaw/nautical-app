@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import styles from "../../style/styles";
-
-export default function LengthConverter({ numberRegex, formatNumber }) {
+import Layout from "../Layout";
+import { numberRegex, } from "../../utils/constants";
+import { formatNumber } from "../../utils/methods"
+export default function LengthConverter() {
     const [meter, setMeter] = useState("");
     const [fathom, setFathom] = useState("");
     const [feet, setFeet] = useState("");
@@ -73,76 +75,135 @@ export default function LengthConverter({ numberRegex, formatNumber }) {
         }
     };
     return (
-        <View style={styles.inputForm}>
+        <Layout
+            bannerContent={
+                <View>
+                    <Image source={require("../../../assets/images/depthIcon.png")}
+                        style={[
+                            styles.converterImage,
 
+                        ]} />
+                    <Text style={[
+                        styles.converterTitle,
 
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Meter"
-                    keyboardType="number-pad"
-                    value={meter}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleMeterChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>m</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Fathom"
-                    keyboardType="number-pad"
-                    value={fathom}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleFathomChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>fm</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Feet"
-                    keyboardType="number-pad"
-                    value={feet}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleFeetChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>ft</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={[styles.SideInput, styles.flexBox]}>
-                <TextInput
-                    style={[styles.textInput, styles.inputUnit]}
-                    placeholder="Cables"
-                    keyboardType="number-pad"
-                    value={cable}
-                    maxLength={8}
-                    placeholderTextColor="#9b9898ff"
-                    onChangeText={(text) => {
-                        if (numberRegex.test(text)) handleCableChange(text);
-                    }}
-                />
-                <TouchableOpacity style={styles.inputIcon} onPress={resetAll}>
-                    <Text style={styles.inputIconText}>cab</Text>
-                </TouchableOpacity>
-            </View>
-
-        </View>
+                    ]}>Length Converter</Text>
+                </View>
+            }
+            mainContent={
+                <View style={[styles.flexBox]}>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Meters (m)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={meter}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleMeterChange(text);
+                                }
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {meter.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Fathom (ftm)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={fathom}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                    handleFathomChange(text);
+                                }
+                            }}
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {fathom.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Feet (ft)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={feet}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleFeetChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {feet.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                    <View style={[styles.leftItem]}>
+                        <Text style={[styles.label]}>Cable (cab)</Text>
+                    </View>
+                    <View style={[styles.rightItem]}>
+                        <TextInput
+                            style={[styles.textInput]}
+                            placeholder="Enter value"
+                            keyboardType="decimal-pad"
+                            value={cable}
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                handleCableChange(text);
+                            }
+                            }
+                            placeholderTextColor="#bfbebeff"
+                            maxLength={8}
+                            textContentType="none"
+                        />
+                        {cable.length > 0 && (  // Only show ❌ when there's text
+                            <TouchableOpacity
+                                style={styles.inputIcon}
+                                onPress={resetAll}
+                            >
+                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                </View>
+            }
+        />
     );
 }
