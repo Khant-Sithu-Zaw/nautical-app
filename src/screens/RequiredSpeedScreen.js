@@ -6,20 +6,20 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { handleNumberChange } from "../utils/methods";
 import Card from "../components/Card";
 import { RadioButton } from "../components/RadioButton";
+import { scale } from "../utils/scale";
 
 export default function RequiredSpeedScreen() {
     const [speed, setSpeed] = useState("");
     const [distance, setDistance] = useState("");
-    const [currentDirection, setCurrentDirection] = useState("with");
     const [currentSpeed, setCurrentSpeed] = useState("");
     // Two states for times
     const [currentTime, setCurrentTime] = useState(null);
     const [arrivalTime, setArrivalTime] = useState(null);
-
+    const [currentSpeedSign, setCurrentSpeedSign] = useState("+");
     // Picker state
     const [isPickerVisible, setPickerVisible] = useState(false);
     const [activePicker, setActivePicker] = useState(null); // "current" or "arrival"
-
+    const [showHint, setShowHint] = useState(false);
     const showPicker = (type) => {
         setActivePicker(type);
         setPickerVisible(true);
@@ -52,10 +52,15 @@ export default function RequiredSpeedScreen() {
     };
 
     const calculateSpeed = () => {
+        const currentSpeedNum = Number(currentSpeed) || 0;
         Keyboard.dismiss();
         if (!currentTime || !arrivalTime || !distance) {
             alert("Inputs can't be empty!");
             setSpeed("--");
+            return;
+        }
+        if (isNaN(currentSpeedNum) || isNaN(distance)) {
+            alert("Invalid Inputs! Accepts Number only");
             return;
         }
 
@@ -71,7 +76,13 @@ export default function RequiredSpeedScreen() {
             return;
         }
 
-        const requiredSpeed = distanceNum / timeDiffHours; // knots
+
+        let requiredSpeed = distanceNum / timeDiffHours; // knots
+        if (currentSpeedSign === "+") {
+            requiredSpeed = requiredSpeed - currentSpeedNum; // with ship → subtract current
+        } else {
+            requiredSpeed = requiredSpeed + currentSpeedNum; // against ship → add current
+        }
         setSpeed(requiredSpeed.toFixed(2));
     };
 
@@ -106,48 +117,7 @@ export default function RequiredSpeedScreen() {
                             </TouchableOpacity>
                         )}
                     </View>
-                    <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Sea Current</Text>
-                    </View>
-                    <View style={[styles.rightItem, styles.inputContainer]}>
-                        <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} >
-                            <RadioButton
-                                label="With Ship"
-                                value="with"
-                                selectedValue={currentDirection}
-                                onSelect={setCurrentDirection}
-                            />
-                            <RadioButton
-                                label="Against Ship"
-                                value="against"
-                                selectedValue={currentDirection}
-                                onSelect={setCurrentDirection}
-                            />
-                        </View>
-                    </View>
-                    <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Current Speed</Text>
-                    </View>
-                    <View style={[styles.rightItem, styles.inputContainer]}>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="Differ STW & SOG (optional)"
-                            keyboardType="decimal-pad"
-                            value={currentSpeed}
-                            onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Current Speed");
-                                setCurrentSpeed(cleaned);
-                            }}
-                            placeholderTextColor="#9b9898ff"
-                            maxLength={8}
-                            textContentType="none"
-                        />
-                        {currentSpeed && (
-                            <TouchableOpacity onPress={() => setDistance("")}>
-                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
-                            </TouchableOpacity>
-                        )}
-                    </View>
+
                     {/* Date & Time Input */}
                     <View style={[styles.leftItem, styles.inputLabel]}>
                         <Text style={styles.label}>Departure Time</Text>
@@ -208,6 +178,51 @@ export default function RequiredSpeedScreen() {
                             </TouchableOpacity>
                         )}
                     </View>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Set speed(±)</Text>
+                    </View>
+                    <View style={[styles.rightItem, styles.inputContainer,]}>
+                        <View style={{ position: "relative" }}>
+                            <TouchableOpacity
+                                style={styles.signBtn}
+                                onPress={() => {
+                                    setCurrentSpeedSign(currentSpeedSign === "+" ? "−" : "+");
+                                    setShowHint(true);
+                                    setTimeout(() => setShowHint(false), 1000); // hide after 2 seconds
+                                }}
+                            >
+                                <Text style={styles.signTxt}>{currentSpeedSign}</Text>
+                            </TouchableOpacity>
+                            <TextInput
+                                style={[styles.textInput, { paddingLeft: scale(34) }]}
+                                placeholder="Enter Current Speed(±)"
+                                keyboardType="decimal-pad"
+                                value={currentSpeed}
+                                onChangeText={(text) => {
+                                    const cleaned = handleNumberChange(text, "Current Speed");
+                                    setCurrentSpeed(cleaned);
+                                }}
+                                placeholderTextColor="#9b9898ff"
+                                maxLength={8}
+                                textContentType="none"
+                            />
+                            {currentSpeed && (
+                                <TouchableOpacity onPress={() => setCurrentSpeed("")}>
+                                    <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                        {/* Inline hint text */}
+                        {showHint && (
+                            <View style={styles.hintBubble}>
+                                <Text style={styles.hintBubbleText}>
+                                    {currentSpeedSign === "+"
+                                        ? "Current With ship"
+                                        : "Current Against ship"}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
                     <Card
                         style={styles.cardExtend}>
                         <Text
@@ -216,7 +231,7 @@ export default function RequiredSpeedScreen() {
 
                             ]}
                         >
-                            Required Speed to travel in time
+                            STW to arrive on time
                         </Text>
                         <Text style={[
                             styles.resultText,
@@ -242,7 +257,7 @@ export default function RequiredSpeedScreen() {
                             : {})}
                     />
 
-                </View>
+                </View >
             }
         />
     );

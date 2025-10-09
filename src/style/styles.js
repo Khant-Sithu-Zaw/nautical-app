@@ -325,9 +325,43 @@ const styles = StyleSheet.create({
         borderRadius: moderateScale(6),
         paddingHorizontal: scale(8),
         paddingVertical: verticalScale(6),
-        color: "#000"
+        color: "#000",
     },
-
+    signBtn: {
+        position: "absolute",
+        width: scale(28),
+        height: verticalScale(33),
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 0,
+        backgroundColor: "#477DAD",
+        borderRadius: moderateScale(6),
+        borderBottomRightRadius: 0,
+        borderTopRightRadius: 0,
+        left: scale(0),
+        top: "50%",
+        transform: [{ translateY: -verticalScale(16) }], // half of button height
+        zIndex: 1
+    },
+    signTxt: {
+        fontSize: moderateScale(12),
+        color: "#ffffff"
+    },
+    hintBubble: {
+        position: "absolute",
+        bottom: verticalScale(-28), // above sign button
+        left: scale(8), // adjust horizontally
+        backgroundColor: "#477DAD",
+        paddingHorizontal: scale(8),
+        paddingVertical: verticalScale(4),
+        borderRadius: moderateScale(5),
+        zIndex: 10,
+        color: "#fff"
+    },
+    hintBubbleText: {
+        color: "#fff",
+        fontSize: moderateScale(11)
+    },
     crossEmoji: {
         top: "50%",
         transform: [{ translateY: verticalScale(-31) }],

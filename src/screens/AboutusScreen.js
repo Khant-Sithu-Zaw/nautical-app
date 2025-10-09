@@ -86,7 +86,7 @@ export default function AboutusScreen() {
                             <Text style={{ fontSize: moderateScale(12), color: "#205E95", fontWeight: '800' }}>Khant Sithu Zaw</Text>
                             <Text style={{ fontSize: moderateScale(9), color: "#205E95" }}>Developer,Seafarer</Text>
                         </View>
-                        <Image source={require("../../assets/images/developer.jpg")} style={[styles.aboutUsImg, { marginLeft: scale(12) }]} />
+                        {/* <Image source={require("../../assets/images/developer.jpg")} style={[styles.aboutUsImg, { marginLeft: scale(12) }]} /> */}
                         {/* <Image source={require("../../assets/images/.png")}
                         /> */}
                     </View>
