@@ -4,7 +4,7 @@ export const screens = [
     { name: "Required Speed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
     { name: "Anchor Dragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
     { name: "Fuel Calculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
-    { name: "Time Conversion", route: "", image: require("../../assets/images/Time.png"), },
+    { name: "TimeZone Calculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
     { name: "Temperature Converter", image: require("../../assets/images/temperature.png") },
@@ -16,7 +16,10 @@ export const categoryOptions = [
     { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png") },
     { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
 ];
-
+export const timeInput = [
+    "Coordinated Universal Time",
+    "Local Time",
+];
 export const fuelUnit = [
     "(MT/day)",
     "(kg/h)",
@@ -47,7 +50,7 @@ export const countOptions = [
     "15 shackles",
     "16 shackles",
 ];
-export const temperatureRegex = /^-?\d*\.?\d*$/;
+export const signNumberRegex = /^-?\d*\.?\d*$/;
 export const numberRegex = /^\d*\.?\d*$/;
 export const safetyTips = [
     // ⚙️ General Safety

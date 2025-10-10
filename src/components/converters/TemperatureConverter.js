@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import styles from "../../style/styles";
 import Layout from "../Layout";
-import { temperatureRegex, numberRegex, } from "../../utils/constants";
+import { signNumberRegex, numberRegex, } from "../../utils/constants";
 import { formatNumber } from "../../utils/methods"
 export default function TemperatureConverter() {
     const [fah, setFah] = useState("");
@@ -94,7 +94,7 @@ export default function TemperatureConverter() {
                             keyboardType="decimal-pad"
                             value={fah}
                             onChangeText={(text) => {
-                                if (temperatureRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
 
                                     if (parseFloat(text) < FAH_MIN) {
                                         alert(`Kelvin cannot be below ${FAH_MIN}`);
@@ -126,7 +126,7 @@ export default function TemperatureConverter() {
                             keyboardType="decimal-pad"
                             value={cel}
                             onChangeText={(text) => {
-                                if (temperatureRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
 
                                     if (parseFloat(text) < CEL_MIN) {
                                         alert(`Kelvin cannot be below ${CEL_MIN}`);

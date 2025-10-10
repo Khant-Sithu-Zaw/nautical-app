@@ -78,7 +78,7 @@ export default function AboutusScreen() {
 
                     <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", marginTop: verticalScale(20), marginBottom: verticalScale(5) }]}>
                         <View style={[styles.lftBox, { marginTop: verticalScale(3) }]}>
-                            <Image source={require("../../assets/images/developerIcon.png")} style={styles.aboutIcon} />
+
                         </View>
 
                         <View style={[styles.rhtBox, { margin: moderateScale(5) }]}>
@@ -90,7 +90,7 @@ export default function AboutusScreen() {
                         {/* <Image source={require("../../assets/images/.png")}
                         /> */}
                     </View>
-                    {/* <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(10) }]}>
+                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(10) }]}>
 
                         <View style={styles.rhtBox}>
                             <View style={styles.rhtBox}>
@@ -102,8 +102,8 @@ export default function AboutusScreen() {
                         <View style={styles.lftBox}>
                             <Image source={require("../../assets/images/figmaIcon.png")} style={styles.aboutIcon} />
                         </View>
-                        <Image source={require("../../assets/images/designer.jpg")} style={styles.aboutUsImg} />
-                    </View> */}
+                        {/* <Image source={require("../../assets/images/designer.jpg")} style={styles.aboutUsImg} /> */}
+                    </View>
                 </ View>
             }
             cardStyle={{ top: verticalScale(-76), paddingBottom: verticalScale(10), }}

@@ -349,17 +349,13 @@ const styles = StyleSheet.create({
     },
     hintBubble: {
         position: "absolute",
-        bottom: verticalScale(-28), // above sign button
-        left: scale(8), // adjust horizontally
-        backgroundColor: "#477DAD",
-        paddingHorizontal: scale(8),
-        paddingVertical: verticalScale(4),
-        borderRadius: moderateScale(5),
+        bottom: verticalScale(-18), // above sign button
+        left: scale(1), // adjust horizontally
         zIndex: 10,
         color: "#fff"
     },
     hintBubbleText: {
-        color: "#fff",
+        color: "#6d6d6dff",
         fontSize: moderateScale(11)
     },
     crossEmoji: {
