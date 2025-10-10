@@ -10,6 +10,7 @@ import {
 import { handleNumberChange } from "../utils/methods";
 import { countOptions, shackleLengthOptions } from "../utils/constants";
 import Card from "../components/Card";
+import { moderateScale, scale } from "../utils/scale";
 export default function AnchorDragScreen() {
     const [lengthOverall, setLengthOverall] = useState(""); // string
 
@@ -76,7 +77,7 @@ export default function AnchorDragScreen() {
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TouchableOpacity
-                            style={dropdownStyles.customPicker}
+                            style={[styles.flexBox, dropdownStyles.customPicker]}
                             onPress={() => setShowCountModal(true)}
                         >
                             <Text
@@ -87,6 +88,7 @@ export default function AnchorDragScreen() {
                             >
                                 {shackleCount || "Select Shackle Counts"}
                             </Text>
+                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
                         </TouchableOpacity>
                         {/* Modal */}
                         <Modal
@@ -126,7 +128,7 @@ export default function AnchorDragScreen() {
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TouchableOpacity
-                            style={dropdownStyles.customPicker}
+                            style={[styles.flexBox, dropdownStyles.customPicker]}
                             onPress={() => setShowLengthModal(true)}
                         >
                             <Text
@@ -137,6 +139,7 @@ export default function AnchorDragScreen() {
                             >
                                 {shackleLength || "Length of a shackle"}
                             </Text>
+                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
                         </TouchableOpacity>
                         {/* Modal */}
                         <Modal

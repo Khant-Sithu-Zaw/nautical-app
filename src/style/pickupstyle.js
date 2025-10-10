@@ -10,7 +10,7 @@ const dropdownStyles = StyleSheet.create({
         paddingHorizontal: scale(10),
         backgroundColor: "#fff",
         borderColor: "#205E95",
-
+        justifyContent: "space-between"
     },
     pickerText: {
         fontSize: moderateScale(12),

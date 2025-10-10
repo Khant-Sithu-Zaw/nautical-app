@@ -1,55 +1,105 @@
-import React, { useState } from 'react'
-import { handleNumberChange } from "../utils/methods";
-import Card from "../components/Card";
-import { View, Text, TouchableOpacity, TextInput, Modal, Image, Keyboard, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    Modal,
+    ScrollView
+} from "react-native";
 import styles from "../style/styles";
 import countriesData from "../utils/countries.json";
-import timeInput from "../utils/constants";
-import Layout from '../components/Layout'
-import Dropdown from '../components/Dropdown';
+import Layout from "../components/Layout";
+import Card from "../components/Card";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { moderateScale, scale } from "../utils/scale";
+import dropdownStyles from "../style/pickupstyle";
+import Dropdown from "../components/Dropdown";
 export default function TimeZoneScreen() {
+
+    const [timeLabel, setTimeLabel] = useState("Universal Time");
     const [dateTime, setDateTime] = useState(null);
     const [isPickerVisible, setPickerVisible] = useState(false);
-    const [timezone, setTimeZone] = useState("");
-    const [time, setTime] = useState("");
 
+    const [showTimeType, setShowTimeType] = useState(false);
+    // Toggle picker
     const showPicker = () => setPickerVisible(true);
     const hidePicker = () => setPickerVisible(false);
-    const calculateTime = () => { }
-    const handleSelectCountry = (item) => {
-        setTimeZone(item.name);
-        console.log("Selected:", item); // You can use item.timezone_offset, item.latlong
-    };
 
+    // When a country is selected
+    const convertTime = () => {
+
+    };
+    const handleSelectCountry = (item) => {
+
+    };
+    // Handle datetime confirm
     const handleDateTimeConfirm = (date) => {
         setDateTime(date);
         hidePicker();
     };
-    const handleSelectTimeZone = (zone) => {
-        setTime(zone)
+    const toggleTimeLabel = () => {
+        setTimeLabel(prev => (prev === "UTC" ? "Local" : "UTC"));
     };
+
+
     return (
         <Layout
             mainContent={
                 <View style={[styles.flexBox]}>
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Time Zone</Text>
+                        <Text style={styles.label}>Base TimeZone</Text>
                     </View>
-                    <View style={[styles.rightItem, styles.inputContainer]}>
-                        <Dropdown
-                            data={timeInput}
-                            labelKey="name"
-                            valueKey="timezone_offset"
-                            placeholder="Select UTC or Local"
-                            searchable={false}
-                            onSelect={handleSelectCountry}
-                        />
+                    <View style={[styles.rightItem, styles.inputContainer,]}>
+                        <TouchableOpacity
+                            style={[styles.flexBox, dropdownStyles.customPicker,]}
+                            onPress={() => setShowTimeType(true)}
+                        >
+                            <Text
+                                style={[
+                                    dropdownStyles.pickerText,
+                                    { color: timeLabel ? "black" : "#9b9898ff" }
+                                ]}
+                            >
+                                {timeLabel || "Select Time Type"}
+                            </Text>
+                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
+                        </TouchableOpacity>
+                        {/* Modal */}
+                        <Modal
+                            visible={showTimeType}
+                            transparent
+                            animationType="fade"
+                            onRequestClose={() => setShowTimeType(false)}
+                        >
+                            <TouchableOpacity
+                                style={dropdownStyles.modalOverlay}
+                                onPress={() => setShowTimeType(false)}
+                                activeOpacity={1}
+                            >
+                                <View style={dropdownStyles.modalContent}>
+                                    <ScrollView>
+                                        {["Universal Time", "Local Time"].map((opt, i) => (
+                                            <TouchableOpacity
+                                                key={i}
+                                                style={dropdownStyles.option}
+                                                onPress={() => {
+                                                    setTimeLabel(opt);
+                                                    setShowTimeType(false);
+                                                }}
+                                            >
+                                                <Text style={dropdownStyles.optionText}>{opt}</Text>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </ScrollView>
+                                </View>
+                            </TouchableOpacity>
+                        </Modal>
                     </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Choose Time</Text>
+                        <Text style={styles.label}>Date & Time</Text>
                     </View>
-                    <View style={[styles.rightItem, styles.inputContainer]}>
+                    <View style={[styles.rightItem, styles.inputContainer,]}>
                         <TouchableOpacity style={styles.dateInput} onPress={showPicker}>
                             <Image
                                 source={require("../../assets/images/calenderIcon.png")}
@@ -63,7 +113,7 @@ export default function TimeZoneScreen() {
                             >
                                 {dateTime
                                     ? dateTime.toLocaleString()
-                                    : "Datetime not selected"}
+                                    : "Select Date&time"}
                             </Text>
                         </TouchableOpacity>
 
@@ -72,14 +122,9 @@ export default function TimeZoneScreen() {
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
                         )}
-                        {/* DateTime Picker */}
-                        <DateTimePickerModal
-                            isVisible={isPickerVisible}
-                            mode="datetime"
-                            onConfirm={handleDateTimeConfirm}
-                            onCancel={hidePicker}
-                        />
                     </View>
+
+                    {/* Country Selector */}
                     <View style={[styles.leftItem, styles.inputLabel]}>
                         <Text style={styles.label}>Country</Text>
                     </View>
@@ -92,32 +137,31 @@ export default function TimeZoneScreen() {
                             searchable={true}
                             onSelect={handleSelectCountry}
                         />
+
                     </View>
 
-                    <Card
-                        style={styles.cardExtend}>
-                        <Text
-                            style={[
-                                styles.cardText,
+                    {/* Shared DateTime Picker */}
+                    <DateTimePickerModal
+                        isVisible={isPickerVisible}
+                        mode="datetime"
+                        onConfirm={handleDateTimeConfirm}
+                        onCancel={hidePicker}
+                    />
 
-                            ]}
-                        >
-                            UTC
-                        </Text>
-                        <Text style={[
-                            styles.resultText,
-                        ]}>  {time || "--"}
-                        </Text>
+                    {/* Result Card */}
+                    <Card style={styles.cardExtend}>
 
+                        <Text style={styles.resultText}></Text>
                     </Card>
 
+                    <TouchableOpacity style={styles.calculateBtn} onPress={convertTime}>
 
-                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateTime}>
-                        <Text style={styles.calculateTxt}>Convert TimeZone</Text>
+                        <Text style={styles.calculateTxt}>
+                            {timeLabel === "UTC" ? "Convert to Local" : "Convert to UTC"}
+                        </Text>
                     </TouchableOpacity>
-                </ View>
+                </View >
             }
         />
-    )
+    );
 }
-

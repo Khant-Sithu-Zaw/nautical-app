@@ -110,7 +110,7 @@ export default function FuelConsumptionScreen() {
                                 <Text style={[dropdownStyles.pickerText, { fontSize: moderateScale(10), color: selectedUnit ? "black" : "gray" }]}>
                                     {selectedUnit}
                                 </Text>
-                                <Text style={{ fontSize: scale(9) }}>▼</Text>
+                                <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
                             </TouchableOpacity>
                         </View>
                         {/* Modal */}

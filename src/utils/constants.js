@@ -1,6 +1,6 @@
 export const screens = [
     { name: "Unit Conversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
-    { name: "ETA Calculator", route: "ETA Calculator", image: require("../../assets/images/Eta.png") },
+    { name: "ETA\nCalculator", route: "ETA Calculator", image: require("../../assets/images/Eta.png") },
     { name: "Required Speed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
     { name: "Anchor Dragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
     { name: "Fuel Calculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },

@@ -8,8 +8,9 @@ import {
   FlatList,
   Modal,
 } from "react-native";
-import { scale } from "../utils/scale";
+import { moderateScale, scale } from "../utils/scale";
 import selectStyle from "../style/selectStyle";
+import styles from "../style/styles";
 export default function Dropdown({
   data = [],
   labelKey = "name",
@@ -35,15 +36,21 @@ export default function Dropdown({
   return (
     <View style={{ width: "100%" }}>
       <TouchableOpacity
-        style={selectStyle.dropdownButton}
+        style={[selectStyle.dropdownButton, styles.flexBox, { justifyContent: "space-between", }]}
         onPress={() => setVisible(true)}
       >
-        <Text style={selectStyle.dropdownText}>
+        <Text
+          style={[
+            selectStyle.dropdownText,
+            !selectedItem && { color: "#9b9898ff" }
+          ]}
+        >
           {selectedItem ? selectedItem[labelKey] : placeholder}
         </Text>
+        <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
       </TouchableOpacity>
 
-      <Modal visible={visible} transparent animationType="slide">
+      <Modal visible={visible} transparent animationType="fade">
         <View style={selectStyle.modalOverlay}>
           <View style={selectStyle.modalContainer}>
             {searchable && (
