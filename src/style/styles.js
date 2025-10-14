@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
     // Common starts
     screenContainer: {
         width: "100%",
-        paddingTop: verticalScale(15),
-        paddingHorizontal: scale(10),
+        // paddingTop: verticalScale(15),
+        // paddingHorizontal: scale(10),
         backgroundColor: "#fff",
         height: "100%"
     },
@@ -411,7 +411,67 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
 
     },
-
+    bannerText:{
+        color:"#fff",
+        textAlign:"center",
+        fontWeight: "bold",
+        fontSize:moderateScale(16),
+        moderateScale:moderateScale(13),
+        lineHeight:moderateScale(23)
+    },
+    bannerContent:{
+         backgroundColor: "#3C78AD",
+         display:"flex",
+         direction:"column",
+         justifyContent:"center",
+         alignItems:"center",
+         width:"100%",
+        paddingTop: verticalScale(40),
+        paddingBottom:verticalScale(26),
+        paddingHorizontal: scale(20),
+        margin:"auto"
+    },
+    mainContent:{
+        backgroundColor:"#fff",
+        paddingHorizontal:scale(20),
+    }
+    ,
+    anchorLogo:{
+        marginVertical:scale(30),
+        width:scale(70)
+    },
+    contentTitle:{
+        paddingHorizontal:scale(20),
+        fontWeight:"bold",
+        fontSize:moderateScale(16),
+        textAlign:"center",
+        
+    },
+    relativeHolder:{
+        position:"relative",
+        alignContent:"center"
+    },
+    commentBoxIcon:{
+        position:"absolute",
+         top:70,
+          right:45,
+        
+    },
+    sendEmoji:{
+        marginLeft:moderateScale(20),
+       
+    }
+    ,
+    maxText:{
+        
+        paddingRight:moderateScale(20)
+    },
+    lftBox:{
+        paddingLeft:moderateScale(40),
+    },
+    rhtBox:{
+        paddingRight:moderateScale(25)
+    }
 });
 
 export default styles;

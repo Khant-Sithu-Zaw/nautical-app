@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import styles from "../style/styles";
 
 import { scale, moderateScale, verticalScale } from '../utils/scale';
-
+import { screenOptions } from '../utils/backTab';
 export default function AboutusScreen() {
     const MAX_LENGTH = 120;
     const [message, setMessage] = useState("");
@@ -22,12 +22,13 @@ export default function AboutusScreen() {
         const emailUrl = `mailto:${receiverEmail}?subject=${encodeURIComponent(
             subject
         )}&body=${body}`;
-
+         
         Linking.canOpenURL(emailUrl)
             .then((supported) => {
                 if (!supported) {
                     Alert.alert("Error", "No email app found");
                 } else {
+                   setMessage("");
                     return Linking.openURL(emailUrl);
                 }
             })
@@ -35,34 +36,36 @@ export default function AboutusScreen() {
     };
 
     return (
+        
         <Layout
             bannerContent={
                 <View style={styles.bannerContent}>
-                    <Image source={require("../../assets/images/splash-logo.png")} style={styles.splashLogo} />
+                    <Image source={require("../../assets/images/anchor.png")} style={styles.anchorLogo} />
 
                     <Text style={styles.bannerText}>
                         Designed for seafarers, this app works both online and offline to support daily calculation tasks and learning. Access nautical tools and tutorials in this box anytime for a better experience at sea
                     </Text>
                 </View>
             }
-            bodyContent={
+            mainContent={
                 <View>
 
-                    <Text style={[styles.contentTitle, { marginBottom: verticalScale(10) }]}>" We welcome your feedback to improve this tool and make it more useful !! "</Text    >
+                    <Text style={[styles.contentTitle, { marginBottom: verticalScale(20) }]}>" We welcome your feedback to improve this tool and make it more useful !! "</Text    >
 
-                    <View style={[styles.flexBox, styles.relativeHolder, { alignItems: "flex-start", justifyContent: "center" }]}>
+                    <View style={[styles.flexBox, styles.relativeHolder, { alignItems: "flex-start", justifyContent: "center"}]}>
 
 
                         <TextInput
                             style={[styles.textInput, {
                                 textAlignVertical: "top",
-                                height: 110,
-                                width: "90%",
+                                height: 100,
+                                width: "80%",
                             }]}
                             placeholder="Suggestions & Complaints"
                             keyboardType="default"
                             value={message}
                             onChangeText={setMessage}
+
                             placeholderTextColor="#9b9898ff"
                             multiline
                             numberOfLines={6}
@@ -76,27 +79,29 @@ export default function AboutusScreen() {
                         <Text onPress={handleSendEmail} style={[styles.commentBoxIcon, styles.sendEmoji]}>📤</Text>
                     </View>
 
-                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", marginTop: verticalScale(20), marginBottom: verticalScale(5) }]}>
+                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", marginTop: verticalScale(26), marginBottom: verticalScale(5) }]}>
                         <View style={[styles.lftBox, { marginTop: verticalScale(3) }]}>
-
+                                <Image source={require("../../assets/images/developerIcon.png")} style={[styles.aboutUsImg, ]} />
                         </View>
 
-                        <View style={[styles.rhtBox, { margin: moderateScale(5) }]}>
-                            <Text style={{ fontSize: moderateScale(10), color: "#205E95" }}>Developed by.</Text>
-                            <Text style={{ fontSize: moderateScale(12), color: "#205E95", fontWeight: '800' }}>Khant Sithu Zaw</Text>
-                            <Text style={{ fontSize: moderateScale(9), color: "#205E95" }}>Developer,Seafarer</Text>
+                        <View style={[styles.rhtBox]}>
+                            <Text style={{ fontSize: moderateScale(12), color: "#205E95" }}>Developed by.</Text>
+                            <Text style={{ fontSize: moderateScale(14), color: "#205E95", fontWeight: '800' }}>Khant Sithu Zaw</Text>
+                            <Text style={{ fontSize: moderateScale(10), color: "#205E95" }}>Developer,Seafarer</Text>
                         </View>
-                        {/* <Image source={require("../../assets/images/developer.jpg")} style={[styles.aboutUsImg, { marginLeft: scale(12) }]} /> */}
+                        {/* <View style={styles.rhtBox}> */}
+                        
                         {/* <Image source={require("../../assets/images/.png")}
                         /> */}
+                        {/* </View> */}
                     </View>
-                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(10) }]}>
+                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(20) }]}>
 
                         <View style={styles.rhtBox}>
                             <View style={styles.rhtBox}>
-                                <Text style={{ fontSize: moderateScale(10), color: "#205E95" }}>Designed by.</Text>
-                                <Text style={{ fontSize: moderateScale(12), color: "#205E95", fontWeight: '800' }}>Khin Saw Hnin</Text>
-                                <Text style={{ fontSize: moderateScale(9), color: "#205E95" }}>UI/UX Designer,Developer</Text>
+                                <Text style={{ fontSize: moderateScale(12), color: "#205E95" }}>Designed by.</Text>
+                                <Text style={{ fontSize: moderateScale(14), color: "#205E95", fontWeight: '800' }}>Khin Saw Hnin</Text>
+                                <Text style={{ fontSize: moderateScale(10), color: "#205E95" }}>UI/UX Designer,Developer</Text>
                             </View>
                         </View>
                         <View style={styles.lftBox}>
@@ -106,8 +111,9 @@ export default function AboutusScreen() {
                     </View>
                 </ View>
             }
-            cardStyle={{ top: verticalScale(-76), paddingBottom: verticalScale(10), }}
+           
         />
+       
     )
 }
 
