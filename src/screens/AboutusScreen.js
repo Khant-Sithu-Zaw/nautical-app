@@ -95,7 +95,7 @@ export default function AboutusScreen() {
                         /> */}
                         {/* </View> */}
                     </View>
-                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginVertical: verticalScale(20) }]}>
+                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginTop: verticalScale(26), marginBottom: verticalScale(5)}]}>
 
                         <View style={styles.rhtBox}>
                             <View style={styles.rhtBox}>
