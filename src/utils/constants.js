@@ -1,10 +1,10 @@
 export const screens = [
-    { name: "Unit Conversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
+    { name: "Unit\nConversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
     { name: "ETA\nCalculator", route: "ETA Calculator", image: require("../../assets/images/Eta.png") },
-    { name: "Required Speed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
-    { name: "Anchor Dragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
-    { name: "Fuel Calculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
-    { name: "TimeZone Calculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
+    { name: "Required\nSpeed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
+    { name: "Anchor\nDragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
+    { name: "Fuel\nCalculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
+    { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
     { name: "Temperature Converter", image: require("../../assets/images/temperature.png") },
@@ -17,7 +17,7 @@ export const categoryOptions = [
     { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
 ];
 export const timeInput = [
-    "Coordinated Universal Time",
+    "Universal Time",
     "Local Time",
 ];
 export const fuelUnit = [

@@ -11,6 +11,7 @@ import { handleNumberChange } from "../utils/methods";
 import { countOptions, shackleLengthOptions } from "../utils/constants";
 import Card from "../components/Card";
 import { moderateScale, scale } from "../utils/scale";
+import DropdownPicker from '../components/DropdownPicker';
 export default function AnchorDragScreen() {
     const [lengthOverall, setLengthOverall] = useState(""); // string
 
@@ -76,50 +77,11 @@ export default function AnchorDragScreen() {
                         <Text style={styles.label}>Shackle Counts</Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
-                        <TouchableOpacity
-                            style={[styles.flexBox, dropdownStyles.customPicker]}
-                            onPress={() => setShowCountModal(true)}
-                        >
-                            <Text
-                                style={[
-                                    dropdownStyles.pickerText,
-                                    { color: shackleCount ? "black" : "#9b9898ff" }
-                                ]}
-                            >
-                                {shackleCount || "Select Shackle Counts"}
-                            </Text>
-                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
-                        </TouchableOpacity>
-                        {/* Modal */}
-                        <Modal
-                            visible={showCountModal}
-                            transparent
-                            animationType="fade"
-                            onRequestClose={() => setShowCountModal(false)}
-                        >
-                            <TouchableOpacity
-                                style={dropdownStyles.modalOverlay}
-                                onPress={() => setShowCountModal(false)}
-                                activeOpacity={1}
-                            >
-                                <View style={dropdownStyles.modalContent}>
-                                    <ScrollView>
-                                        {countOptions.map((opt, i) => (
-                                            <TouchableOpacity
-                                                key={i}
-                                                style={dropdownStyles.option}
-                                                onPress={() => {
-                                                    setShackleCount(opt);
-                                                    setShowCountModal(false);
-                                                }}
-                                            >
-                                                <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            </TouchableOpacity>
-                        </Modal>
+                        <DropdownPicker
+                            options={countOptions}
+                            selected={shackleCount}
+                            onSelect={(opt) => setShackleCount(opt)}
+                        />
 
                     </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
@@ -127,50 +89,12 @@ export default function AnchorDragScreen() {
                         </Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
-                        <TouchableOpacity
-                            style={[styles.flexBox, dropdownStyles.customPicker]}
-                            onPress={() => setShowLengthModal(true)}
-                        >
-                            <Text
-                                style={[
-                                    dropdownStyles.pickerText,
-                                    { color: shackleLength ? "black" : "#9b9898ff" }
-                                ]}
-                            >
-                                {shackleLength || "Length of a shackle"}
-                            </Text>
-                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
-                        </TouchableOpacity>
-                        {/* Modal */}
-                        <Modal
-                            visible={showLengthModal}
-                            transparent
-                            animationType="fade"
-                            onRequestClose={() => setShowLengthModal(false)}
-                        >
-                            <TouchableOpacity
-                                style={dropdownStyles.modalOverlay}
-                                onPress={() => setShowLengthModal(false)}
-                                activeOpacity={1}
-                            >
-                                <View style={dropdownStyles.modalContent}>
-                                    <ScrollView>
-                                        {shackleLengthOptions.map((opt, i) => (
-                                            <TouchableOpacity
-                                                key={i}
-                                                style={dropdownStyles.option}
-                                                onPress={() => {
-                                                    setShackleLength(opt);
-                                                    setShowLengthModal(false);
-                                                }}
-                                            >
-                                                <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            </TouchableOpacity>
-                        </Modal>
+                        <DropdownPicker
+                            options={shackleLengthOptions}
+                            selected={shackleLength}
+                            onSelect={(opt) => setShackleLength(opt)}
+                        />
+
                     </View>
                     <Card
                         style={styles.cardExtend}>

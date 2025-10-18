@@ -7,6 +7,7 @@ import styles from "../style/styles";
 import { fuelUnit } from '../utils/constants';
 import { handleNumberChange } from "../utils/methods";
 import Card from "../components/Card";
+import DropdownPicker from '../components/DropdownPicker';
 export default function FuelConsumptionScreen() {
     const [speed, setSpeed] = useState("");
     const [distance, setDistance] = useState("");
@@ -104,31 +105,17 @@ export default function FuelConsumptionScreen() {
                         )}
                     </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <View style={{ display: "flex", flexDirection: "row", alignItems: "center" }} >
-                            <Text style={[styles.label]}>Rate</Text>
-                            <TouchableOpacity style={[dropdownStyles.customPicker, { paddingVertical: 0, justifyContent: "flex-start", paddingHorizontal: 0, flexDirection: "row", marginLeft: scale(2), borderWidth: 0 }]} onPress={() => setShowCountModal(true)}>
-                                <Text style={[dropdownStyles.pickerText, { fontSize: moderateScale(10), color: selectedUnit ? "black" : "gray" }]}>
-                                    {selectedUnit}
-                                </Text>
-                                <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
-                            </TouchableOpacity>
-                        </View>
-                        {/* Modal */}
-                        <Modal visible={showCountModal} transparent animationType="fade" onRequestClose={() => setShowCountModal(false)}>
-                            <TouchableOpacity style={dropdownStyles.modalOverlay} onPress={() => setShowCountModal(false)} activeOpacity={1}>
-                                <View style={dropdownStyles.modalContent}>
-                                    <ScrollView>
-                                        {fuelUnit.map((opt, i) => (
-                                            <TouchableOpacity key={i} style={dropdownStyles.option} onPress={() => { setSelectedUnit(opt); setShowCountModal(false); }}>
-                                                <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            </TouchableOpacity>
-                        </Modal>
-
-
+                        <Text style={styles.label}>Unit of Rate</Text>
+                    </View>
+                    <View style={[styles.rightItem, styles.inputContainer]}>
+                        <DropdownPicker
+                            options={fuelUnit}
+                            selected={selectedUnit}
+                            onSelect={(opt) => setSelectedUnit(opt)}
+                        />
+                    </View>
+                    <View style={[styles.leftItem, styles.inputLabel]}>
+                        <Text style={styles.label}>Rate Value</Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput

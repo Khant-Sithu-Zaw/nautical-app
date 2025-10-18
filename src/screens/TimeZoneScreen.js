@@ -15,6 +15,8 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { moderateScale, scale } from "../utils/scale";
 import dropdownStyles from "../style/pickupstyle";
 import Dropdown from "../components/Dropdown";
+import DropdownPicker from "../components/DropdownPicker";
+import { timeInput } from "../utils/constants";
 export default function TimeZoneScreen() {
 
     const [timeLabel, setTimeLabel] = useState("Universal Time");
@@ -51,50 +53,12 @@ export default function TimeZoneScreen() {
                         <Text style={styles.label}>Base TimeZone</Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer,]}>
-                        <TouchableOpacity
-                            style={[styles.flexBox, dropdownStyles.customPicker,]}
-                            onPress={() => setShowTimeType(true)}
-                        >
-                            <Text
-                                style={[
-                                    dropdownStyles.pickerText,
-                                    { color: timeLabel ? "black" : "#9b9898ff" }
-                                ]}
-                            >
-                                {timeLabel || "Select Time Type"}
-                            </Text>
-                            <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
-                        </TouchableOpacity>
-                        {/* Modal */}
-                        <Modal
-                            visible={showTimeType}
-                            transparent
-                            animationType="fade"
-                            onRequestClose={() => setShowTimeType(false)}
-                        >
-                            <TouchableOpacity
-                                style={dropdownStyles.modalOverlay}
-                                onPress={() => setShowTimeType(false)}
-                                activeOpacity={1}
-                            >
-                                <View style={dropdownStyles.modalContent}>
-                                    <ScrollView>
-                                        {["Universal Time", "Local Time"].map((opt, i) => (
-                                            <TouchableOpacity
-                                                key={i}
-                                                style={dropdownStyles.option}
-                                                onPress={() => {
-                                                    setTimeLabel(opt);
-                                                    setShowTimeType(false);
-                                                }}
-                                            >
-                                                <Text style={dropdownStyles.optionText}>{opt}</Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            </TouchableOpacity>
-                        </Modal>
+                        <DropdownPicker
+                            options={timeInput}
+                            selected={timeLabel}
+                            onSelect={(opt) => setTimeLabel(opt)}
+                        />
+
                     </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
                         <Text style={styles.label}>Date & Time</Text>

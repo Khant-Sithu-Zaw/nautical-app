@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: "#3C78ADB2",
+        backgroundColor: "#477DAD",
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
@@ -411,66 +411,66 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
 
     },
-    bannerText:{
-        color:"#fff",
-        textAlign:"center",
+    bannerText: {
+        color: "#fff",
+        textAlign: "center",
         fontWeight: "bold",
-        fontSize:moderateScale(16),
-        moderateScale:moderateScale(13),
-        lineHeight:moderateScale(23)
+        fontSize: moderateScale(16),
+        moderateScale: moderateScale(13),
+        lineHeight: moderateScale(23)
     },
-    bannerContent:{
-         backgroundColor: "#3C78AD",
-         display:"flex",
-         direction:"column",
-         justifyContent:"center",
-         alignItems:"center",
-         width:"100%",
+    bannerContent: {
+        backgroundColor: "#3C78AD",
+        display: "flex",
+        direction: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
         paddingTop: verticalScale(40),
-        paddingBottom:verticalScale(26),
+        paddingBottom: verticalScale(26),
         paddingHorizontal: scale(20),
-        margin:"auto"
+        margin: "auto"
     },
-    mainContent:{
-        backgroundColor:"#fff",
-        paddingHorizontal:scale(20),
+    mainContent: {
+        backgroundColor: "#fff",
+        paddingHorizontal: scale(20),
     }
     ,
-    anchorLogo:{
-        marginVertical:scale(30),
-        width:scale(70)
+    anchorLogo: {
+        marginVertical: scale(30),
+        width: scale(70)
     },
-    contentTitle:{
-        paddingHorizontal:scale(20),
-        fontWeight:"bold",
-        fontSize:moderateScale(16),
-        textAlign:"center",
-        
+    contentTitle: {
+        paddingHorizontal: scale(20),
+        fontWeight: "bold",
+        fontSize: moderateScale(16),
+        textAlign: "center",
+
     },
-    relativeHolder:{
-        position:"relative",
-        alignContent:"center"
+    relativeHolder: {
+        position: "relative",
+        alignContent: "center"
     },
-    commentBoxIcon:{
-        position:"absolute",
-         top:70,
-          right:45,
-        
+    commentBoxIcon: {
+        position: "absolute",
+        top: 70,
+        right: 45,
+
     },
-    sendEmoji:{
-        marginLeft:moderateScale(20),
-       
+    sendEmoji: {
+        marginLeft: moderateScale(20),
+
     }
     ,
-    maxText:{
-        
-        paddingRight:moderateScale(20)
+    maxText: {
+
+        paddingRight: moderateScale(20)
     },
-    lftBox:{
-        paddingLeft:moderateScale(40),
+    lftBox: {
+        paddingLeft: moderateScale(40),
     },
-    rhtBox:{
-        paddingRight:moderateScale(25)
+    rhtBox: {
+        paddingRight: moderateScale(25)
     }
 });
 

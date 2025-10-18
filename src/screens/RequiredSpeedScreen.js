@@ -212,7 +212,6 @@ export default function RequiredSpeedScreen() {
 										setCurrentSpeedSign(text.startsWith("-") ? "-" : "+");
 										setShowHint(true);
 
-										// Clear any existing timer first to prevent overlapping
 										if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
 
 										// Auto-hide after 2 seconds
