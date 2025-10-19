@@ -116,7 +116,7 @@ export default function HomeScreen({ navigation }) {
                 </View>
 
             </View>
-            <View style={[styles.flexBox, styles.screenContainer]}>
+            <View style={[styles.flexBox, styles.screenContainer, { justifyContent: 'flex-start' }]}>
                 {filteredScreens.length > 0 ? (
                     filteredScreens.map((tool, index) => (
                         <TouchableOpacity

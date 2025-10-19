@@ -201,7 +201,7 @@ export default function RequiredSpeedScreen() {
 					<View style={[styles.rightItem, styles.inputContainer,]}>
 						<DropdownPicker
 							options={weatherOptions.map(o => o.label)} // only labels for dropdown
-							selected={selectedWeather?.label}        // display selected label
+							selected={`${selectedWeather.label} (${selectedWeather.loss}% Loss)`}       // display selected label
 							onSelect={(label) => {
 								const selected = weatherOptions.find(o => o.label === label);
 								setSelectedWeather(selected);       // save full object with loss

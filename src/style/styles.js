@@ -179,9 +179,8 @@ const styles = StyleSheet.create({
     },
 
     screenButton: {
-        width: "30%",
+        width: "33.33%",
         display: "flex",
-        justifyContent: "center",
         alignItems: "center",
         padding: moderateScale(10),
         borderRadius: moderateScale(20),
@@ -258,8 +257,6 @@ const styles = StyleSheet.create({
     // Common starts
     screenContainer: {
         width: "100%",
-        // paddingTop: verticalScale(15),
-        // paddingHorizontal: scale(10),
         backgroundColor: "#fff",
         height: "100%"
     },
@@ -442,7 +439,7 @@ const styles = StyleSheet.create({
     }
     ,
     anchorLogo: {
-        marginVertical: scale(30),
+        marginVertical: verticalScale(30),
         width: scale(70)
     },
     contentTitle: {
@@ -462,11 +459,11 @@ const styles = StyleSheet.create({
         right: scale(45),
     },
     sendEmoji: {
-        marginLeft: moderateScale(20),
+        marginLeft: scale(20),
     }
     ,
     maxText: {
-        paddingRight: moderateScale(25),
+        paddingRight: scale(25),
         fontSize: moderateScale(12),
     },
     lftBox: {
@@ -480,7 +477,6 @@ const styles = StyleSheet.create({
         height: verticalScale(50),
         resizeMode: "contain",
         marginHorizontal: scale(2),
-
     }
 });
 
