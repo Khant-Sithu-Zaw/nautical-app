@@ -1,7 +1,7 @@
 export const screens = [
     { name: "Unit\nConversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
     { name: "ETA\nCalculator", route: "ETA Calculator", image: require("../../assets/images/Eta.png") },
-    { name: "Required\nSpeed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
+    { name: "Required\nSTW", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
     { name: "Anchor\nDragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
     { name: "Fuel\nCalculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
     // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
@@ -16,7 +16,18 @@ export const categoryOptions = [
     { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png") },
     { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
 ];
-
+export const weatherOptions = [
+    { label: "Calm", loss: 0 },
+    { label: "Light breeze", loss: 2 },
+    { label: "Moderate breeze", loss: 5 },
+    { label: "Fresh breeze", loss: 7 },
+    { label: "Strong breeze", loss: 10 },
+    { label: "Near gale", loss: 12 },
+    { label: "Gale", loss: 15 },
+    { label: "Severe gale", loss: 18 },
+    { label: "Storm", loss: 20 },
+    { label: "Violent storm", loss: 25 },
+];
 export const fuelUnit = [
     "(MT/day)",
     "(kg/h)",

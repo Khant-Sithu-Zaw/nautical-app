@@ -4,10 +4,11 @@ import styles from "../style/styles";
 import Layout from "../components/Layout";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { handleNumberChange } from "../utils/methods";
-import { signNumberRegex } from "../utils/constants";
+import { signNumberRegex, weatherOptions } from "../utils/constants";
 import Card from "../components/Card";
 import { RadioButton } from "../components/RadioButton";
 import { scale } from "../utils/scale";
+import DropdownPicker from "../components/DropdownPicker";
 
 export default function RequiredSpeedScreen() {
 	const [speed, setSpeed] = useState("");
@@ -23,6 +24,7 @@ export default function RequiredSpeedScreen() {
 	const hintTimerRef = useRef(null);
 	const [showHint, setShowHint] = useState(false);
 	const [hintShown, setHintShown] = useState(false); // prevent showing again
+	const [selectedWeather, setSelectedWeather] = useState(weatherOptions[0]);
 	const showPicker = (type) => {
 		setActivePicker(type);
 		setPickerVisible(true);
@@ -95,7 +97,10 @@ export default function RequiredSpeedScreen() {
 		} else {
 			requiredSpeed = requiredSpeed + currentSpeedNum; // against ship → add current
 		}
-		setSpeed(requiredSpeed.toFixed(2));
+		const adjustedSTW = requiredSpeed / (1 - selectedWeather.loss / 100);
+
+		setSpeed(adjustedSTW.toFixed(2));
+
 	};
 
 
@@ -191,13 +196,26 @@ export default function RequiredSpeedScreen() {
 						)}
 					</View>
 					<View style={[styles.leftItem, styles.inputLabel]}>
+						<Text style={styles.label}>Weather/Wind Condition</Text>
+					</View>
+					<View style={[styles.rightItem, styles.inputContainer,]}>
+						<DropdownPicker
+							options={weatherOptions.map(o => o.label)} // only labels for dropdown
+							selected={selectedWeather?.label}        // display selected label
+							onSelect={(label) => {
+								const selected = weatherOptions.find(o => o.label === label);
+								setSelectedWeather(selected);       // save full object with loss
+							}}
+						/>
+					</View>
+					<View style={[styles.leftItem, styles.inputLabel]}>
 						<Text style={styles.label}>Set Speed(±)</Text>
 					</View>
 					<View style={[styles.rightItem, styles.inputContainer,]}>
 						<View style={{ position: "relative" }}>
 							<TextInput
 								style={[styles.textInput,]}
-								placeholder="Enter Current Speed"
+								placeholder="Enter Water Speed (kn)"
 								keyboardType="decimal-pad"
 								value={currentSpeed}
 								onChangeText={(text) => {
@@ -254,7 +272,7 @@ export default function RequiredSpeedScreen() {
 
 							]}
 						>
-							STW to arrive on time
+							Required STW to Travel
 						</Text>
 						<Text style={[
 							styles.resultText,
