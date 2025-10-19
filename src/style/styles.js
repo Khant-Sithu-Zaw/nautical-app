@@ -208,6 +208,11 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(16),
         fontWeight: "bold"
     },
+    dateUTC: {
+        color: "#205E95",
+        fontSize: moderateScale(10),
+        paddingTop: verticalScale(6),
+    },
     // HomeScreen ends
 
     //Card starts
@@ -453,24 +458,29 @@ const styles = StyleSheet.create({
     },
     commentBoxIcon: {
         position: "absolute",
-        top: 70,
-        right: 45,
-
+        bottom: verticalScale(7),
+        right: scale(45),
     },
     sendEmoji: {
         marginLeft: moderateScale(20),
-
     }
     ,
     maxText: {
-
-        paddingRight: moderateScale(20)
+        paddingRight: moderateScale(25),
+        fontSize: moderateScale(12),
     },
     lftBox: {
-        paddingLeft: moderateScale(40),
+        paddingLeft: scale(40),
     },
     rhtBox: {
-        paddingRight: moderateScale(25)
+        paddingRight: scale(25)
+    },
+    aboutIcon: {
+        width: scale(50),
+        height: verticalScale(50),
+        resizeMode: "contain",
+        marginHorizontal: scale(2),
+
     }
 });
 

@@ -22,13 +22,13 @@ export default function AboutusScreen() {
         const emailUrl = `mailto:${receiverEmail}?subject=${encodeURIComponent(
             subject
         )}&body=${body}`;
-         
+
         Linking.canOpenURL(emailUrl)
             .then((supported) => {
                 if (!supported) {
                     Alert.alert("Error", "No email app found");
                 } else {
-                   setMessage("");
+                    setMessage("");
                     return Linking.openURL(emailUrl);
                 }
             })
@@ -36,7 +36,7 @@ export default function AboutusScreen() {
     };
 
     return (
-        
+
         <Layout
             bannerContent={
                 <View style={styles.bannerContent}>
@@ -52,7 +52,7 @@ export default function AboutusScreen() {
 
                     <Text style={[styles.contentTitle, { marginBottom: verticalScale(20) }]}>" We welcome your feedback to improve this tool and make it more useful !! "</Text    >
 
-                    <View style={[styles.flexBox, styles.relativeHolder, { alignItems: "flex-start", justifyContent: "center"}]}>
+                    <View style={[styles.flexBox, styles.relativeHolder, { alignItems: "flex-start", justifyContent: "center" }]}>
 
 
                         <TextInput
@@ -81,7 +81,7 @@ export default function AboutusScreen() {
 
                     <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", marginTop: verticalScale(26), marginBottom: verticalScale(5) }]}>
                         <View style={[styles.lftBox, { marginTop: verticalScale(3) }]}>
-                                <Image source={require("../../assets/images/developerIcon.png")} style={[styles.aboutUsImg, ]} />
+                            <Image source={require("../../assets/images/developerIcon.png")} style={[styles.aboutIcon,]} />
                         </View>
 
                         <View style={[styles.rhtBox]}>
@@ -89,13 +89,9 @@ export default function AboutusScreen() {
                             <Text style={{ fontSize: moderateScale(14), color: "#205E95", fontWeight: '800' }}>Khant Sithu Zaw</Text>
                             <Text style={{ fontSize: moderateScale(10), color: "#205E95" }}>Developer,Seafarer</Text>
                         </View>
-                        {/* <View style={styles.rhtBox}> */}
-                        
-                        {/* <Image source={require("../../assets/images/.png")}
-                        /> */}
-                        {/* </View> */}
+
                     </View>
-                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginTop: verticalScale(26), marginBottom: verticalScale(5)}]}>
+                    <View style={[styles.flexBox, { alignItems: "flex-start", justifyContent: "flex-start", flexDirection: "row-reverse", marginTop: verticalScale(26), marginBottom: verticalScale(5) }]}>
 
                         <View style={styles.rhtBox}>
                             <View style={styles.rhtBox}>
@@ -107,13 +103,13 @@ export default function AboutusScreen() {
                         <View style={styles.lftBox}>
                             <Image source={require("../../assets/images/figmaIcon.png")} style={styles.aboutIcon} />
                         </View>
-                        {/* <Image source={require("../../assets/images/designer.jpg")} style={styles.aboutUsImg} /> */}
+
                     </View>
                 </ View>
             }
-           
+
         />
-       
+
     )
 }
 

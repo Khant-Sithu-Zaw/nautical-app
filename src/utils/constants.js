@@ -4,7 +4,7 @@ export const screens = [
     { name: "Required\nSpeed", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
     { name: "Anchor\nDragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
     { name: "Fuel\nCalculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
-    { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
+    // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
     { name: "Temperature Converter", image: require("../../assets/images/temperature.png") },
@@ -16,18 +16,12 @@ export const categoryOptions = [
     { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png") },
     { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
 ];
-export const timeInput = [
-    "Universal Time",
-    "Local Time",
-];
+
 export const fuelUnit = [
     "(MT/day)",
     "(kg/h)",
 ]
-export const pressureType = [
-    "Absolute Pressure",
-    "Gauge Pressure",
-]
+
 export const shackleLengthOptions = [
     "15 meters",
     "20 meters",
