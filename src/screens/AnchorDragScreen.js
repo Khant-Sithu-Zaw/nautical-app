@@ -16,9 +16,9 @@ export default function AnchorDragScreen() {
     const [lengthOverall, setLengthOverall] = useState(""); // string
 
     const [radius, setRadius] = useState("");
-
+    const [radiusNM, setRadiusNm] = useState("");
     const NAUTICAL_MILE = 1852;
-    const [shackleCount, setShackleCount] = useState(null);
+    const [shackleCount, setShackleCount] = useState("");
     const [shackleLength, setShackleLength] = useState("27.5 meters");
     const [showCountModal, setShowCountModal] = useState(false);
     const [showLengthModal, setShowLengthModal] = useState(false);
@@ -29,19 +29,27 @@ export default function AnchorDragScreen() {
         const lengthNum = parseFloat(lengthOverall);
         const shackleNum = parseFloat(shackleCount);
         const length = parseFloat(shackleLength);
-        if (!lengthNum) {
+        if (!lengthNum || !shackleCount) {
+            alert("Please fill the inputs");
             setRadius("");
+            setRadiusNm("");
             return;
         }
+        if (isNaN(lengthNum)) {
+            alert("Please enter numbers only for LOA");
+            setRadius("");
+            setRadiusNm("");
+            return;
+        }
+
 
         const chainLength = shackleNum * length;
         const halfLOA = lengthNum / 2;
 
         const totalMeters = chainLength + halfLOA;
 
-        const radiusNM = totalMeters / NAUTICAL_MILE;
-
-        setRadius(radiusNM.toFixed(3));
+        setRadius(totalMeters.toFixed(3));
+        setRadiusNm((totalMeters.toFixed(3) / NAUTICAL_MILE).toFixed(3));
     };
 
     return (
@@ -108,12 +116,16 @@ export default function AnchorDragScreen() {
                         </Text>
                         <Text style={[
                             styles.resultText,
-                        ]}> {radius || "--"} NM(s)
+                        ]}> {radius || "--"} Meter(s)
+                        </Text>
+                        <Text style={[
+                            styles.resultText,
+                        ]}> {radiusNM || "--"} NMile(s)
                         </Text>
                     </Card>
 
 
-                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateRadius}>
+                    <TouchableOpacity style={styles.calculateBtn} activeOpacity={0.8} onPress={calculateRadius}>
                         <Text style={styles.calculateTxt}>Calculate Swing Radius</Text>
                     </TouchableOpacity>
                 </View>

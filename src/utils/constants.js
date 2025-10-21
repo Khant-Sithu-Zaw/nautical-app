@@ -41,6 +41,7 @@ export const shackleLengthOptions = [
     "30 meters"
 ];
 export const countOptions = [
+    "3 shackles",
     "4 shackles",
     "5 shackles",
     "6 shackles",

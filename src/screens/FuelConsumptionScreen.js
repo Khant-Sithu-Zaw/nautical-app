@@ -4,8 +4,7 @@ import { View, Text, TouchableOpacity, TextInput, Modal, Image, Keyboard, Scroll
 import dropdownStyles from "../style/pickupstyle";
 import { scale, moderateScale } from '../utils/scale';
 import styles from "../style/styles";
-import { fuelUnit } from '../utils/constants';
-import { handleNumberChange } from "../utils/methods";
+import { fuelUnit, numberRegex } from '../utils/constants';
 import Card from "../components/Card";
 import DropdownPicker from '../components/DropdownPicker';
 export default function FuelConsumptionScreen() {
@@ -20,8 +19,8 @@ export default function FuelConsumptionScreen() {
 
     const calculateCost = () => {
         Keyboard.dismiss();
-        if (!speed || !distance || !rate || !price) {
-            alert("Inputs can't be empty.");
+        if (speed === "" || distance === "" || rate === "" || price === "" || speed.trim() === "" || distance.trim() === "" || rate.trim() === "" || price.trim() === "") {
+            alert("Please fill all the inputs.");
             return;
         }
         const dist = parseFloat(distance);
@@ -29,11 +28,10 @@ export default function FuelConsumptionScreen() {
         const rateVal = parseFloat(rate);
         const priceVal = parseFloat(price);
 
-        if (isNaN(dist) || isNaN(spd) || isNaN(rateVal) || isNaN(priceVal) || spd === 0) {
-            alert("Please fill all inputs correctly.");
+        if (isNaN(dist) || isNaN(spd) || isNaN(rateVal) || isNaN(priceVal) || spd === 0 || dist === 0 || rateVal === 0 || priceVal === 0) {
+            alert("Please enter only digits greater than 0.");
             return;
         }
-
         const timeHours = dist / spd; // voyage time in hours
 
         let fuelMT = 0;
@@ -46,9 +44,8 @@ export default function FuelConsumptionScreen() {
             alert("Selected unit not supported.");
             return;
         }
-        const totalCost = fuelMT * priceVal;
-
         setFuel(fuelMT.toFixed(2));
+        const totalCost = fuelMT.toFixed(2) * priceVal;
         setCost(totalCost.toFixed(2));
     };
 
@@ -68,8 +65,9 @@ export default function FuelConsumptionScreen() {
                             keyboardType="decimal-pad"
                             value={distance}
                             onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Distance");
-                                setDistance(cleaned);
+                                if (numberRegex.test(text)) {
+                                }
+                                setDistance(text);
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
@@ -91,9 +89,11 @@ export default function FuelConsumptionScreen() {
                             keyboardType="decimal-pad"
                             value={speed}
                             onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Speed");
-                                setSpeed(cleaned);
+                                if (numberRegex.test(text)) {
+                                }
+                                setSpeed(text);
                             }}
+
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
                             textContentType="none"
@@ -125,9 +125,11 @@ export default function FuelConsumptionScreen() {
                             value={rate}
                             maxLength={8}
                             onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Fuel Usage Rate");
-                                setRate(cleaned);
+                                if (numberRegex.test(text)) {
+                                }
+                                setRate(text);
                             }}
+
                             placeholderTextColor="#9b9898ff"
                         />
                         {rate && (
@@ -146,11 +148,12 @@ export default function FuelConsumptionScreen() {
                             keyboardType="decimal-pad"
                             value={price}
                             maxLength={8}
-                            onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Price");
-                                setPrice(cleaned);
-                            }}
 
+                            onChangeText={(text) => {
+                                if (numberRegex.test(text)) {
+                                }
+                                setPrice(text);
+                            }}
                             placeholderTextColor="#9b9898ff"
                         />
                         {price && (
@@ -179,7 +182,7 @@ export default function FuelConsumptionScreen() {
 
                             ]}
                         >
-                            Estimated Fuel Amount
+                            Estimated Fuel Amount for Voyage
                         </Text>
                         <Text style={[
                             styles.resultText,
@@ -188,7 +191,7 @@ export default function FuelConsumptionScreen() {
                     </Card>
 
 
-                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateCost}>
+                    <TouchableOpacity style={styles.calculateBtn} activeOpacity={0.8} onPress={calculateCost}>
                         <Text style={styles.calculateTxt}>Calculate Cost</Text>
                     </TouchableOpacity>
                 </ View>

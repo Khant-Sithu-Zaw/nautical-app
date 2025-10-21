@@ -362,14 +362,14 @@ const styles = StyleSheet.create({
     },
     crossEmoji: {
         top: "50%",
-        transform: [{ translateY: verticalScale(-31) }],
+        transform: [{ translateY: verticalScale(-33) }],
         fontSize: moderateScale(7),
-        right: scale(-2),
+        right: scale(-4),
         zIndex: 10,
-        width: scale(28),
-        height: verticalScale(28),
+        width: scale(34),
         textAlign: "center",
-        paddingTop: verticalScale(9)
+        paddingVertical: verticalScale(11),
+
     },
     //dateTime Input
     dateInput: {
@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
         fontFamily: 'JacquesFrancois',
     },
     calculateBtn: {
-        backgroundColor: "#477DADC7",
+        backgroundColor: "#477DAD",
         padding: moderateScale(10),
         borderRadius: moderateScale(15),
         width: "90%"

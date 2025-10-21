@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import Layout from "../Layout";
-import { numberRegex, } from "../../utils/constants";
+import { numberRegex, signNumberRegex } from "../../utils/constants";
 import { formatNumber } from "../../utils/methods";
 import styles from "../../style/styles";
 
@@ -22,15 +22,20 @@ export default function PressureConverter() {
     };
 
     const handleBarChange = (value) => {
-        setBar(value);
         const num = parseFloat(value);
-        if (!isNaN(num)) {
-            setPsi(formatNumber(num * 14.5038));     // 1 bar = 14.5038 psi
-            setAtm(formatNumber(num * 0.986923));    // 1 bar = 0.986923 atm
-            setMmHg(formatNumber(num * 750.062));    // 1 bar = 750.062 mmHg
-            setKPa(formatNumber(num * 100));         // 1 bar = 100 kPa
-        } else {
 
+        if (!isNaN(num)) {
+            if (num < -1) {
+                alert("Gauge Pressure cannot be less than -1 bar");
+                return; // stops further processing
+            }
+            const absBar = num + 1; // convert to absolute
+            setBar(num);
+            setPsi(formatNumber(absBar * 14.5038));
+            setAtm(formatNumber(absBar * 0.986923));
+            setMmHg(formatNumber(absBar * 750.062));
+            setKPa(formatNumber(absBar * 100));
+        } else {
             setPsi("");
             setAtm("");
             setMmHg("");
@@ -42,14 +47,14 @@ export default function PressureConverter() {
         setPsi(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const barVal = num / 14.5038;
-            setBar(formatNumber(barVal));
-            setAtm(formatNumber(barVal * 0.986923));
-            setMmHg(formatNumber(barVal * 750.062));
-            setKPa(formatNumber(barVal * 100));
+            const absBar = num / 14.5038;    // psi → absolute bar
+            const gaugeBar = absBar - 1;     // convert to gauge
+            setBar(formatNumber(gaugeBar));
+            setAtm(formatNumber(absBar * 0.986923));
+            setMmHg(formatNumber(absBar * 750.062));
+            setKPa(formatNumber(absBar * 100));
         } else {
             setBar("");
-
             setAtm("");
             setMmHg("");
             setKPa("");
@@ -57,56 +62,59 @@ export default function PressureConverter() {
     };
 
     const handleAtmChange = (value) => {
-        setAtm(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const barVal = num / 0.986923;
-            setBar(formatNumber(barVal));
-            setPsi(formatNumber(barVal * 14.5038));
-            setMmHg(formatNumber(barVal * 750.062));
-            setKPa(formatNumber(barVal * 100));
+            const absBar = num / 0.986923;
+            const gaugeBar = absBar - 1;
+
+            setBar(formatNumber(gaugeBar));
+            setPsi(formatNumber(absBar * 14.5038));
+            setAtm(num);
+            setMmHg(formatNumber(absBar * 750.062));
+            setKPa(formatNumber(absBar * 100));
         } else {
             setBar("");
             setPsi("");
-
             setMmHg("");
             setKPa("");
         }
     };
 
     const handleMmHgChange = (value) => {
-        setMmHg(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const barVal = num / 750.062;
-            setBar(formatNumber(barVal));
-            setPsi(formatNumber(barVal * 14.5038));
-            setAtm(formatNumber(barVal * 0.986923));
-            setKPa(formatNumber(barVal * 100));
+            const absBar = num / 750.062;
+            const gaugeBar = absBar - 1;
+
+            setBar(formatNumber(gaugeBar));
+            setPsi(formatNumber(absBar * 14.5038));
+            setAtm(formatNumber(absBar * 0.986923));
+            setMmHg(num);
+            setKPa(formatNumber(absBar * 100));
         } else {
             setBar("");
             setPsi("");
             setAtm("");
-
             setKPa("");
         }
     };
 
     const handleKPaChange = (value) => {
-        setKPa(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const barVal = num / 100;
-            setBar(formatNumber(barVal));
-            setPsi(formatNumber(barVal * 14.5038));
-            setAtm(formatNumber(barVal * 0.986923));
-            setMmHg(formatNumber(barVal * 750.062));
+            const absBar = num / 100;
+            const gaugeBar = absBar - 1;
+
+            setBar(formatNumber(gaugeBar));
+            setPsi(formatNumber(absBar * 14.5038));
+            setAtm(formatNumber(absBar * 0.986923));
+            setMmHg(formatNumber(absBar * 750.062));
+            setKPa(num);
         } else {
             setBar("");
             setPsi("");
             setAtm("");
             setMmHg("");
-
         }
     };
 
@@ -128,7 +136,7 @@ export default function PressureConverter() {
             mainContent={
                 <View style={[styles.flexBox]}>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Bar (bar)</Text>
+                        <Text style={[styles.label]}>Gauge (bar) </Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
@@ -137,7 +145,7 @@ export default function PressureConverter() {
                             keyboardType="decimal-pad"
                             value={bar}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
                                     handleBarChange(text);
                                 }
                             }
@@ -156,7 +164,7 @@ export default function PressureConverter() {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Pound per square inch (psi)</Text>
+                        <Text style={[styles.label]}>Pound/inch² (psi)</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
@@ -211,7 +219,7 @@ export default function PressureConverter() {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Millimeters of mercury (mmHg)</Text>
+                        <Text style={[styles.label]}>Mercury (mmHg)</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput

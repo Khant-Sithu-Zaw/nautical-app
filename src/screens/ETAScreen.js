@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import styles from "../style/styles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { handleNumberChange } from "../utils/methods";
+import { numberRegex } from "../utils/constants";
 import Card from "../components/Card";
 export default function ETAScreen() {
     const [speed, setSpeed] = useState("");
@@ -30,23 +30,23 @@ export default function ETAScreen() {
 
     const calculateETA = () => {
         Keyboard.dismiss();
-        if (!dateTime) {
-            alert("Please select Date & Time first!");
+
+
+        if (!dateTime || speed === "" || distance === "" || speed.trim() === "" || distance.trim() === "") {
+            alert("Please fill all both inputs!");
             return;
         }
-        if (!speed || !distance) {
-            alert("Please enter both speed and distance!");
-            return;
-        }
-        if (isNaN(Number(speed)) || isNaN(Number(distance))) {
+        const dist = parseFloat(distance);
+        const spd = parseFloat(speed);
+        if (isNaN(Number(spd)) || isNaN(Number(dist)) || Number(spd) <= 0 || Number(dist) <= 0) {
             setArrivalTime("");
             setDuration("");
-            alert(`Please enter number only !`);
+            alert(`Please enter digits greater than 0!`);
             return;
 
         }
 
-        const etaHours = parseFloat(distance) / parseFloat(speed);
+        const etaHours = parseFloat(dist) / parseFloat(spd);
         if (!isNaN(etaHours)) {
             const etaDays = Math.floor(etaHours / 24);
             const etaWholeHours = Math.floor(etaHours % 24);
@@ -86,7 +86,7 @@ export default function ETAScreen() {
                 <View style={[styles.flexBox]}>
                     {/* Date & Time Input */}
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Date & Time</Text>
+                        <Text style={styles.label}>Departure Time</Text>
                     </View>
 
                     <View style={[styles.rightItem, styles.inputContainer]}>
@@ -125,9 +125,11 @@ export default function ETAScreen() {
                             placeholder="Enter nautical miles"
                             keyboardType="decimal-pad"
                             value={distance}
+
                             onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Distance");
-                                setDistance(cleaned);
+                                if (numberRegex.test(text)) {
+                                }
+                                setDistance(text);
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
@@ -148,9 +150,11 @@ export default function ETAScreen() {
                             placeholder="Enter vessel speed"
                             keyboardType="decimal-pad"
                             value={speed}
+
                             onChangeText={(text) => {
-                                const cleaned = handleNumberChange(text, "Speed");
-                                setSpeed(cleaned);
+                                if (numberRegex.test(text)) {
+                                }
+                                setSpeed(text);
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
@@ -174,15 +178,15 @@ export default function ETAScreen() {
                         </Text>
                         <Text style={[
                             styles.resultText,
-                        ]}> {arrivalTime || ""}
+                        ]}>Arrival {arrivalTime || "--"}
                         </Text>
 
                         <Text style={[
                             styles.resultText,
-                        ]}> Duration takes  {duration || "--"}
+                        ]}>Duration {duration || "--"}
                         </Text>
                     </Card>
-                    <TouchableOpacity style={styles.calculateBtn} onPress={calculateETA}>
+                    <TouchableOpacity style={styles.calculateBtn} activeOpacity={0.8} onPress={calculateETA}>
                         <Text style={styles.calculateTxt}>Calculate ETA</Text>
                     </TouchableOpacity>
                     {/* DateTime Picker */}

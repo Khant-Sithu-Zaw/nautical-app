@@ -7,13 +7,13 @@ import { formatNumber } from "../../utils/methods"
 export default function PowerConverter() {
     const [kW, setKW] = useState("");
     const [hp, setHP] = useState("");
-    const [joules, setJoules] = useState("");
+    const [MW, setMW] = useState("");
     const [btu, setBTU] = useState("");
 
     const resetAll = () => {
         setKW("");
         setHP("");
-        setJoules("");
+        setMW("");
         setBTU("");
     };
 
@@ -22,12 +22,12 @@ export default function PowerConverter() {
         const num = parseFloat(value);
         if (!isNaN(num)) {
             setHP(formatNumber(num * 1.34102));       // kW → HP
-            setJoules(formatNumber(num * 1000));      // kW → Joules/s
+            setMW(formatNumber(num / 1000));         // kW → MW
             setBTU(formatNumber(num * 3412.142));     // kW → BTU/h
         } else {
 
             setHP("");
-            setJoules("");
+            setMW("");
             setBTU("");
         }
     };
@@ -38,28 +38,26 @@ export default function PowerConverter() {
         if (!isNaN(num)) {
             const kWVal = num / 1.34102;
             setKW(formatNumber(kWVal));
-            setJoules(formatNumber(kWVal * 1000));
+            setMW(formatNumber(kWVal / 1000));
             setBTU(formatNumber(kWVal * 3412.142));
         } else {
             setKW("");
-
-            setJoules("");
+            setMW("");
             setBTU("");
         }
     };
 
-    const handleJoulesChange = (value) => {
-        setJoules(value);
+    const handleMWChange = (value) => {
+        setMW(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const kWVal = num / 1000;
+            const kWVal = num * 1000;                 // MW → kW
             setKW(formatNumber(kWVal));
             setHP(formatNumber(kWVal * 1.34102));
             setBTU(formatNumber(kWVal * 3412.142));
         } else {
             setKW("");
             setHP("");
-
             setBTU("");
         }
     };
@@ -71,12 +69,11 @@ export default function PowerConverter() {
             const kWVal = num / 3412.142;
             setKW(formatNumber(kWVal));
             setHP(formatNumber(kWVal * 1.34102));
-            setJoules(formatNumber(kWVal * 1000));
+            setMW(formatNumber(kWVal / 1000));
         } else {
             setKW("");
             setHP("");
-            setJoules("");
-
+            setMW("");
         }
     };
 
@@ -153,25 +150,25 @@ export default function PowerConverter() {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Joules per second (j/s)</Text>
+                        <Text style={[styles.label]}>MegaWatt (MW)</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
                             placeholder="Enter value"
                             keyboardType="decimal-pad"
-                            value={joules}
+                            value={MW}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
                                 }
-                                handleJoulesChange(text);
+                                handleMWattChange(text);
                             }
                             }
                             placeholderTextColor="#bfbebeff"
                             maxLength={8}
                             textContentType="none"
                         />
-                        {joules.length > 0 && (  // Only show ❌ when there's text
+                        {MW.length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -181,12 +178,12 @@ export default function PowerConverter() {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>British Thermal Unit (BTU)</Text>
+                        <Text style={[styles.label]}>British Thermal </Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter BTU value"
                             keyboardType="decimal-pad"
                             value={btu}
                             onChangeText={(text) => {

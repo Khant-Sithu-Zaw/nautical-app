@@ -4,7 +4,7 @@ import styles from "../style/styles";
 import Layout from "../components/Layout";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { handleNumberChange } from "../utils/methods";
-import { signNumberRegex, weatherOptions } from "../utils/constants";
+import { signNumberRegex, weatherOptions, numberRegex } from "../utils/constants";
 import Card from "../components/Card";
 import { RadioButton } from "../components/RadioButton";
 import { scale } from "../utils/scale";
@@ -57,18 +57,23 @@ export default function RequiredSpeedScreen() {
 	};
 
 	const calculateSpeed = () => {
-
 		Keyboard.dismiss();
-		if (!currentTime || !arrivalTime || !distance) {
-			alert("Inputs can't be empty!");
+
+
+		if (!currentTime || !arrivalTime || distance === "" || currentSpeed === "" || distance.trim() === "" || currentSpeed.trim() === "") {
+			alert("Please fill all the inputs.");
 			setSpeed("--");
+			return;
+		}
+		const distanceNum = Number(distance);
+		if (distanceNum <= 0) {
+			setSpeed("--");
+			alert("Please enter distance greater than 0.");
 			return;
 		}
 
 		// Convert safely first
 		const currentSpeedNum = Number(currentSpeed);
-		const distanceNum = Number(distance);
-
 		// Validate inputs
 		if (
 			isNaN(currentSpeedNum) ||
@@ -85,17 +90,11 @@ export default function RequiredSpeedScreen() {
 			return;
 		}
 
-		if (isNaN(distanceNum) || distanceNum <= 0) {
-			setSpeed("--");
-			return;
-		}
-
-
 		let requiredSpeed = distanceNum / timeDiffHours; // knots
 		if (currentSpeedSign === "+") {
-			requiredSpeed = requiredSpeed - currentSpeedNum; // with ship → subtract current
+			requiredSpeed = requiredSpeed - Math.abs(currentSpeedNum); // with ship → subtract current
 		} else {
-			requiredSpeed = requiredSpeed + currentSpeedNum; // against ship → add current
+			requiredSpeed = requiredSpeed + Math.abs(currentSpeedNum); // against ship → add current
 		}
 		const adjustedSTW = requiredSpeed / (1 - selectedWeather.loss / 100);
 
@@ -120,9 +119,11 @@ export default function RequiredSpeedScreen() {
 							placeholder="Enter nautical miles"
 							keyboardType="decimal-pad"
 							value={distance}
+
 							onChangeText={(text) => {
-								const cleaned = handleNumberChange(text, "Distance");
-								setDistance(cleaned);
+								if (numberRegex.test(text)) {
+								}
+								setDistance(text);
 							}}
 							placeholderTextColor="#9b9898ff"
 							maxLength={8}
@@ -196,7 +197,7 @@ export default function RequiredSpeedScreen() {
 						)}
 					</View>
 					<View style={[styles.leftItem, styles.inputLabel]}>
-						<Text style={styles.label}>Weather/Wind Condition</Text>
+						<Text style={styles.label}>Weather & Wind </Text>
 					</View>
 					<View style={[styles.rightItem, styles.inputContainer,]}>
 						<DropdownPicker
@@ -214,35 +215,23 @@ export default function RequiredSpeedScreen() {
 					<View style={[styles.rightItem, styles.inputContainer,]}>
 						<View style={{ position: "relative" }}>
 							<TextInput
-								style={[styles.textInput,]}
+								style={styles.textInput}
 								placeholder="Enter Water Speed (kn)"
 								keyboardType="decimal-pad"
 								value={currentSpeed}
 								onChangeText={(text) => {
-									if (!signNumberRegex.test(text)) {
-										alert(`Invalid Current Speed Input`);
-										return;
-									}
-
-									setCurrentSpeed(text);
-									if (text.length === 1) {
-										// Detect sign
+									if (signNumberRegex.test(text)) {
+										setCurrentSpeed(text);
 										setCurrentSpeedSign(text.startsWith("-") ? "-" : "+");
-										setShowHint(true);
-
-										if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-
-										// Auto-hide after 2 seconds
-										hintTimerRef.current = setTimeout(() => setShowHint(false), 2000);
+										if (text.length > 0) {
+											setShowHint(true);
+											if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
+											hintTimerRef.current = setTimeout(() => setShowHint(false), 2000);
+										} else {
+											setShowHint(false);
+										}
 									}
-
-									// If input cleared, reset hint so it shows again next time
-									if (text.length === 0) {
-										setShowHint(false);
-										if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
-									}
-								}
-								}
+								}}
 								placeholderTextColor="#9b9898ff"
 								maxLength={8}
 								textContentType="none"
@@ -281,7 +270,7 @@ export default function RequiredSpeedScreen() {
 					</Card>
 
 
-					<TouchableOpacity style={styles.calculateBtn} onPress={calculateSpeed}>
+					<TouchableOpacity style={styles.calculateBtn} activeOpacity={0.8} onPress={calculateSpeed}>
 						<Text style={styles.calculateTxt}>Calculate Speed</Text>
 					</TouchableOpacity>
 					{/* DateTime Picker with restrictions */}
