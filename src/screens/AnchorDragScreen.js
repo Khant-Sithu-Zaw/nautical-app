@@ -107,7 +107,7 @@ export default function AnchorDragScreen() {
 
                             ]}
                         >
-                            Swing radius using Turning cirle
+                            Swing radius to be considered
                         </Text>
                         <Text style={[
                             styles.resultText,
