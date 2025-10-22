@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Image } from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity } from "react-native";
 import styles from "../../style/styles";
 import Layout from "../Layout";
 import { numberRegex, } from "../../utils/constants";
 import { formatNumber } from "../../utils/methods"
-export default function SpeedConverter({ numberRegex, formatNumber }) {
+export default function SpeedConverter() {
     const [knots, setKnots] = useState("");
     const [kmh, setKmh] = useState("");
     const [mph, setMph] = useState("");
@@ -106,12 +106,12 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
             mainContent={
                 <View style={[styles.flexBox]}>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Knots (KN)</Text>
+                        <Text style={[styles.label]}>Knots</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter KN value"
                             keyboardType="decimal-pad"
                             value={knots}
                             onChangeText={(text) => {
@@ -134,12 +134,12 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Kilometer per hour (km/h)</Text>
+                        <Text style={[styles.label]}>Kilometer per hour</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter km/h value"
                             keyboardType="decimal-pad"
                             value={kmh}
                             onChangeText={(text) => {
@@ -161,12 +161,12 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Mile per hour (mph)</Text>
+                        <Text style={[styles.label]}>Mile per hour</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter mph value"
                             keyboardType="decimal-pad"
                             value={mph}
                             onChangeText={(text) => {
@@ -189,12 +189,12 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Meter per second (ms)</Text>
+                        <Text style={[styles.label]}>Meter per sec</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter m/s value"
                             keyboardType="decimal-pad"
                             value={ms}
                             onChangeText={(text) => {

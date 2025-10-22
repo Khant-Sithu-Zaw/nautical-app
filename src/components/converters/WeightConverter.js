@@ -47,7 +47,6 @@ export default function WeightConverter() {
             setPound(formatNumber(mt * 2204.62262185));
         } else {
             setMetricTon("");
-
             setShortTon("");
             setKilogram("");
             setPound("");
