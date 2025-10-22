@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     dateIcon: {
         width: scale(21),
         height: verticalScale(21),
-        marginRight: scale(3)
+        marginRight: scale(6)
     },
     resultText: {
         color: "#205E95",

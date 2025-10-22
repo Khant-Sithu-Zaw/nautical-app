@@ -124,7 +124,7 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {knots.length > 0 && (  // Only show ❌ when there's text
+                        {knots && knots.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -151,7 +151,7 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kmh.length > 0 && (  // Only show ❌ when there's text
+                        {kmh && kmh.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -179,7 +179,7 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {mph.length > 0 && (  // Only show ❌ when there's text
+                        {mph && mph.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -207,7 +207,7 @@ export default function SpeedConverter({ numberRegex, formatNumber }) {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {ms.length > 0 && (  // Only show ❌ when there's text
+                        {ms && ms.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

@@ -107,7 +107,7 @@ export default function TemperatureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kel.length > 0 && (  // Only show ❌ when there's text
+                        {fah && fah.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -139,7 +139,7 @@ export default function TemperatureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {cel.length > 0 && (  // Only show ❌ when there's text
+                        {cel && cel.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -171,7 +171,7 @@ export default function TemperatureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kel.length > 0 && (  // Only show ❌ when there's text
+                        {kel && kel.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

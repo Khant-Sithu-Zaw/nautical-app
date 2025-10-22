@@ -12,11 +12,16 @@ export default function FuelConsumptionScreen() {
     const [distance, setDistance] = useState("");
     const [rate, setRate] = useState("");
     const [price, setPrice] = useState("");
-    const [selectedUnit, setSelectedUnit] = useState("(kg/h)");
+    const [selectedUnit, setSelectedUnit] = useState("(Kilogram/hour)");
     const [showCountModal, setShowCountModal] = useState(false);
     const [cost, setCost] = useState(false);
     const [fuel, setFuel] = useState(false);
-
+    const getFuelUnit = () => {
+        if (selectedUnit === "(Kilogram/hour)") return "Kg";
+        if (selectedUnit === "(MetricTon/day)") return "MT";
+        if (selectedUnit === "(Litre/hour)") return "L";
+        return "";
+    };
     const calculateCost = () => {
         Keyboard.dismiss();
         if (speed === "" || distance === "" || rate === "" || price === "" || speed.trim() === "" || distance.trim() === "" || rate.trim() === "" || price.trim() === "") {
@@ -28,24 +33,36 @@ export default function FuelConsumptionScreen() {
         const rateVal = parseFloat(rate);
         const priceVal = parseFloat(price);
 
-        if (isNaN(dist) || isNaN(spd) || isNaN(rateVal) || isNaN(priceVal) || spd === 0 || dist === 0 || rateVal === 0 || priceVal === 0) {
-            alert("Please enter only digits greater than 0.");
+        if (isNaN(dist) || isNaN(spd) || isNaN(rateVal) || isNaN(priceVal) || spd <= 0 || dist <= 0 || rateVal <= 0 || priceVal <= 0) {
+            alert("Please enter only numeric value greater than 0.");
             return;
         }
         const timeHours = dist / spd; // voyage time in hours
 
-        let fuelMT = 0;
+        let fuelConsumed = 0; // unit depends on selectedUnit
+        let totalCost = 0;
 
-        if (selectedUnit === "(kg/h)") {
-            fuelMT = (rateVal * timeHours) / 1000; // kg/h → MT
-        } else if (selectedUnit === "(MT/day)") {
-            fuelMT = (rateVal / 24 * timeHours);   // MT/day → MT
-        } else {
+        // 🔹 Conversion and calculation logic
+        if (selectedUnit === "(Kilogram/hour)") {
+            // Convert kg → metric tons for display, but cost is based on kg
+            fuelConsumed = rateVal * timeHours; // in kg
+            totalCost = fuelConsumed * priceVal; // price per kg
+        }
+        else if (selectedUnit === "(MetricTon/day)") {
+            fuelConsumed = (rateVal / 24) * timeHours; // in metric tons
+            totalCost = fuelConsumed * priceVal; // price per metric ton
+        }
+        else if (selectedUnit === "(Litre/hour)") {
+            fuelConsumed = rateVal * timeHours; // in liters
+            totalCost = fuelConsumed * priceVal; // price per litre
+        }
+        else {
             alert("Selected unit not supported.");
             return;
         }
-        setFuel(fuelMT.toFixed(2));
-        const totalCost = fuelMT.toFixed(2) * priceVal;
+
+        // Display
+        setFuel(fuelConsumed.toFixed(2));
         setCost(totalCost.toFixed(2));
     };
 
@@ -73,7 +90,7 @@ export default function FuelConsumptionScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {distance && (
+                        {distance && distance.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setDistance("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
@@ -98,7 +115,7 @@ export default function FuelConsumptionScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {speed && (
+                        {speed && speed.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setSpeed("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
@@ -132,19 +149,27 @@ export default function FuelConsumptionScreen() {
 
                             placeholderTextColor="#9b9898ff"
                         />
-                        {rate && (
+                        {rate && rate.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setRate("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
                         )}
                     </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Fuel Price</Text>
+                        <Text style={styles.label}>Fuel Price <Text style={{ color: "red" }}>*</Text></Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Price per Metric Ton"
+                            placeholder={
+                                selectedUnit === "(Litre/hour)"
+                                    ? "Price per Litre"
+                                    : selectedUnit === "(Kilogram/hour)"
+                                        ? "Price per Kilogram"
+                                        : selectedUnit === "(MetricTon/day)"
+                                            ? "Price per Metric Ton"
+                                            : "Enter Fuel Price"
+                            }
                             keyboardType="decimal-pad"
                             value={price}
                             maxLength={8}
@@ -156,7 +181,7 @@ export default function FuelConsumptionScreen() {
                             }}
                             placeholderTextColor="#9b9898ff"
                         />
-                        {price && (
+                        {price && price.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setPrice("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
@@ -186,7 +211,7 @@ export default function FuelConsumptionScreen() {
                         </Text>
                         <Text style={[
                             styles.resultText,
-                        ]}>{fuel || "--"} MT
+                        ]}>{fuel || "--"} {getFuelUnit()}
                         </Text>
                     </Card>
 

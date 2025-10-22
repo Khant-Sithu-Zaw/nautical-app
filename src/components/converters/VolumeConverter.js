@@ -120,7 +120,7 @@ export default function VolumeConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {liters.length > 0 && (  // Only show ❌ when there's text
+                        {liters && liters.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -147,7 +147,7 @@ export default function VolumeConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {cubicMeters.length > 0 && (  // Only show ❌ when there's text
+                        {cubicMeters && cubicMeters.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -175,7 +175,7 @@ export default function VolumeConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {gallonsUS.length > 0 && (  // Only show ❌ when there's text
+                        {gallonsUS && gallonsUS.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -203,7 +203,7 @@ export default function VolumeConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {barrels.length > 0 && (  // Only show ❌ when there's text
+                        {barrels && barrels.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

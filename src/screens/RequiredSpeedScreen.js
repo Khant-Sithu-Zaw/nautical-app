@@ -59,28 +59,24 @@ export default function RequiredSpeedScreen() {
 	const calculateSpeed = () => {
 		Keyboard.dismiss();
 
-
 		if (!currentTime || !arrivalTime || distance === "" || currentSpeed === "" || distance.trim() === "" || currentSpeed.trim() === "") {
 			alert("Please fill all the inputs.");
-			setSpeed("--");
 			return;
 		}
 		const distanceNum = Number(distance);
-		if (distanceNum <= 0) {
-			setSpeed("--");
-			alert("Please enter distance greater than 0.");
-			return;
-		}
-
 		// Convert safely first
 		const currentSpeedNum = Number(currentSpeed);
-		// Validate inputs
 		if (
 			isNaN(currentSpeedNum) ||
 			isNaN(distanceNum) ||
-			currentSpeed.trim() === "-"
+			currentSpeed.trim() === "-" || isNaN(distanceNum)
 		) {
 			alert("Invalid Inputs! Accepts number only.");
+			return;
+		}
+
+		if (distanceNum <= 0) {
+			alert("Please enter distance greater than 0.");
 			return;
 		}
 
@@ -91,11 +87,14 @@ export default function RequiredSpeedScreen() {
 		}
 
 		let requiredSpeed = distanceNum / timeDiffHours; // knots
-		if (currentSpeedSign === "+") {
-			requiredSpeed = requiredSpeed - Math.abs(currentSpeedNum); // with ship → subtract current
-		} else {
-			requiredSpeed = requiredSpeed + Math.abs(currentSpeedNum); // against ship → add current
+		if (currentSpeedNum > 0) {
+			// with the ship
+			requiredSpeed = requiredSpeed - currentSpeedNum;
+		} else if (currentSpeedNum < 0) {
+			// against the ship
+			requiredSpeed = requiredSpeed + Math.abs(currentSpeedNum);
 		}
+
 		const adjustedSTW = requiredSpeed / (1 - selectedWeather.loss / 100);
 
 		setSpeed(adjustedSTW.toFixed(2));
@@ -129,7 +128,7 @@ export default function RequiredSpeedScreen() {
 							maxLength={8}
 							textContentType="none"
 						/>
-						{distance && (
+						{distance && distance.toString().length > 0 && (
 							<TouchableOpacity onPress={() => setDistance("")}>
 								<Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
 							</TouchableOpacity>
@@ -236,7 +235,7 @@ export default function RequiredSpeedScreen() {
 								maxLength={8}
 								textContentType="none"
 							/>
-							{currentSpeed && (
+							{currentSpeed && currentSpeed.toString().length > 0 && (
 								<TouchableOpacity onPress={() => setCurrentSpeed("")}>
 									<Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
 								</TouchableOpacity>
@@ -261,7 +260,7 @@ export default function RequiredSpeedScreen() {
 
 							]}
 						>
-							Required STW to Travel
+							Required Speed Through Water
 						</Text>
 						<Text style={[
 							styles.resultText,
@@ -286,7 +285,6 @@ export default function RequiredSpeedScreen() {
 							? { maximumDate: arrivalTime }
 							: {})}
 					/>
-
 				</View >
 			}
 		/>

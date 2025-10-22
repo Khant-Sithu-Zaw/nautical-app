@@ -154,7 +154,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {bar.length > 0 && (  // Only show ❌ when there's text
+                        {bar.toString().length > 0 && bar && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -181,7 +181,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {psi.length > 0 && (  // Only show ❌ when there's text
+                        {psi && psi.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -209,7 +209,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {atm.length > 0 && (  // Only show ❌ when there's text
+                        {atm && atm.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -237,7 +237,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {mmHg.length > 0 && (  // Only show ❌ when there's text
+                        {mmHg && mmHg.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -265,7 +265,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kPa.length > 0 && (  // Only show ❌ when there's text
+                        {kPa && kPa.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

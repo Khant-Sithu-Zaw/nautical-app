@@ -145,7 +145,7 @@ export default function WeightConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {metricTon.length > 0 && (  // Only show ❌ when there's text
+                        {metricTon && metricTon.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -172,7 +172,7 @@ export default function WeightConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {longTon.length > 0 && (  // Only show ❌ when there's text
+                        {longTon && longTon.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -200,7 +200,7 @@ export default function WeightConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {shortTon.length > 0 && (  // Only show ❌ when there's text
+                        {shortTon && shortTon.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -228,7 +228,7 @@ export default function WeightConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kilogram.length > 0 && (  // Only show ❌ when there's text
+                        {kilogram && kilogram.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -256,7 +256,7 @@ export default function WeightConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {pound.length > 0 && (  // Only show ❌ when there's text
+                        {pound && pound.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

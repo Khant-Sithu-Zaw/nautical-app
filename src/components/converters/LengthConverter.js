@@ -110,7 +110,7 @@ export default function LengthConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {meter.length > 0 && (  // Only show ❌ when there's text
+                        {meter && meter.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -137,7 +137,7 @@ export default function LengthConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {fathom.length > 0 && (  // Only show ❌ when there's text
+                        {fathom && fathom.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -165,7 +165,7 @@ export default function LengthConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {feet.length > 0 && (  // Only show ❌ when there's text
+                        {feet && feet.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -193,7 +193,7 @@ export default function LengthConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {cable.length > 0 && (  // Only show ❌ when there's text
+                        {cable && cable.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

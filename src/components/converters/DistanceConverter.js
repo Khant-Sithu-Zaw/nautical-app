@@ -92,7 +92,7 @@ export default function DistanceConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {nm.length > 0 && (  // Only show ❌ when there's text
+                        {nm && nm.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -119,7 +119,7 @@ export default function DistanceConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {km.length > 0 && (  // Only show ❌ when there's text
+                        {km && km.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -147,7 +147,7 @@ export default function DistanceConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {mile.length > 0 && (  // Only show ❌ when there's text
+                        {mile && mile.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

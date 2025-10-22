@@ -31,17 +31,12 @@ export default function AnchorDragScreen() {
         const length = parseFloat(shackleLength);
         if (!lengthNum || !shackleCount) {
             alert("Please fill the inputs");
-            setRadius("");
-            setRadiusNm("");
             return;
         }
         if (isNaN(lengthNum)) {
-            alert("Please enter numbers only for LOA");
-            setRadius("");
-            setRadiusNm("");
+            alert("Please enter numeric value for LOA");
             return;
         }
-
 
         const chainLength = shackleNum * length;
         const halfLOA = lengthNum / 2;
@@ -75,7 +70,7 @@ export default function AnchorDragScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {lengthOverall && (
+                        {lengthOverall && lengthOverall.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setLengthOverall("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>

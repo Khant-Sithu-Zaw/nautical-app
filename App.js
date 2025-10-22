@@ -83,10 +83,10 @@ export default function App() {
           />
 
           <Stack.Screen name="Converter" component={ConverterStack} options={{ headerShown: false }} />
-          <Stack.Screen name="ETA Calculator" component={ETAScreen} />
-          <Stack.Screen name="Speed Calculator" component={RequiredSpeedScreen} />
-          <Stack.Screen name="Anchor Dragging" component={AnchorDragScreen} />
-          <Stack.Screen name="Fuel Cost Calculator" component={FuelConsumptionScreen} />
+          <Stack.Screen name="Estimated Time of Arrival" component={ETAScreen} />
+          <Stack.Screen name="STW Calculator" component={RequiredSpeedScreen} />
+          <Stack.Screen name="Turning Circle Method" component={AnchorDragScreen} />
+          <Stack.Screen name="Fuel Cost Estimation" component={FuelConsumptionScreen} />
           {/* <Stack.Screen name="TimeZone Calculator" component={TimeZoneScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>

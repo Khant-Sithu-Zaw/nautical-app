@@ -1,9 +1,9 @@
 export const screens = [
     { name: "Unit\nConversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
-    { name: "ETA\nCalculator", route: "ETA Calculator", image: require("../../assets/images/Eta.png") },
-    { name: "Required\nSTW", route: "Speed Calculator", image: require("../../assets/images/Speed.png") },
-    { name: "Anchor\nDragging", route: "Anchor Dragging", image: require("../../assets/images/Drag.png") },
-    { name: "Fuel\nCalculation", route: "Fuel Cost Calculator", image: require("../../assets/images/Fuel.png") },
+    { name: "ETA\nCalculator", route: "Estimated Time of Arrival", image: require("../../assets/images/Eta.png") },
+    { name: "Required\nSpeed", route: "STW Calculator", image: require("../../assets/images/Speed.png") },
+    { name: "Anchor\nDragging", route: "Turning Circle Method", image: require("../../assets/images/Drag.png") },
+    { name: "Fuel\nEstimator", route: "Fuel Cost Estimation", image: require("../../assets/images/Fuel.png") },
     // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
@@ -29,8 +29,9 @@ export const weatherOptions = [
     { label: "Violent storm", loss: 25 },
 ];
 export const fuelUnit = [
-    "(MT/day)",
-    "(kg/h)",
+    "(MetricTon/day)",
+    "(Kilogram/hour)",
+    "(Litre/hour)"
 ]
 
 export const shackleLengthOptions = [

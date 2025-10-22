@@ -47,7 +47,7 @@ export default function PowerConverter() {
         }
     };
 
-    const handleMWChange = (value) => {
+    const handleMWattChange = (value) => {
         setMW(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
@@ -113,7 +113,7 @@ export default function PowerConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kW.length > 0 && (  // Only show ❌ when there's text
+                        {kW && kW.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
 
                                 onPress={resetAll}
@@ -140,7 +140,7 @@ export default function PowerConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {hp.length > 0 && (  // Only show ❌ when there's text
+                        {hp && hp.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -168,7 +168,7 @@ export default function PowerConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {MW.length > 0 && (  // Only show ❌ when there's text
+                        {MW && MW.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -196,7 +196,7 @@ export default function PowerConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {btu.length > 0 && (  // Only show ❌ when there's text
+                        {btu && btu.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

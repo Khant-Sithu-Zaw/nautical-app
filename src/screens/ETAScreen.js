@@ -39,11 +39,8 @@ export default function ETAScreen() {
         const dist = parseFloat(distance);
         const spd = parseFloat(speed);
         if (isNaN(Number(spd)) || isNaN(Number(dist)) || Number(spd) <= 0 || Number(dist) <= 0) {
-            setArrivalTime("");
-            setDuration("");
-            alert(`Please enter digits greater than 0!`);
+            alert(`Please enter value greater than 0!`);
             return;
-
         }
 
         const etaHours = parseFloat(dist) / parseFloat(spd);
@@ -135,7 +132,7 @@ export default function ETAScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {distance && (
+                        {distance && distance.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setDistance("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
@@ -160,7 +157,7 @@ export default function ETAScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {speed && (
+                        {speed && speed.toString().length > 0 && (
                             <TouchableOpacity onPress={() => setSpeed("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
