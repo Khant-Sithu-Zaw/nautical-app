@@ -44,7 +44,7 @@ export default function PressureConverter() {
     };
 
     const handlePsiChange = (value) => {
-        setPsi(value);
+
         const num = parseFloat(value);
         if (!isNaN(num)) {
             const absBar = num / 14.5038;    // psi → absolute bar
@@ -53,6 +53,7 @@ export default function PressureConverter() {
             setAtm(formatNumber(absBar * 0.986923));
             setMmHg(formatNumber(absBar * 750.062));
             setKPa(formatNumber(absBar * 100));
+            setPsi(num);
         } else {
             setBar("");
             setAtm("");
