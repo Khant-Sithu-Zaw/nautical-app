@@ -13,7 +13,7 @@ import DropdownPicker from "../components/DropdownPicker";
 export default function RequiredSpeedScreen() {
 	const [speed, setSpeed] = useState("");
 	const [distance, setDistance] = useState("");
-	const [currentSpeed, setCurrentSpeed] = useState("0");
+	const [currentSpeed, setCurrentSpeed] = useState("");
 	// Two states for times
 	const [currentTime, setCurrentTime] = useState(null);
 	const [arrivalTime, setArrivalTime] = useState(null);
