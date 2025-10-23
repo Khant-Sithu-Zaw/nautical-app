@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, Alert, Image, TextInput, Linking } from "react-native";
 import Layout from "../components/Layout";
 import styles from "../style/styles";
-
+import * as IntentLauncher from 'expo-intent-launcher';
 import { scale, moderateScale, verticalScale } from '../utils/scale';
 import { screenOptions } from '../utils/backTab';
 export default function AboutusScreen() {
@@ -15,24 +15,20 @@ export default function AboutusScreen() {
             return;
         }
 
-        const subject = "Feedback from Seaman ToolBox App";
+        const subject = encodeURIComponent("Feedback from Seaman ToolBox App");
         const body = encodeURIComponent(message);
         const receiverEmail = "khantsithuzaw10@gmail.com";
+        const mailtoUrl = `mailto:${receiverEmail}?subject=${subject}&body=${body}`;
 
-        const emailUrl = `mailto:${receiverEmail}?subject=${encodeURIComponent(
-            subject
-        )}&body=${body}`;
-
-        Linking.canOpenURL(emailUrl)
-            .then((supported) => {
-                if (!supported) {
-                    Alert.alert("Error", "No email app found");
-                } else {
-                    setMessage("");
-                    return Linking.openURL(emailUrl);
-                }
-            })
-            .catch((err) => console.error("Error:", err));
+        try {
+            IntentLauncher.startActivityAsync('android.intent.action.SENDTO', {
+                data: mailtoUrl,
+            });
+            setMessage("");
+        } catch (error) {
+            Alert.alert("Error", "No email app found");
+            console.error(error);
+        }
     };
 
     return (

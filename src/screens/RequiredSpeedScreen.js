@@ -13,7 +13,7 @@ import DropdownPicker from "../components/DropdownPicker";
 export default function RequiredSpeedScreen() {
 	const [speed, setSpeed] = useState("");
 	const [distance, setDistance] = useState("");
-	const [currentSpeed, setCurrentSpeed] = useState("");
+	const [currentSpeed, setCurrentSpeed] = useState("0");
 	// Two states for times
 	const [currentTime, setCurrentTime] = useState(null);
 	const [arrivalTime, setArrivalTime] = useState(null);
@@ -59,9 +59,13 @@ export default function RequiredSpeedScreen() {
 	const calculateSpeed = () => {
 		Keyboard.dismiss();
 
-		if (!currentTime || !arrivalTime || distance === "" || currentSpeed === "" || distance.trim() === "" || currentSpeed.trim() === "") {
+		if (!currentTime || !arrivalTime || distance === "" || distance.trim() === "") {
 			alert("Please fill all the inputs.");
 			return;
+		}
+		if (currentSpeed.trim() === "" || currentSpeed === "") {
+			setCurrentSpeed("0");
+			setCurrentSpeedSign("+");
 		}
 		const distanceNum = Number(distance);
 		// Convert safely first
