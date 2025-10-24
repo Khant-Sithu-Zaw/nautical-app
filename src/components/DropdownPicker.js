@@ -10,8 +10,8 @@ import {
     findNodeHandle,
     UIManager,
 } from "react-native";
+import { moderateScale, verticalScale } from "../utils/scale";
 import dropdownStyles from "../style/pickupstyle";
-import { moderateScale, verticalScale, scale } from "../utils/scale";
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -20,15 +20,20 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
     const [pickerLayout, setPickerLayout] = useState(null);
     const pickerRef = useRef(null);
 
-    // Measure picker position to place dropdown below it
     const openDropdown = () => {
         if (pickerRef.current) {
+            // Get absolute position of dropdown
             UIManager.measureInWindow(findNodeHandle(pickerRef.current), (x, y, width, height) => {
                 setPickerLayout({ x, y, width, height });
                 setShowModal(true);
             });
         }
     };
+
+    const closeDropdown = () => setShowModal(false);
+
+    const maxHeight = verticalScale(200); // max height of dropdown modal
+    const spacing = verticalScale(0); // space between picker and modal
 
     return (
         <View>
@@ -53,34 +58,23 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
             </TouchableOpacity>
 
             {showModal && pickerLayout && (
-                <Modal
-                    transparent
-                    animationType="fade"
-                    visible={showModal}
-                    onRequestClose={() => setShowModal(false)}
-                >
+                <Modal transparent animationType="fade" visible={showModal} onRequestClose={closeDropdown}>
                     {/* Tap outside to close */}
-                    <TouchableOpacity
-
-                        activeOpacity={0.9}
-                        style={{ flex: 1 }}
-                        onPressOut={() => setShowModal(false)}
-                    >
-                        {/* Dropdown positioned below picker */}
+                    <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPressOut={closeDropdown}>
                         <View
                             style={{
                                 position: "absolute",
                                 top:
-                                    pickerLayout.y + pickerLayout.height > screenHeight - verticalScale(200)
-                                        ? pickerLayout.y - verticalScale(200) // If near bottom, show above
-                                        : pickerLayout.y + pickerLayout.height,
+                                    pickerLayout.y + pickerLayout.height + spacing + maxHeight > screenHeight
+                                        ? pickerLayout.y - maxHeight - spacing // show above if near bottom
+                                        : pickerLayout.y + pickerLayout.height + spacing, // show below normally
                                 left: pickerLayout.x,
                                 width: pickerLayout.width,
+                                maxHeight: maxHeight,
                                 backgroundColor: "#477DAD",
                                 borderRadius: moderateScale(8),
                                 borderWidth: 1,
                                 borderColor: "#477DAD",
-                                maxHeight: verticalScale(200),
                                 shadowColor: "#000",
                                 shadowOpacity: 0.15,
                                 shadowRadius: 6,
@@ -98,13 +92,13 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
                                         ]}
                                         onPress={() => {
                                             onSelect(opt);
-                                            setShowModal(false); // 👈 closes immediately
+                                            closeDropdown();
                                         }}
                                     >
                                         <Text
                                             style={[
                                                 dropdownStyles.optionText,
-                                                selected === opt && { fontWeight: "bold" } // highlight selected
+                                                selected === opt && { fontWeight: "bold" },
                                             ]}
                                         >
                                             {opt}

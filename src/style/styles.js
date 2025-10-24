@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
         color: "#205E95",
         marginBottom: verticalScale(10),
         width: "100%",
-        fontFamily: 'JacquesFrancois',
+        fontFamily: 'TimeNewRoman',
     },
     leftItem: {
         width: "55%",
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     label: {
         fontSize: moderateScale(14),
         color: "#205E95",
-        fontFamily: 'JacquesFrancois',
+        fontFamily: 'TimeNewRoman',
     },
     inputLabel: {
         width: "42%",
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
         width: "58%",
     },
     textInput: {
-        fontSize: moderateScale(13),
+        fontSize: moderateScale(12),
         borderColor: "#205E95",
         borderWidth: moderateScale(1),
         backgroundColor: "#fff",
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     dateText: {
-        fontSize: moderateScale(13),
+        fontSize: moderateScale(12),
         color: "#636060ff",
     },
     dateIcon: {
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
         marginVertical: verticalScale(5),
         textAlign: "center",
         width: "100%",
-        fontFamily: 'JacquesFrancois',
+        fontFamily: 'TimeNewRoman',
     },
     calculateBtn: {
         backgroundColor: "#477DAD",

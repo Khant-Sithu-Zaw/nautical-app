@@ -6,6 +6,7 @@ export const screens = [
     { name: "Fuel\nEstimator", route: "Fuel Cost Estimation", image: require("../../assets/images/Fuel.png") },
     // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
+
 export const categoryOptions = [
     { name: "Temperature Converter", image: require("../../assets/images/temperature.png"), displayName: "Temperature\nConverter" },
     { name: "Speed Converter", image: require("../../assets/images/speedIcon.png"), displayName: "Speed\nConverter" },

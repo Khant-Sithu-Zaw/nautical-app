@@ -11,7 +11,7 @@ const dropdownStyles = StyleSheet.create({
         justifyContent: "space-between",
     },
     pickerText: {
-        fontSize: moderateScale(13),
+        fontSize: moderateScale(12),
         color: "#000",
     },
     modalOverlay: {

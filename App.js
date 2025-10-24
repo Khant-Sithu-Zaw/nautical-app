@@ -21,10 +21,10 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [showCustomSplash, setShowCustomSplash] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [fontsLoaded] = useFonts({
-    JacquesFrancois: require("./assets/fonts/JacquesFrancois-Regular.ttf"),
-  });
 
+  const [fontsLoaded] = useFonts({
+    TimeNewRoman: require("./assets/fonts/Times-Semibold-Regular.otf"),
+  });
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
