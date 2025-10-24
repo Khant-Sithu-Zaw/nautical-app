@@ -100,7 +100,7 @@ export default function ETAScreen() {
                             >
                                 {dateTime
                                     ? dateTime.toLocaleString()
-                                    : "Datetime not selected"}
+                                    : "Select Datetime "}
                             </Text>
                         </TouchableOpacity>
 

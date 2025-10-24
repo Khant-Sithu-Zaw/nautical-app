@@ -72,7 +72,7 @@ export default function HomeScreen({ navigation }) {
 
 
 
-        const interval = setInterval(animateTip, 30000); // every 60s
+        const interval = setInterval(animateTip, 10000);
         return () => clearInterval(interval);
     }, []);
     useEffect(() => {

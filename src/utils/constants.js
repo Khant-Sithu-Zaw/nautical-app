@@ -7,14 +7,14 @@ export const screens = [
     // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },
 ];
 export const categoryOptions = [
-    { name: "Temperature Converter", image: require("../../assets/images/temperature.png") },
-    { name: "Speed Converter", image: require("../../assets/images/speedIcon.png") },
-    { name: "Distance Converter", image: require("../../assets/images/distanceIcon.png") },
-    { name: "Length Converter", image: require("../../assets/images/depthIcon.png") },
-    { name: "Weight Converter", image: require("../../assets/images/weightIcon.png") },
-    { name: "Volume Converter", image: require("../../assets/images/volumeIcon.png") },
-    { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png") },
-    { name: "Energy Converter", image: require("../../assets/images/energyIcon.png") },
+    { name: "Temperature Converter", image: require("../../assets/images/temperature.png"), displayName: "Temperature\nConverter" },
+    { name: "Speed Converter", image: require("../../assets/images/speedIcon.png"), displayName: "Speed\nConverter" },
+    { name: "Distance Converter", image: require("../../assets/images/distanceIcon.png"), displayName: "Distance\nConverter" },
+    { name: "Length Converter", image: require("../../assets/images/depthIcon.png"), displayName: "Length\nConverter" },
+    { name: "Weight Converter", image: require("../../assets/images/weightIcon.png"), displayName: "Weight\nConverter" },
+    { name: "Volume Converter", image: require("../../assets/images/volumeIcon.png"), displayName: "Volume\nConverter" },
+    { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png"), displayName: "Pressure\nConverter" },
+    { name: "Energy Converter", image: require("../../assets/images/energyIcon.png"), displayName: "Energy\nConverter" },
 ];
 export const weatherOptions = [
     { label: "Calm", loss: 0 },
@@ -66,34 +66,65 @@ export const safetyTips = [
     "Keep emergency exits and passageways clear at all times.",
     "Know the location of fire extinguishers and how to use them properly.",
     "Report all unsafe conditions or near-misses immediately to your superior.",
-    "Keep your tools in good condition and return them after use.",
     "Always follow the company’s Safety Management System (SMS) guidelines.",
 
     // ⚡ Electrical & Machinery
     "Before working on electrical systems, isolate and tag out the power source.",
-    "Never bypass safety devices or interlocks on machinery.",
     "Check oil and fuel leaks regularly — small leaks can lead to fire hazards.",
-    "Avoid wearing loose clothing while operating rotating machinery.",
     "Ventilate the engine room properly before starting work.",
 
     // 🪜 Deck & Mooring Safety
-    " Keep clear of snap-back zones when handling mooring lines.",
-    "Always use proper hand signals and communication during mooring operations.",
-    "Wear gloves and safety shoes when handling ropes or wires.",
-    "Never stand in the bight of a line under tension.",
-    "Keep decks clean and dry — slips cause many injuries on board.",
+    "Keep clear of snap-back zones when handling mooring lines — one step can save your life.",
+    "Always use proper hand signals and clear communication during mooring operations.",
+    "Wear gloves, helmet, and safety shoes when handling ropes or wires.",
+    "Never stand in the bight of a line under tension or inside a potential snap-back area.",
+    "Check winch brakes, stoppers, and fairleads before operation.",
+    "Keep decks clean and dry — most slips and falls occur due to oil or water residues.",
+    "Ensure proper lighting on deck during night operations.",
+    "Never throw heaving lines directly at people — aim beside them.",
 
     // 🔥 Fire Safety
-    "Conduct fire drills seriously — they prepare you for real emergencies.",
-    "Check fire doors and dampers regularly to ensure they close properly.",
+    "Conduct fire drills seriously — these prepare you for real emergencies.",
     "Know your fire station and assigned duties during fire drills.",
-    "Never block fire extinguishers, hydrants, or emergency equipment.",
+    "Keep flammable materials away from hot work or open flames.",
+    "Check fire doors, detectors, and dampers regularly to ensure proper operation.",
+    "Ensure all fire extinguishers are charged, sealed, and within inspection date.",
+    "Close ventilation openings immediately when a fire is detected.",
+    "Never block access to fire hydrants or emergency equipment.",
+    "Raise the fire alarm immediately — never assume someone else will do it.",
+    "Close all doors, hatches, and ventilation systems to cut off oxygen and prevent the fire from spreading.",
+    "Use the correct type of fire extinguisher — never use water on electrical or oil fires",
+    "If you are not directly involved in firefighting, proceed to your muster station and wait for further instructions.",
+    "Wear full firefighting gear including fireman’s outfit and breathing apparatus before entering any smoke-filled area.",
+    "Do not open any door that feels hot to the touch — this could lead to a flashover or explosion.",
+    "Follow the orders of the Officer in Charge and never abandon your assigned station until officially relieved.",
+    // ⚓ Tanker Safety
+    "Always check that all cargo pipelines and valves are properly lined up before transfer.",
+    "Bond and ground all hoses before cargo transfer to prevent static discharge.",
+    "Never smoke or use open flames anywhere outside the designated smoking area.",
+    "Keep portable radios and mobile phones away from cargo deck unless certified explosion-proof.",
 
+    "Monitor tank pressure and temperature continuously when loading or discharging.",
+    "Ensure all scuppers are plugged and save-alls are clean before cargo operations.",
+    "Test gas concentration in enclosed spaces before entry — hydrocarbon vapors are deadly.",
+    "Never discharge oil, garbage, or chemicals into the sea — comply with MARPOL regulations.",
+    "Use spill trays and drip pans when transferring fuel or oil to prevent pollution.",
+    "Report any accidental oil or chemical spill immediately to the bridge.",
+    "Follow ballast water exchange procedures to prevent invasive species transfer.",
+    "Segregate and properly label all waste before disposal or incineration.",
     // 🧭 Navigation & Bridge
     "Maintain a proper lookout — collision risk increases when you lose focus.",
-    "Verify radar and AIS settings before every watch.",
-    "Do not leave the bridge unattended — call the Master if in doubt.",
-    "Communicate clearly with the engine room before maneuvering.",
+    "Use all available means (visual, radar, AIS, ECDIS, sound signals) to assess the risk of collision.",
+    "Verify radar, AIS, and ECDIS settings at the beginning of every watch to ensure accurate readings.",
+    "Check compass errors and compare with gyro and magnetic readings regularly.",
+    "Keep bridge equipment clean, operational, and ready for immediate use.",
+    "Communicate clearly with the engine room before maneuvering or changing speed.",
+    "Never leave the bridge unattended while on watch — call the Master if in doubt or in restricted visibility.",
+    "Maintain a safe speed at all times according to visibility, traffic density, and maneuvering characteristics.",
+    "Avoid distractions such as using mobile phones or engaging in unrelated conversations during watch.",
+    "Ensure bridge lighting is properly adjusted at night to maintain night vision.",
+    "Use binoculars and all available instruments to verify contacts and navigation marks.",
+    "Maintain continuous monitoring of the vessel’s position — cross-check GPS with radar ranges, bearings, and visual fixes.",
 
     // ⚓ Engine Room Safety
     "Keep engine room clean and free from oil residues.",
@@ -102,16 +133,9 @@ export const safetyTips = [
     "Always close the fuel oil quick closing valves when required.",
     "Wear ear protection — engine rooms are high noise zones.",
 
-    // 🌊 Personal & Weather Safety
-    "Always use lifelines and safety harnesses when working on deck in bad weather.",
-    "Secure loose items before rough weather or heavy rolling.",
-    "Never go outside the accommodation without proper clothing in cold weather.",
-    "Avoid leaning over the ship’s side — use safety belts when necessary.",
-
     // 🧠 Mental & Team Safety
     "Speak up if you’re unsure — assumptions cause accidents.",
     "Watch out for your crewmates; safety is teamwork.",
-    "Rest well — fatigue impairs judgment and reaction time.",
     "Report injuries immediately, no matter how small.",
     "Stay alert — your family is waiting for you to return home safely."
 ];

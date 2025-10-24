@@ -58,7 +58,7 @@ export default function ConverterScreen({ navigation }) {
                         { color: pressed ? "#fff" : "#3C78AD" }, // Change text color while pressing
                       ]}
                     >
-                      {tool.name}
+                      {tool.displayName}
                     </Text>
                   </Card>
                 )}

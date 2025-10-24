@@ -248,9 +248,10 @@ const styles = StyleSheet.create({
 
     },
     backIcon: {
-        width: scale(16),
+        width: scale(20),
         height: verticalScale(23),
         marginRight: scale(8),
+        marginLeft: scale(-10),
         tintColor: "#fff",
     },
     // BackIcon ends
@@ -295,59 +296,39 @@ const styles = StyleSheet.create({
         fontFamily: 'JacquesFrancois',
     },
     leftItem: {
-        width: "50%",
+        width: "55%",
         paddingHorizontal: scale(20),
         marginBottom: verticalScale(20)
     },
 
     label: {
-        fontSize: moderateScale(13),
+        fontSize: moderateScale(14),
         color: "#205E95",
         fontFamily: 'JacquesFrancois',
     },
     inputLabel: {
-        width: "40%",
-        paddingRight: scale(10),
+        width: "42%",
+        paddingRight: scale(8),
         paddingLeft: scale(17),
     },
     rightItem: {
-        width: "50%",
-        paddingRight: scale(20),
+        width: "45%",
+        paddingRight: scale(17),
         position: "relative",
         marginBottom: verticalScale(20)
     },
     inputContainer: {
-        width: "60%",
+        width: "58%",
     },
     textInput: {
-        fontSize: moderateScale(12),
+        fontSize: moderateScale(13),
         borderColor: "#205E95",
         borderWidth: moderateScale(1),
         backgroundColor: "#fff",
         borderRadius: moderateScale(6),
         paddingHorizontal: scale(8),
-        paddingVertical: verticalScale(6),
+        paddingVertical: verticalScale(7),
         color: "#000",
-    },
-    signBtn: {
-        position: "absolute",
-        width: scale(28),
-        height: verticalScale(33),
-        justifyContent: "center",
-        alignItems: "center",
-        borderWidth: 0,
-        backgroundColor: "#477DAD",
-        borderRadius: moderateScale(6),
-        borderBottomRightRadius: 0,
-        borderTopRightRadius: 0,
-        left: scale(0),
-        top: "50%",
-        transform: [{ translateY: -verticalScale(16) }], // half of button height
-        zIndex: 1
-    },
-    signTxt: {
-        fontSize: moderateScale(12),
-        color: "#ffffff"
     },
     hintBubble: {
         position: "absolute",
@@ -378,13 +359,13 @@ const styles = StyleSheet.create({
         borderWidth: moderateScale(1),
         borderColor: "#205E95",
         borderRadius: moderateScale(6),
-        paddingVertical: verticalScale(6),
+        paddingVertical: verticalScale(7),
         paddingHorizontal: scale(8),
         backgroundColor: "#fff",
         width: "100%",
     },
     dateText: {
-        fontSize: moderateScale(12),
+        fontSize: moderateScale(13),
         color: "#636060ff",
     },
     dateIcon: {

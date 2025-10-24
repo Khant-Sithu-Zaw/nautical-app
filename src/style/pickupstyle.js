@@ -5,13 +5,13 @@ const dropdownStyles = StyleSheet.create({
         borderWidth: scale(1),
         borderColor: "#205E95",
         borderRadius: moderateScale(6),
-        paddingVertical: verticalScale(6),
+        paddingVertical: verticalScale(7),
         paddingHorizontal: scale(10),
         // backgroundColor: "#fff",
         justifyContent: "space-between",
     },
     pickerText: {
-        fontSize: moderateScale(12),
+        fontSize: moderateScale(13),
         color: "#000",
     },
     modalOverlay: {

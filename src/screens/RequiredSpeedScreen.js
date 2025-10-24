@@ -159,7 +159,7 @@ export default function RequiredSpeedScreen() {
 							>
 								{currentTime
 									? currentTime.toLocaleString()
-									: "Datetime not selected"}
+									: "Select Datetime"}
 							</Text>
 						</TouchableOpacity>
 
@@ -189,7 +189,7 @@ export default function RequiredSpeedScreen() {
 							>
 								{arrivalTime
 									? arrivalTime.toLocaleString()
-									: "Datetime not selected"}
+									: "Select Datetime"}
 							</Text>
 						</TouchableOpacity>
 

@@ -46,7 +46,7 @@ export default function AboutusScreen() {
             mainContent={
                 <View>
 
-                    <Text style={[styles.contentTitle, { marginBottom: verticalScale(20) }]}>" We welcome your feedback to improve this tool and make it more useful !! "</Text    >
+                    <Text style={[styles.contentTitle, { marginBottom: verticalScale(20) }]}>" We welcome your feedback to improve this tool and make it more useful !! "</Text>
 
                     <View style={[styles.flexBox, styles.relativeHolder, { alignItems: "flex-start", justifyContent: "center" }]}>
 
