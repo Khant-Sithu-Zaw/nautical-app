@@ -33,7 +33,7 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
     const closeDropdown = () => setShowModal(false);
 
     const maxHeight = verticalScale(200); // max height of dropdown modal
-    const spacing = verticalScale(0); // space between picker and modal
+    const spacing = verticalScale(30); // space between picker and modal
 
     return (
         <View>
