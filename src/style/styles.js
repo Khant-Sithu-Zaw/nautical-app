@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#477DAD",
+        backgroundColor: "#3C78AD",
         paddingTop: verticalScale(18),
         paddingBottom: verticalScale(65),
         position: "absolute",
@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#3C78AD",
         display: "flex",
-        paddingHorizontal: scale(20)
+        paddingHorizontal: scale(20),
+        minHeight: verticalScale(300),
     },
     btnIcon: {
         width: scale(55),
@@ -217,11 +218,11 @@ const styles = StyleSheet.create({
     //Card starts
     card: {
         backgroundColor: "#fff",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+        boxShadow: "0px 8px 10px rgba(0,0,0,0.2)",
         paddingVertical: verticalScale(13),
         paddingHorizontal: scale(10),
         alignItems: "center",
-        borderRadius: moderateScale(20),
+        borderRadius: moderateScale(15),
         elevation: moderateScale(5), // for Android shadow
     },
     cardExtend: {
@@ -237,7 +238,8 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: moderateScale(15),
         textAlign: "center",
-        color: "#205E95"
+        color: "#205E95",
+        fontWeight: "bold",
     },
     //Card ends
     // BackIcon starts
@@ -378,6 +380,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(16),
         marginVertical: verticalScale(5),
         textAlign: "center",
+
         width: "100%",
         fontFamily: 'TimeNewRoman',
     },
@@ -458,6 +461,11 @@ const styles = StyleSheet.create({
         height: verticalScale(50),
         resizeMode: "contain",
         marginHorizontal: scale(2),
+    },
+    //Learn Screen starts
+    arrow: {
+        width: scale(7),
+        height: verticalScale(13),
     }
 });
 

@@ -140,3 +140,11 @@ export const safetyTips = [
     "Report injuries immediately, no matter how small.",
     "Stay alert — your family is waiting for you to return home safely."
 ];
+export const courses = [
+    { id: 1, name: "Basic Safety Training" },
+    { id: 2, name: "Pre-Sea (Deck)" },
+    { id: 3, name: "Ship Security Awareness" },
+    { id: 4, name: "Designated Security Duties" },
+    { id: 5, name: "Marlins English" },
+    { id: 6, name: "Tanker Familiarization" },
+];
