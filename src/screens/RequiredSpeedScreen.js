@@ -213,13 +213,13 @@ export default function RequiredSpeedScreen() {
 						/>
 					</View>
 					<View style={[styles.leftItem, styles.inputLabel]}>
-						<Text style={styles.label}>Set Speed(±)</Text>
+						<Text style={styles.label}>Set Speed(kn)</Text>
 					</View>
 					<View style={[styles.rightItem, styles.inputContainer,]}>
 						<View style={{ position: "relative" }}>
 							<TextInput
 								style={styles.textInput}
-								placeholder="Enter Water Speed (kn)"
+								placeholder="(±)Water Current Speed"
 								keyboardType="decimal-pad"
 								value={currentSpeed}
 								onChangeText={(text) => {

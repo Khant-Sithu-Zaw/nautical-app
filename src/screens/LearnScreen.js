@@ -9,15 +9,13 @@ export default function LearnScreen({ navigation }) {
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
             {/* Title (optional) */}
-            <Text
+            <View
                 style={
                     styles.homeTop
                 }
             >
 
-            </Text>
-
-            {/* Scrollable area */}
+            </View>
             <View style={{ flex: 1, marginBottom: 80 }}>
                 {/* 👆 marginBottom = height of your footer */}
                 <ScrollView
@@ -34,36 +32,26 @@ export default function LearnScreen({ navigation }) {
                         courses.map((tool, index) => (
                             <Pressable
                                 key={index}
-                                style={[
-                                    {
-                                        width: "85%",
-                                        marginTop: verticalScale(10),
-                                        marginBottom: verticalScale(20),
-                                    },
-                                ]}
-                                onPress={() => navigation.navigate("CourseScreen")}
-                            // onPress={() => navigation.navigate(tool.name)}
+                                style={[styles.pressableCard, {
+                                    width
+                                        : "85%"
+                                }]}
+                                onPress={() => navigation.navigate("Topic Screen", { course: tool })}
+
                             >
                                 {({ pressed }) => (
                                     <Card
-                                        style={{
+                                        style={[styles.cardItem, {
                                             backgroundColor: pressed ? "#3C78AD" : "#fff",
-                                            elevation: 3,
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            justifyContent: "space-between",
-                                            paddingHorizontal: scale(25),
-                                            paddingVertical: verticalScale(10),
-                                        }}
+                                        }]}
                                     >
                                         <Text
-                                            style={{
+                                            style={[styles.cardCourse, {
 
                                                 color: pressed ? "#fff" : "#205E95",
-                                                fontSize: moderateScale(16),
                                                 fontWeight: "bold",
 
-                                            }}
+                                            }]}
                                         >
                                             {tool.name}
                                         </Text>
@@ -80,6 +68,7 @@ export default function LearnScreen({ navigation }) {
                     )}
                 </ScrollView>
             </View>
+
         </View>
     );
 }

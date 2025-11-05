@@ -115,6 +115,10 @@ export default function AnchorDragScreen() {
                         </Text>
                         <Text style={[
                             styles.resultText,
+                        ]}> Or
+                        </Text>
+                        <Text style={[
+                            styles.resultText,
                         ]}> {radiusNM || "--"} NMile(s)
                         </Text>
                     </Card>

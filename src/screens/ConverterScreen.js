@@ -13,10 +13,6 @@ export default function ConverterScreen({ navigation }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("Temperature");
   const [showCountModal, setShowCountModal] = useState(false);
-  const [isPressed, setIsPressed] = React.useState(false);
-
-
-
 
   return (
     <Layout

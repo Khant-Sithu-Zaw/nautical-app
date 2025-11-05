@@ -13,7 +13,7 @@ import HomeTabs from "./src/components/HomeTabs";
 import { useFonts } from "expo-font";
 import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
 import styles from "./src/style/styles";
-import CourseScreen from "./src/screens/CourseScreen";
+import TopicScreen from "./src/screens/TopicScreen";
 // import TimeZoneScreen from "./src/screens/TimeZoneScreen";
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
@@ -88,7 +88,7 @@ export default function App() {
           <Stack.Screen name="STW Calculator" component={RequiredSpeedScreen} />
           <Stack.Screen name="Turning Circle Method" component={AnchorDragScreen} />
           <Stack.Screen name="Fuel Cost Estimation" component={FuelConsumptionScreen} />
-          <Stack.Screen name="CourseScreen" component={CourseScreen} />
+          <Stack.Screen name="Topic Screen" component={TopicScreen} />
           {/* <Stack.Screen name="TimeZone Calculator" component={TimeZoneScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>

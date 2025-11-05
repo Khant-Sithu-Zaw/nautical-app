@@ -241,6 +241,15 @@ const styles = StyleSheet.create({
         color: "#205E95",
         fontWeight: "bold",
     },
+    cardItem: {
+        elevation: 3,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: scale(25),
+        paddingVertical: verticalScale(10),
+
+    },
     //Card ends
     // BackIcon starts
     backContainer: {
@@ -466,6 +475,18 @@ const styles = StyleSheet.create({
     arrow: {
         width: scale(7),
         height: verticalScale(13),
+    },
+    //Topic screen starts
+    courseList: { flex: 1, backgroundColor: "#fff", padding: moderateScale(20) },
+    cardCourse: {
+        fontSize: moderateScale(16),
+    },
+    cardTopic: {
+        fontSize: moderateScale(15),
+    },
+    pressableCard: {
+        marginTop: verticalScale(10),
+        marginBottom: verticalScale(20),
     }
 });
 
