@@ -255,11 +255,11 @@ const styles = StyleSheet.create({
     backContainer: {
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: scale(10),
-
+        paddingLeft: scale(15),
     },
     backIcon: {
         width: scale(20),
+        textAlign: "center",
         height: verticalScale(23),
         marginRight: scale(8),
         marginLeft: scale(-10),

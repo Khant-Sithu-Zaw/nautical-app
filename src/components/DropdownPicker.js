@@ -9,6 +9,7 @@ import {
     Dimensions,
     findNodeHandle,
     UIManager,
+    Platform
 } from "react-native";
 import { moderateScale, verticalScale } from "../utils/scale";
 import dropdownStyles from "../style/pickupstyle";
@@ -33,7 +34,8 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
     const closeDropdown = () => setShowModal(false);
 
     const maxHeight = verticalScale(200); // max height of dropdown modal
-    const spacing = verticalScale(32); // space between picker and modal
+    const spacing = Platform.OS === "ios" ? verticalScale(0) : verticalScale(32);
+    // space between picker and modal
 
     return (
         <View>
