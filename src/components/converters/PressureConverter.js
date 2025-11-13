@@ -25,17 +25,13 @@ export default function PressureConverter() {
         const num = parseFloat(value);
 
         if (!isNaN(num)) {
-            if (num < -1) {
-                alert("Gauge Pressure cannot be less than -1 bar");
-                return; // stops further processing
-            }
-            const absBar = num + 1; // convert to absolute
             setBar(num);
-            setPsi(formatNumber(absBar * 14.5038));
-            setAtm(formatNumber(absBar * 0.986923));
-            setMmHg(formatNumber(absBar * 750.062));
-            setKPa(formatNumber(absBar * 100));
+            setPsi(formatNumber(num * 14.5038));
+            setAtm(formatNumber(num * 0.986923));
+            setMmHg(formatNumber(num * 750.062));
+            setKPa(formatNumber(num * 100));
         } else {
+
             setPsi("");
             setAtm("");
             setMmHg("");
@@ -44,16 +40,14 @@ export default function PressureConverter() {
     };
 
     const handlePsiChange = (value) => {
-
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const absBar = num / 14.5038;    // psi → absolute bar
-            const gaugeBar = absBar - 1;     // convert to gauge
+            const gaugeBar = num / 14.5038; // psi → gauge bar (no +1)
             setBar(formatNumber(gaugeBar));
-            setAtm(formatNumber(absBar * 0.986923));
-            setMmHg(formatNumber(absBar * 750.062));
-            setKPa(formatNumber(absBar * 100));
             setPsi(num);
+            setAtm(formatNumber(gaugeBar * 0.986923));
+            setMmHg(formatNumber(gaugeBar * 750.062));
+            setKPa(formatNumber(gaugeBar * 100));
         } else {
             setBar("");
             setAtm("");
@@ -65,14 +59,12 @@ export default function PressureConverter() {
     const handleAtmChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const absBar = num / 0.986923;
-            const gaugeBar = absBar - 1;
-
+            const gaugeBar = num / 0.986923; // atm → gauge bar
             setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(absBar * 14.5038));
+            setPsi(formatNumber(gaugeBar * 14.5038));
             setAtm(num);
-            setMmHg(formatNumber(absBar * 750.062));
-            setKPa(formatNumber(absBar * 100));
+            setMmHg(formatNumber(gaugeBar * 750.062));
+            setKPa(formatNumber(gaugeBar * 100));
         } else {
             setBar("");
             setPsi("");
@@ -84,14 +76,12 @@ export default function PressureConverter() {
     const handleMmHgChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const absBar = num / 750.062;
-            const gaugeBar = absBar - 1;
-
+            const gaugeBar = num / 750.062; // mmHg → gauge bar
             setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(absBar * 14.5038));
-            setAtm(formatNumber(absBar * 0.986923));
+            setPsi(formatNumber(gaugeBar * 14.5038));
+            setAtm(formatNumber(gaugeBar * 0.986923));
             setMmHg(num);
-            setKPa(formatNumber(absBar * 100));
+            setKPa(formatNumber(gaugeBar * 100));
         } else {
             setBar("");
             setPsi("");
@@ -103,13 +93,11 @@ export default function PressureConverter() {
     const handleKPaChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const absBar = num / 100;
-            const gaugeBar = absBar - 1;
-
+            const gaugeBar = num / 100; // kPa → gauge bar
             setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(absBar * 14.5038));
-            setAtm(formatNumber(absBar * 0.986923));
-            setMmHg(formatNumber(absBar * 750.062));
+            setPsi(formatNumber(gaugeBar * 14.5038));
+            setAtm(formatNumber(gaugeBar * 0.986923));
+            setMmHg(formatNumber(gaugeBar * 750.062));
             setKPa(num);
         } else {
             setBar("");
@@ -137,7 +125,7 @@ export default function PressureConverter() {
             mainContent={
                 <View style={[styles.flexBox]}>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>Gauge (bar) </Text>
+                        <Text style={[styles.label]}>Bar</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
@@ -146,16 +134,16 @@ export default function PressureConverter() {
                             keyboardType="decimal-pad"
                             value={bar}
                             onChangeText={(text) => {
-                                if (signNumberRegex.test(text)) {
+                                if (numberRegex.test(text)) {
                                     handleBarChange(text);
                                 }
-                            }
-                            }
+                            }}
+
                             placeholderTextColor="#bfbebeff"
                             maxLength={8}
                             textContentType="none"
                         />
-                        {bar.toString().length > 0 && bar && (  // Only show ❌ when there's text
+                        {bar.toString().length > 0 && (
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -182,7 +170,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {psi && psi.toString().length > 0 && (  // Only show ❌ when there's text
+                        {psi.toString().length > 0 && (// Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -210,7 +198,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {atm && atm.toString().length > 0 && (  // Only show ❌ when there's text
+                        {atm.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -238,7 +226,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {mmHg && mmHg.toString().length > 0 && (  // Only show ❌ when there's text
+                        {mmHg.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}
@@ -266,7 +254,7 @@ export default function PressureConverter() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {kPa && kPa.toString().length > 0 && (  // Only show ❌ when there's text
+                        {kPa.toString().length > 0 && (  // Only show ❌ when there's text
                             <TouchableOpacity
                                 style={styles.inputIcon}
                                 onPress={resetAll}

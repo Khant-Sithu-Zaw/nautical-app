@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Image } from "react-native";
-
+import shipIcon from "../../assets/images/shipIcon.png"
+import shipIconActive from "../../assets/images/shipIconActive.png"
 import homeIcon from "../../assets/images/homeIcon.png";
 import homeIconActive from "../../assets/images/homeIconActive.png";
-import learnIcon from "../../assets/images/learnIcon.png";
-import learnIconActive from "../../assets/images/learnIconActive.png";
+
 import profileIcon from "../../assets/images/profileIcon.png";
 import profileIconActive from "../../assets/images/profileIconActive.png";
 import styles from "../style/styles";
@@ -13,9 +13,9 @@ export default function Footer({ navigation }) {
     const [activeTab, setActiveTab] = useState("home");
 
     const tabs = [
-        { key: "learn", icon: learnIcon, iconActive: learnIconActive, screen: "LearnScreen" },
+        { key: "profile", icon: profileIcon, iconActive: profileIconActive, screen: "ProfileScreen" },
         { key: "home", icon: homeIcon, iconActive: homeIconActive, screen: "Home" },
-        { key: "aboutus", icon: profileIcon, iconActive: profileIconActive, screen: "AboutusScreen" },
+        { key: "aboutus", icon: shipIcon, iconActive: shipIconActive, screen: "AboutusScreen" },
     ];
 
     return (

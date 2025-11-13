@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Footer from "./Footer";
 import HomeHeader from "./HomeHeader";
 import AboutusScreen from "../screens/AboutusScreen";
-import LearnScreen from "../screens/LearnScreen";
 import HomeScreen from "../screens/HomeScreen";
+import ProfileScreen from '../screens/ProfileScreen';
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabs() {
@@ -22,7 +22,7 @@ export default function HomeTabs() {
                     header: () => <HomeHeader />, // Show HomeHeader only on Home
                 }}
             />
-            <Tab.Screen name="LearnScreen" component={LearnScreen} />
+            <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
             <Tab.Screen name="AboutusScreen" component={AboutusScreen} />
         </Tab.Navigator>
     )

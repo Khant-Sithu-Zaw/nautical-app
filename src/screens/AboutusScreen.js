@@ -39,7 +39,7 @@ export default function AboutusScreen() {
                     <Image source={require("../../assets/images/anchor.png")} style={styles.anchorLogo} />
 
                     <Text style={styles.bannerText}>
-                        Designed for seafarers, this app works both online and offline to support daily calculation tasks and learning. Access nautical tools and tutorials in this box anytime for a better experience at sea
+                        Designed for seafarers, this app supports daily calculation tasks and résumé creation. Access nautical tools and in this app anytime for a better experience at sea
                     </Text>
                 </View>
             }

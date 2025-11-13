@@ -36,7 +36,7 @@ export default function PowerConverter() {
         setHP(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const kWVal = num / 1.34102;
+            const kWVal = num * 0.7457;
             setKW(formatNumber(kWVal));
             setMW(formatNumber(kWVal / 1000));
             setBTU(formatNumber(kWVal * 3412.142));
@@ -178,12 +178,12 @@ export default function PowerConverter() {
                         )}
                     </View>
                     <View style={[styles.leftItem]}>
-                        <Text style={[styles.label]}>British Thermal </Text>
+                        <Text style={[styles.label]}>BritishThermal Unit</Text>
                     </View>
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter BTU value"
+                            placeholder="Enter BTU/hour"
                             keyboardType="decimal-pad"
                             value={btu}
                             onChangeText={(text) => {
