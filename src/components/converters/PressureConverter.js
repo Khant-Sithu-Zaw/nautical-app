@@ -42,12 +42,12 @@ export default function PressureConverter() {
     const handlePsiChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const gaugeBar = num / 14.5038; // psi → gauge bar (no +1)
-            setBar(formatNumber(gaugeBar));
+            const barVal = num / 14.5038; // psi → gauge bar (no +1)
+            setBar(formatNumber(barVal));
             setPsi(num);
-            setAtm(formatNumber(gaugeBar * 0.986923));
-            setMmHg(formatNumber(gaugeBar * 750.062));
-            setKPa(formatNumber(gaugeBar * 100));
+            setAtm(formatNumber(barVal * 0.986923));
+            setMmHg(formatNumber(barVal * 750.062));
+            setKPa(formatNumber(barVal * 100));
         } else {
             setBar("");
             setAtm("");
@@ -59,12 +59,12 @@ export default function PressureConverter() {
     const handleAtmChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const gaugeBar = num / 0.986923; // atm → gauge bar
-            setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(gaugeBar * 14.5038));
+            const barVal = num / 0.986923; // atm → gauge bar
+            setBar(formatNumber(barVal));
+            setPsi(formatNumber(barVal * 14.5038));
             setAtm(num);
-            setMmHg(formatNumber(gaugeBar * 750.062));
-            setKPa(formatNumber(gaugeBar * 100));
+            setMmHg(formatNumber(barVal * 750.062));
+            setKPa(formatNumber(barVal * 100));
         } else {
             setBar("");
             setPsi("");
@@ -76,12 +76,12 @@ export default function PressureConverter() {
     const handleMmHgChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const gaugeBar = num / 750.062; // mmHg → gauge bar
-            setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(gaugeBar * 14.5038));
-            setAtm(formatNumber(gaugeBar * 0.986923));
+            const barVal = num / 750.062; // mmHg → gauge bar
+            setBar(formatNumber(barVal));
+            setPsi(formatNumber(barVal * 14.5038));
+            setAtm(formatNumber(barVal * 0.986923));
             setMmHg(num);
-            setKPa(formatNumber(gaugeBar * 100));
+            setKPa(formatNumber(barVal * 100));
         } else {
             setBar("");
             setPsi("");
@@ -93,11 +93,11 @@ export default function PressureConverter() {
     const handleKPaChange = (value) => {
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const gaugeBar = num / 100; // kPa → gauge bar
-            setBar(formatNumber(gaugeBar));
-            setPsi(formatNumber(gaugeBar * 14.5038));
-            setAtm(formatNumber(gaugeBar * 0.986923));
-            setMmHg(formatNumber(gaugeBar * 750.062));
+            const barVal = num / 100; // kPa → gauge bar
+            setBar(formatNumber(barVal));
+            setPsi(formatNumber(barVal * 14.5038));
+            setAtm(formatNumber(barVal * 0.986923));
+            setMmHg(formatNumber(barVal * 750.062));
             setKPa(num);
         } else {
             setBar("");
@@ -130,7 +130,7 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter absolute value"
                             keyboardType="decimal-pad"
                             value={bar}
                             onChangeText={(text) => {
@@ -158,7 +158,7 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter absolute value"
                             keyboardType="decimal-pad"
                             value={psi}
                             onChangeText={(text) => {
@@ -185,7 +185,7 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter absolute value"
                             keyboardType="decimal-pad"
                             value={atm}
                             onChangeText={(text) => {
@@ -213,7 +213,7 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter absolute value"
                             keyboardType="decimal-pad"
                             value={mmHg}
                             onChangeText={(text) => {
@@ -241,7 +241,7 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter value"
+                            placeholder="Enter absolute value"
                             keyboardType="decimal-pad"
                             value={kPa}
                             onChangeText={(text) => {

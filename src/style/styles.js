@@ -471,23 +471,13 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         marginHorizontal: scale(2),
     },
-    //Learn Screen starts
-    arrow: {
-        width: scale(7),
-        height: verticalScale(13),
-    },
-    //Topic screen starts
-    courseList: { flex: 1, backgroundColor: "#fff", padding: moderateScale(20) },
-    cardCourse: {
-        fontSize: moderateScale(16),
-    },
-    cardTopic: {
-        fontSize: moderateScale(15),
-    },
-    pressableCard: {
-        marginTop: verticalScale(10),
-        marginBottom: verticalScale(20),
+    linkText: {
+        color: "#ffffff",
+        fontSize: moderateScale(20),
+        textAlign: "center",
+        lineHeight: moderateScale(28),
     }
+
 });
 
 export default styles;
