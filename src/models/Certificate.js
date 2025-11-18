@@ -1,7 +1,7 @@
 export class Certificate {
-    constructor({ title = "", issuedBy = "", expiryDate = "" } = {}) {
+    constructor({ title = "", expiredDate = "", issuedDate = "", } = {}) {
         this.title = title;
-        this.issuedBy = issuedBy;
-        this.expiryDate = expiryDate;
+        this.expiredDate = expiredDate;
+        this.issuedDate = issuedDate;
     }
 }

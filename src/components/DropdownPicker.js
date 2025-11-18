@@ -16,7 +16,7 @@ import dropdownStyles from "../style/pickupstyle";
 
 const screenHeight = Dimensions.get("window").height;
 
-export default function DropdownPicker({ label, options, selected, onSelect }) {
+export default function DropdownPicker({ label, options, selected, onSelect, placeholder = "Select", viewStyle = {}, textboxStyle = {} }) {
     const [showModal, setShowModal] = useState(false);
     const [pickerLayout, setPickerLayout] = useState(null);
     const pickerRef = useRef(null);
@@ -38,7 +38,7 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
     // space between picker and modal
 
     return (
-        <View>
+        <View style={[viewStyle]}>
             {label && <Text style={{ fontWeight: "bold", marginBottom: 5 }}>{label}</Text>}
 
             <TouchableOpacity
@@ -53,7 +53,7 @@ export default function DropdownPicker({ label, options, selected, onSelect }) {
                 ]}
                 onPress={openDropdown}
             >
-                <Text style={[dropdownStyles.pickerText, { color: selected ? "black" : "gray" }]}>
+                <Text style={[dropdownStyles.pickerText, { color: selected ? "black" : "gray" }, textboxStyle]}>
                     {selected || "Select"}
                 </Text>
                 <Text style={{ fontSize: moderateScale(9) }}>▼</Text>

@@ -1,7 +1,7 @@
 export default class User {
     constructor({
         name = "",
-        birthday = "",
+        birthday = null,
         nationality = "",
         passport = "",
         sirb = "",

@@ -471,13 +471,62 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         marginHorizontal: scale(2),
     },
+    //Profile Main Screen
     linkText: {
         color: "#ffffff",
         fontSize: moderateScale(20),
         textAlign: "center",
         lineHeight: moderateScale(28),
-    }
+    },
+    //profile setup
+    addIcon: {
+        width: scale(25),
+        height: verticalScale(25),
+        resizeMode: "contain",
 
+    },
+    profileContainer: {
+        flex: 1, padding: moderateScale(20), backgroundColor: "#fff", marginBottom: verticalScale(40),
+    },
+    imgCenter: {
+        alignItems: "center", marginBottom: verticalScale(15)
+    },
+    profileImage: {
+        width: scale(120), height: verticalScale(120), borderRadius: moderateScale(70), borderWidth: scale(2), borderColor: "#3C78AD", resizeByMode: "contain"
+    },
+    profileInput: {
+        width: "100%", borderWidth: scale(1), borderColor: "#3C78AD", borderRadius: moderateScale(6), paddingHorizontal: scale(10), paddingVertical: verticalScale(6), marginTop: verticalScale(10), fontSize: moderateScale(14), color: "#000"
+    },
+    section: {
+        borderBottomWidth: scale(2), borderBottomColor: "#3C78AD", marginTop: verticalScale(15), marginBottom: verticalScale(10),
+    },
+    sectionContainer: {
+        paddingBottom: verticalScale(4), display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingRight: scale(2),
+    },
+    box: {
+        borderBottomWidth: scale(2), borderBottomColor: "#205E95", paddingBottom: verticalScale(10), marginBottom: verticalScale(10), borderStyle: "dotted",
+    },
+    sectionTitle: {
+        fontSize: moderateScale(18), fontWeight: "bold", color: "#205E95",
+    },
+    addButton: {
+        marginTop: verticalScale(8), backgroundColor: "#3C78AD", padding: moderateScale(10), borderRadius: moderateScale(6), alignItems: "center"
+    },
+    addText: {
+        color: "#fff", fontWeight: "600"
+    },
+    userBtn: {
+        marginTop: verticalScale(20), backgroundColor: "#3C78AD", padding: moderateScale(15), borderRadius: moderateScale(18), alignItems: "center", marginBottom: verticalScale(180), width: "46%"
+    },
+    btnText: {
+        color: "#fff", fontWeight: "600", fontSize: moderateScale(16)
+    },
+    removeBtn: {
+        width: "30%",
+        backgroundColor: "#3C78AD",
+        padding: moderateScale(8), borderRadius: moderateScale(8),
+        marginTop: verticalScale(12),
+    }
 });
 
 export default styles;

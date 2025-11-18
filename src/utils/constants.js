@@ -17,6 +17,12 @@ export const categoryOptions = [
     { name: "Pressure Converter", image: require("../../assets/images/pressureIcon.png"), displayName: "Pressure\nConverter" },
     { name: "Energy Converter", image: require("../../assets/images/energyIcon.png"), displayName: "Energy\nConverter" },
 ];
+export const levels = [
+    "Beginner",
+    "Intermediate",
+    "Advanced",
+    "Expert"
+];
 export const weatherOptions = [
     { label: "Calm", loss: 0 },
     { label: "Light breeze", loss: 2 },
