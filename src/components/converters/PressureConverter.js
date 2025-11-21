@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 import Layout from "../Layout";
-import { numberRegex, signNumberRegex } from "../../utils/constants";
+import { signNumberRegex } from "../../utils/constants";
 import { formatNumber } from "../../utils/methods";
 import styles from "../../style/styles";
 
@@ -22,16 +22,14 @@ export default function PressureConverter() {
     };
 
     const handleBarChange = (value) => {
+        setBar(value);
         const num = parseFloat(value);
-
         if (!isNaN(num)) {
-            setBar(num);
             setPsi(formatNumber(num * 14.5038));
             setAtm(formatNumber(num * 0.986923));
             setMmHg(formatNumber(num * 750.062));
             setKPa(formatNumber(num * 100));
         } else {
-
             setPsi("");
             setAtm("");
             setMmHg("");
@@ -40,11 +38,11 @@ export default function PressureConverter() {
     };
 
     const handlePsiChange = (value) => {
+        setPsi(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
-            const barVal = num / 14.5038; // psi → gauge bar (no +1)
+            const barVal = num / 14.5038;
             setBar(formatNumber(barVal));
-            setPsi(num);
             setAtm(formatNumber(barVal * 0.986923));
             setMmHg(formatNumber(barVal * 750.062));
             setKPa(formatNumber(barVal * 100));
@@ -57,12 +55,12 @@ export default function PressureConverter() {
     };
 
     const handleAtmChange = (value) => {
+        setAtm(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
             const barVal = num / 0.986923; // atm → gauge bar
             setBar(formatNumber(barVal));
             setPsi(formatNumber(barVal * 14.5038));
-            setAtm(num);
             setMmHg(formatNumber(barVal * 750.062));
             setKPa(formatNumber(barVal * 100));
         } else {
@@ -74,13 +72,13 @@ export default function PressureConverter() {
     };
 
     const handleMmHgChange = (value) => {
+        setMmHg(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
             const barVal = num / 750.062; // mmHg → gauge bar
             setBar(formatNumber(barVal));
             setPsi(formatNumber(barVal * 14.5038));
             setAtm(formatNumber(barVal * 0.986923));
-            setMmHg(num);
             setKPa(formatNumber(barVal * 100));
         } else {
             setBar("");
@@ -91,6 +89,7 @@ export default function PressureConverter() {
     };
 
     const handleKPaChange = (value) => {
+        setKPa(value);
         const num = parseFloat(value);
         if (!isNaN(num)) {
             const barVal = num / 100; // kPa → gauge bar
@@ -98,7 +97,7 @@ export default function PressureConverter() {
             setPsi(formatNumber(barVal * 14.5038));
             setAtm(formatNumber(barVal * 0.986923));
             setMmHg(formatNumber(barVal * 750.062));
-            setKPa(num);
+
         } else {
             setBar("");
             setPsi("");
@@ -130,11 +129,11 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter absolute value"
+                            placeholder="Enter value"
                             keyboardType="decimal-pad"
                             value={bar}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
                                     handleBarChange(text);
                                 }
                             }}
@@ -158,11 +157,11 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter absolute value"
+                            placeholder="Enter value"
                             keyboardType="decimal-pad"
                             value={psi}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
                                     handlePsiChange(text);
                                 }
                             }}
@@ -185,13 +184,14 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter absolute value"
+                            placeholder="Enter value"
                             keyboardType="decimal-pad"
                             value={atm}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
+                                    handleAtmChange(text);
                                 }
-                                handleAtmChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -213,13 +213,14 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter absolute value"
+                            placeholder="Enter value"
                             keyboardType="decimal-pad"
                             value={mmHg}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
+                                    handleMmHgChange(text);
                                 }
-                                handleMmHgChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -241,13 +242,14 @@ export default function PressureConverter() {
                     <View style={[styles.rightItem]}>
                         <TextInput
                             style={[styles.textInput]}
-                            placeholder="Enter absolute value"
+                            placeholder="Enter value"
                             keyboardType="decimal-pad"
                             value={kPa}
                             onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
+                                if (signNumberRegex.test(text)) {
+                                    handleKPaChange(text);
                                 }
-                                handleKPaChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"

@@ -139,8 +139,9 @@ export default function DistanceConverter() {
                             value={mile}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleMileChange(text);
                                 }
-                                handleMileChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"

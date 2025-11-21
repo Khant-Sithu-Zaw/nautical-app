@@ -167,8 +167,8 @@ export default function VolumeConverter() {
                             value={gallonsUS}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleGallonsUSChange(text);
                                 }
-                                handleGallonsUSChange(text);
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -195,8 +195,8 @@ export default function VolumeConverter() {
                             value={barrels}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleBarrelsChange(text);
                                 }
-                                handleBarrelsChange(text);
                             }
                             }
                             placeholderTextColor="#bfbebeff"

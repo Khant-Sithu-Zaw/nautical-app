@@ -28,7 +28,6 @@ export default function WeightConverter() {
             setKilogram(formatNumber(num * 1000));       // 1 MT = 1000 kg
             setPound(formatNumber(num * 2204.62262185)); // 1 MT = 2204.62262185 lb
         } else {
-
             setLongTon("");
             setShortTon("");
             setKilogram("");
@@ -65,7 +64,6 @@ export default function WeightConverter() {
         } else {
             setMetricTon("");
             setLongTon("");
-
             setKilogram("");
             setPound("");
         }
@@ -84,7 +82,6 @@ export default function WeightConverter() {
             setMetricTon("");
             setLongTon("");
             setShortTon("");
-
             setPound("");
         }
     };
@@ -191,8 +188,8 @@ export default function WeightConverter() {
                             value={shortTon}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleShortTonChange(text);
                                 }
-                                handleShortTonChange(text);
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -219,8 +216,9 @@ export default function WeightConverter() {
                             value={kilogram}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleKilogramChange(text);
                                 }
-                                handleKilogramChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -247,8 +245,8 @@ export default function WeightConverter() {
                             value={pound}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handlePoundChange(text);
                                 }
-                                handlePoundChange(text);
                             }
                             }
                             placeholderTextColor="#bfbebeff"

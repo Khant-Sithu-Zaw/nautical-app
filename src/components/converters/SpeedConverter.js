@@ -171,8 +171,9 @@ export default function SpeedConverter() {
                             value={mph}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleMphChange(text);
                                 }
-                                handleMphChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -199,8 +200,9 @@ export default function SpeedConverter() {
                             value={ms}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleMsChange(text);
                                 }
-                                handleMsChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"

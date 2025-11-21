@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(15),
         color: "#fff",
         fontWeight: "bold",
-        letterSpacing: moderateScale(0.25)
+        letterSpacing: moderateScale(0.25),
     },
     searchWrapper: {
         width: "46%",
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
     dateUTC: {
         color: "#205E95",
-        fontSize: moderateScale(10),
+        fontSize: moderateScale(11),
         paddingTop: verticalScale(6),
     },
     // HomeScreen ends
@@ -477,6 +477,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(20),
         textAlign: "center",
         lineHeight: moderateScale(28),
+        marginVertical: verticalScale(10),
     },
     //profile setup
     addIcon: {

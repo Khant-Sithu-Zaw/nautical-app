@@ -86,10 +86,10 @@ export default function App() {
 
           <Stack.Screen name="Converter" component={ConverterStack} options={{ headerShown: false }} />
           <Stack.Screen name="Estimated Time of Arrival" component={ETAScreen} />
-          <Stack.Screen name="STW Calculator" component={RequiredSpeedScreen} />
+          <Stack.Screen name="Required STW to Travel" component={RequiredSpeedScreen} />
           <Stack.Screen name="Turning Circle Method" component={AnchorDragScreen} />
           <Stack.Screen name="Fuel Cost Estimation" component={FuelConsumptionScreen} />
-          <Stack.Screen name="Setup Profile" component={ProfileScreen} />
+          <Stack.Screen name="Profile Setup" component={ProfileScreen} />
           {/* <Stack.Screen name="TimeZone Calculator" component={TimeZoneScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>

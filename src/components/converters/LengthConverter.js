@@ -157,8 +157,9 @@ export default function LengthConverter() {
                             value={feet}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleFeetChange(text);
                                 }
-                                handleFeetChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -185,8 +186,9 @@ export default function LengthConverter() {
                             value={cable}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleCableChange(text);
                                 }
-                                handleCableChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"

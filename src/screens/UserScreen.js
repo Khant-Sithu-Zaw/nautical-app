@@ -16,6 +16,9 @@ export default function UserScreen({ navigation }) {
         return focusSubscription;
     }, [navigation]);
 
+    const exportCV = () => {
+
+    };
     const deleteProfile = () => {
         Alert.alert(
             "Delete Profile",
@@ -62,7 +65,7 @@ export default function UserScreen({ navigation }) {
             ) : (
                 // ✅ Profile exists → show view + delete
                 <>
-                    <Pressable onPress={() => navigation.navigate("Setup Profile")}>
+                    <Pressable onPress={() => navigation.navigate("Profile Setup")}>
                         {({ pressed }) => (
                             <Text
                                 style={[
@@ -76,11 +79,19 @@ export default function UserScreen({ navigation }) {
                     </Pressable>
 
                     <Pressable
-                        style={{ marginTop: 20 }}
+
                         onPress={deleteProfile}
                     >
                         <Text style={[styles.linkText,]}>
-                            Delete Profile
+                            Delete Your Profile
+                        </Text>
+                    </Pressable>
+                    <Pressable
+
+                        onPress={exportCV}
+                    >
+                        <Text style={[styles.linkText,]}>
+                            Export Curriculum Vitae
                         </Text>
                     </Pressable>
                 </>

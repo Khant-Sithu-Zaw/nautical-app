@@ -83,8 +83,9 @@ export default function FuelConsumptionScreen() {
                             value={distance}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setDistance(text);
                                 }
-                                setDistance(text);
+
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
@@ -107,8 +108,9 @@ export default function FuelConsumptionScreen() {
                             value={speed}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setSpeed(text);
                                 }
-                                setSpeed(text);
+
                             }}
 
                             placeholderTextColor="#9b9898ff"
@@ -143,8 +145,9 @@ export default function FuelConsumptionScreen() {
                             maxLength={8}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setRate(text);
                                 }
-                                setRate(text);
+
                             }}
 
                             placeholderTextColor="#9b9898ff"
@@ -176,8 +179,9 @@ export default function FuelConsumptionScreen() {
 
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setPrice(text);
                                 }
-                                setPrice(text);
+
                             }}
                             placeholderTextColor="#9b9898ff"
                         />

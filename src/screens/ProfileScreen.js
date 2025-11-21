@@ -17,7 +17,7 @@ import { levels, ranks } from "../utils/constants";
 import ClearableInput from "../components/ClearableInput";
 import { validateEmail } from "../utils/methods";
 export default function ProfileScreen({ navigation }) {
-
+    const [isUpdate, setIsUpdate] = useState(false); // <-- new state
     const [user, setUser] = useState(new User());
     const [isPickerVisible, setPickerVisible] = useState(false);
     const [activeField, setActiveField] = useState(null);
@@ -53,6 +53,7 @@ export default function ProfileScreen({ navigation }) {
                 setCertificates(data.certificates || []);
                 setSkills(data.skills || []);
                 setSeaTimeRecords(data.seaTimeRecords || []);
+                setIsUpdate(true);
             }
         } catch (e) {
             console.log("Failed to load user:", e);
@@ -515,13 +516,15 @@ export default function ProfileScreen({ navigation }) {
 
             <View style={[styles.sectionContainer]}>
                 <TouchableOpacity style={styles.userBtn} onPress={saveUser}>
-                    <Text style={styles.btnText}>Save Profile</Text>
+                    <Text style={styles.btnText}>
+                        {isUpdate ? "Update" : "Save"}  {/* dynamic text */}
+                    </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.userBtn}
                     onPress={() => navigation.goBack()}
                 >
-                    <Text style={styles.btnText}>Cancel Setup</Text>
+                    <Text style={styles.btnText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView >

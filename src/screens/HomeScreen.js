@@ -88,19 +88,19 @@ export default function HomeScreen({ navigation }) {
     return (
         <View >
             <View style={styles.homeTop}>
-                <View style={[styles.flexBox, { justifyContent: "space-around" }]}>
+                <View style={[styles.flexBox, { justifyContent: "space-between", paddingRight: scale(20) }]}>
                     <Image
                         source={require("../../assets/images/master.png")}
                         style={styles.homeImage}
                     />
-                    <Text style={styles.headerTitle}>Hello seafarers, Welcome!</Text>
+                    <Text style={[styles.headerTitle, { fontSize: moderateScale(18) }]}>Hello seafarers{'\n'}Welcome aboard!</Text>
 
                 </View>
                 <View style={styles.homeContainer}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
-                        <Text style={styles.title}>Safety Tip for you!
+                        <Text style={styles.title}>Safety Tips!
                         </Text>
-                        <Text style={styles.dateUTC}> {utcTime.toFormat("yyyy-LL-dd HH:mm:ss ")}</Text>
+                        <Text style={styles.dateUTC}>UTC | {utcTime.toFormat("yyyy-LL-dd HH:mm:ss")}</Text>
                     </View>
                     <Animated.Text
                         style={[

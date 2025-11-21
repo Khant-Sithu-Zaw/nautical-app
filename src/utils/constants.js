@@ -1,7 +1,7 @@
 export const screens = [
     { name: "Unit\nConversion", route: "Converter", image: require("../../assets/images/Converter.png"), },
     { name: "ETA\nCalculator", route: "Estimated Time of Arrival", image: require("../../assets/images/Eta.png") },
-    { name: "Required\nSpeed", route: "STW Calculator", image: require("../../assets/images/Speed.png") },
+    { name: "STW\nCalculator", route: "Required STW to Travel", image: require("../../assets/images/Speed.png") },
     { name: "Anchor\nDragging", route: "Turning Circle Method", image: require("../../assets/images/Drag.png") },
     { name: "Fuel\nEstimator", route: "Fuel Cost Estimation", image: require("../../assets/images/Fuel.png") },
     // { name: "TimeZone\nCalculator", route: "TimeZone Calculator", image: require("../../assets/images/Time.png"), },

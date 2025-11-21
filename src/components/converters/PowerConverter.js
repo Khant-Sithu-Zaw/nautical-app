@@ -160,8 +160,9 @@ export default function PowerConverter() {
                             value={MW}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleMWattChange(text);
                                 }
-                                handleMWattChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"
@@ -188,8 +189,9 @@ export default function PowerConverter() {
                             value={btu}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    handleBTUChange(text);
                                 }
-                                handleBTUChange(text);
+
                             }
                             }
                             placeholderTextColor="#bfbebeff"

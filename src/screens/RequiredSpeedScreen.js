@@ -125,8 +125,9 @@ export default function RequiredSpeedScreen() {
 
 							onChangeText={(text) => {
 								if (numberRegex.test(text)) {
+									setDistance(text);
 								}
-								setDistance(text);
+
 							}}
 							placeholderTextColor="#9b9898ff"
 							maxLength={8}
@@ -264,7 +265,7 @@ export default function RequiredSpeedScreen() {
 
 							]}
 						>
-							Required Speed Through Water
+							Required Speed to reach on time
 						</Text>
 						<Text style={[
 							styles.resultText,

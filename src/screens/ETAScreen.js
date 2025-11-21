@@ -125,8 +125,9 @@ export default function ETAScreen() {
 
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setDistance(text);
                                 }
-                                setDistance(text);
+
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
@@ -150,8 +151,8 @@ export default function ETAScreen() {
 
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
+                                    setSpeed(text);
                                 }
-                                setSpeed(text);
                             }}
                             placeholderTextColor="#9b9898ff"
                             maxLength={8}
