@@ -20,6 +20,7 @@ export default class User {
         this.nationality = nationality;
         this.passport = passport;
         this.sirb = sirb;
+        this.rank = rank;
         this.address = address;
         this.objective = objective;
         this.email = email;

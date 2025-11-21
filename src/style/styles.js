@@ -526,6 +526,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#3C78AD",
         padding: moderateScale(8), borderRadius: moderateScale(8),
         marginTop: verticalScale(12),
+    },
+    clearBtn: {
+        position: "absolute",
+        right: scale(5),
+        padding: moderateScale(6),
+        top: "54%",
+        transform: [{ translateY: verticalScale(-12) }],
+    },
+    closeIcon: {
+        fontSize: moderateScale(10),
     }
 });
 

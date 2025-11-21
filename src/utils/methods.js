@@ -35,3 +35,7 @@ export const formatDate = (date) => {
     const minutes = String(date.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|jp|mm)$/i;
+    return emailRegex.test(email);
+};

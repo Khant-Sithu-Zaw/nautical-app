@@ -13,9 +13,11 @@ import { scale, moderateScale, verticalScale } from '../utils/scale';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropdownPicker from '../components/DropdownPicker';
 import dropdownStyles from "../style/pickupstyle";
-import { levels } from "../utils/constants";
-export default function ProfileScreen() {
-    const MAX_LENGTH = 200;
+import { levels, ranks } from "../utils/constants";
+import ClearableInput from "../components/ClearableInput";
+import { validateEmail } from "../utils/methods";
+export default function ProfileScreen({ navigation }) {
+
     const [user, setUser] = useState(new User());
     const [isPickerVisible, setPickerVisible] = useState(false);
     const [activeField, setActiveField] = useState(null);
@@ -33,6 +35,8 @@ export default function ProfileScreen() {
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
             quality: 1,
         });
 
@@ -43,20 +47,46 @@ export default function ProfileScreen() {
         try {
             const jsonValue = await AsyncStorage.getItem("userProfile");
             if (jsonValue != null) {
-                setUser(new User(JSON.parse(jsonValue)));
+                const data = JSON.parse(jsonValue);
+
+                setUser(new User(data));
+                setCertificates(data.certificates || []);
+                setSkills(data.skills || []);
+                setSeaTimeRecords(data.seaTimeRecords || []);
             }
         } catch (e) {
             console.log("Failed to load user:", e);
         }
     };
+
     const saveUser = async () => {
+        if (certificates.length === 0) {
+            alert("Please add at least one certificate before saving.");
+            return;
+        }
+
+        if (skills.length === 0) {
+            alert("Please add at least one skill before saving.");
+            return;
+        }
+
+        // All good → proceed to save
         try {
-            await AsyncStorage.setItem("userProfile", JSON.stringify(user));
+            const fullUser = {
+                ...user,
+                certificates,
+                skills,
+                seaTimeRecords
+            };
+
+            await AsyncStorage.setItem("userProfile", JSON.stringify(fullUser));
             alert("Profile saved successfully!");
+            navigation.goBack();
         } catch (e) {
             console.log("Failed to save user:", e);
         }
     };
+
     const handleConfirm = (date) => {
         const formatted = date.toLocaleDateString("en-US", {
             day: "2-digit",
@@ -212,8 +242,14 @@ export default function ProfileScreen() {
                 <Text style={styles.sectionTitle}>Personal Information</Text>
             </View>
             {/* Personal Info */}
-            <TextInput placeholder="Your Full Name" value={user.name} onChangeText={(text) => setUser({ ...user, name: text })} style={styles.profileInput} placeholderTextColor="#9b9898ff" />
-
+            <ClearableInput
+                value={user.name}
+                onChangeText={(text) => setUser({ ...user, name: text })}
+                placeholder="Your Full Name"
+                maxLength={40}
+                inputStyle={styles.profileInput}
+                validate="text"
+            />
             <TouchableOpacity style={[styles.profileInput,]} onPress={() => openPicker("birthday")}>
                 <Text
                     style={[
@@ -225,25 +261,90 @@ export default function ProfileScreen() {
                 </Text>
             </TouchableOpacity>
 
+            <ClearableInput
+                value={user.nationality}
+                onChangeText={(text) => setUser({ ...user, nationality: text })}
+                placeholder="Your Nationality"
+                maxLength={30}
+                inputStyle={styles.profileInput}
+                validate="text"
+            />
 
-            <TextInput placeholder="Your Nationality" value={user.nationality} onChangeText={(text) => setUser({ ...user, nationality: text })} style={styles.profileInput} placeholderTextColor="#9b9898ff" />
-            <TextInput placeholder="Your Passport Number" value={user.passport} onChangeText={(text) => setUser({ ...user, passport: text })} style={styles.profileInput} placeholderTextColor="#9b9898ff" />
-            <TextInput placeholder="Your SIRB/CDC Number" value={user.sirb} onChangeText={(text) => setUser({ ...user, sirb: text })} style={styles.profileInput} placeholderTextColor="#9b9898ff" />
-            <TextInput placeholder="Your Home Address" value={user.address} onChangeText={(text) => setUser({ ...user, address: text })} style={[styles.profileInput, {
-                textAlignVertical: "top",
-                height: verticalScale(60),
-            }]} multiline numberOfLines={2} placeholderTextColor="#9b9898ff" />
+            <DropdownPicker
+                options={ranks}
+                selected={user.rank}
+                onSelect={(opt) => setUser({ ...user, rank: opt })}
+                placeholder="Select Your Rank"
+                viewStyle={{ marginTop: verticalScale(10) }}
+                textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
+                placeholder="Select Your Rank"
+            />
+            <ClearableInput
+                value={user.passport}
+                onChangeText={(text) => setUser({ ...user, passport: text })}
+                placeholder="Your Passport Number"
+                maxLength={15}
+                inputStyle={styles.profileInput}
+                validate="none"
+            />
 
-            <TextInput placeholder="Your Email Address" value={user.email} onChangeText={(text) => setUser({ ...user, email: text })} style={styles.profileInput} keyboardType="email-address" placeholderTextColor="#9b9898ff" />
-            <TextInput placeholder="Your Phone Number" value={user.phone} onChangeText={(text) => setUser({ ...user, phone: text })} style={styles.profileInput} keyboardType="numeric" placeholderTextColor="#9b9898ff" />
-            <TextInput placeholder="Objective in Maritime Career" value={user.objective} onChangeText={(text) => setUser({ ...user, objective: text })} style={[styles.profileInput, {
-                textAlignVertical: "top",
-                height: verticalScale(100),
-            }]} placeholderTextColor="#9b9898ff"
+            <ClearableInput
+                value={user.sirb}
+                onChangeText={(text) => setUser({ ...user, sirb: text })}
+                placeholder="Your SIRB/CDC Number"
+                maxLength={20}
+                inputStyle={styles.profileInput}
+                validate="number"
+            />
+
+            <ClearableInput
+                value={user.address}
+                onChangeText={(text) => setUser({ ...user, address: text })}
+                placeholder="Your Home Address"
+                maxLength={100}
+                multiline
+                numberOfLines={4}
+                inputStyle={[styles.profileInput, {
+                    textAlignVertical: "top",
+                    height: verticalScale(80),
+                }]}
+                validate="none"
+            />
+            <ClearableInput
+                value={user.email}
+                onChangeText={(text) => setUser({ ...user, email: text })}
+                onBlur={() => {
+                    if (!validateEmail(user.email)) {
+                        Alert.alert("Invalid email format");
+                    }
+                }}
+                placeholder="Your Email Address"
+                inputStyle={[styles.profileInput]}
+                validate="none"
+            />
+
+            <ClearableInput
+                value={user.phone}
+                onChangeText={(text) => setUser({ ...user, phone: text })}
+                placeholder="Your Phone Number"
+                inputStyle={[styles.profileInput]}
+                validate="none"
+                maxLength={15}
+            />
+
+            <ClearableInput
+                value={user.objective}
+                onChangeText={(text) => setUser({ ...user, objective: text })}
+                placeholder="Objective in Maritime Career"
+                inputStyle={[styles.profileInput, {
+                    textAlignVertical: "top",
+                    height: verticalScale(120),
+                }]}
+                validate="none"
                 multiline
                 numberOfLines={6}
-                maxLength={MAX_LENGTH} />
-
+                maxLength={200}
+            />
             <View style={[styles.section, styles.sectionContainer]}>
                 <Text style={styles.sectionTitle}>Certifications</Text>
                 <TouchableOpacity onPress={addCertificate} >
@@ -259,16 +360,16 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.listContainer}>
                 {certificates.map((cert, index) => (
-                    <View key={index} style={[styles.box, styles.flexBox]}>
-
-                        <TextInput
-                            placeholder="Certificate Title"
+                    <View key={index} >
+                        <ClearableInput
                             value={cert.title}
                             onChangeText={(text) =>
                                 updateCertificate(index, "title", text)
                             }
-                            style={styles.profileInput}
-                            placeholderTextColor="#9b9898ff"
+                            placeholder="Enter Certificate Title"
+                            inputStyle={styles.profileInput}
+                            validate="none"
+                            maxLength={35}
                         />
 
                         <TouchableOpacity
@@ -305,7 +406,50 @@ export default function ProfileScreen() {
                     </View>
                 ))}
             </View>
+            <View style={[styles.section, styles.sectionContainer]}>
+                <Text style={styles.sectionTitle}>Skills</Text>
+                <TouchableOpacity onPress={addSkill} >
+                    <Image
+                        source={
 
+                            require("../../assets/images/addIcon.png")
+                        }
+                        style={styles.addIcon}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.listContainer}>
+                {skills.map((skil, index) => (
+                    <View key={index}>
+
+                        <ClearableInput
+                            value={skil.skillName}
+                            onChangeText={(text) => updateSkill(index, "skillName", text)}
+                            placeholder="Enter Skill Title"
+                            inputStyle={styles.profileInput}
+                            validate="none"
+                            maxLength={40}
+                        />
+                        <DropdownPicker
+                            options={levels}
+                            selected={skil.level}
+                            viewStyle={
+                                { marginTop: verticalScale(10) }
+                            }
+                            textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
+                            placeholder="Select Your Level"
+                            onSelect={(value) => updateSkill(index, "level", value)}
+                        />
+                        <TouchableOpacity
+                            style={[styles.removeBtn, { marginRight: "auto" }]}
+                            onPress={() => removeItem("skill", index)}
+                        >
+                            <Text style={[styles.btnText, { textAlign: "center", fontSize: moderateScale(13), }]}>Remove</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                ))}
+            </View>
 
             <View style={[styles.section, styles.sectionContainer]}>
                 <Text style={styles.sectionTitle}>SeaTime Records</Text>
@@ -321,24 +465,25 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.listContainer}>
                 {seaTimeRecords.map((record, index) => (
-                    <View key={index} style={[styles.box, styles.flexBox]}>
+                    <View key={index} >
 
-                        <TextInput
-                            placeholder="Vessel Name"
+                        <ClearableInput
                             value={record.vesselName}
                             onChangeText={(text) => updateSeaTime(index, "vesselName", text)}
-                            style={styles.profileInput}
-                            placeholderTextColor="#9b9898ff"
-                        />
+                            placeholder="Enter Vessel Name"
+                            inputStyle={styles.profileInput}
 
-                        <TextInput
-                            placeholder="Rank"
-                            value={record.rank}
-                            onChangeText={(text) => updateSeaTime(index, "rank", text)}
-                            style={styles.profileInput}
-                            placeholderTextColor="#9b9898ff"
+                            validate="none"
+                            maxLength={35}
                         />
-
+                        <DropdownPicker
+                            options={ranks}
+                            selected={record.rank} // use record.rank, not user.rank
+                            onSelect={(opt) => updateSeaTime(index, "rank", opt)} // update the specific sea time record
+                            viewStyle={{ marginTop: verticalScale(10) }}
+                            textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
+                            placeholder="Select Your Rank"
+                        />
                         <TouchableOpacity
                             style={styles.profileInput}
                             onPress={() => openPicker(`fromDate_${index}`)}
@@ -367,53 +512,15 @@ export default function ProfileScreen() {
                 ))}
             </View>
 
-            <View style={[styles.section, styles.sectionContainer]}>
-                <Text style={styles.sectionTitle}>Skills</Text>
-                <TouchableOpacity onPress={addSkill} >
-                    <Image
-                        source={
 
-                            require("../../assets/images/addIcon.png")
-                        }
-                        style={styles.addIcon}
-                    />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.listContainer}>
-                {skills.map((skil, index) => (
-                    <View key={index} style={[styles.box, styles.flexBox]}>
-                        <TextInput
-                            placeholder="Skill Title"
-                            value={skil.skillName}
-                            onChangeText={(text) => updateSkill(index, "skillName", text)}
-                            style={styles.profileInput}
-                            placeholderTextColor="#9b9898ff"
-                        />
-                        <DropdownPicker
-                            options={levels}
-                            selected={skil.level}
-                            viewStyle={
-                                { marginTop: verticalScale(10) }
-                            }
-                            textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
-                            placeholder="Select Your Level"
-                            onSelect={(value) => updateSkill(index, "level", value)}
-                        />
-                        <TouchableOpacity
-                            style={[styles.removeBtn, { marginRight: "auto" }]}
-                            onPress={() => removeItem("skill", index)}
-                        >
-                            <Text style={[styles.btnText, { textAlign: "center", fontSize: moderateScale(13), }]}>Remove</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                ))}
-            </View>
             <View style={[styles.sectionContainer]}>
                 <TouchableOpacity style={styles.userBtn} onPress={saveUser}>
                     <Text style={styles.btnText}>Save Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.userBtn} onPress={saveUser}>
+                <TouchableOpacity
+                    style={styles.userBtn}
+                    onPress={() => navigation.goBack()}
+                >
                     <Text style={styles.btnText}>Cancel Setup</Text>
                 </TouchableOpacity>
             </View>

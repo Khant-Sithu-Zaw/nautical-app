@@ -23,7 +23,6 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
 
     const openDropdown = () => {
         if (pickerRef.current) {
-            // Get absolute position of dropdown
             UIManager.measureInWindow(findNodeHandle(pickerRef.current), (x, y, width, height) => {
                 setPickerLayout({ x, y, width, height });
                 setShowModal(true);
@@ -33,9 +32,8 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
 
     const closeDropdown = () => setShowModal(false);
 
-    const maxHeight = verticalScale(200); // max height of dropdown modal
+    const maxHeight = verticalScale(200);
     const spacing = Platform.OS === "ios" ? verticalScale(0) : verticalScale(32);
-    // space between picker and modal
 
     return (
         <View style={[viewStyle]}>
@@ -45,31 +43,31 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
                 ref={pickerRef}
                 style={[
                     dropdownStyles.customPicker,
-                    {
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    },
+                    { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }
                 ]}
                 onPress={openDropdown}
             >
-                <Text style={[dropdownStyles.pickerText, { color: selected ? "black" : "gray" }, textboxStyle]}>
-                    {selected || "Select"}
+                <Text
+                    style={[
+                        dropdownStyles.pickerText,
+                        { color: selected ? "black" : "gray" },
+                        textboxStyle
+                    ]}
+                >
+                    {selected || placeholder}
                 </Text>
                 <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
             </TouchableOpacity>
 
             {showModal && pickerLayout && (
                 <Modal transparent animationType="fade" visible={showModal} onRequestClose={closeDropdown}>
-                    {/* Tap outside to close */}
                     <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPressOut={closeDropdown}>
                         <View
                             style={{
                                 position: "absolute",
-                                top:
-                                    pickerLayout.y + pickerLayout.height + spacing + maxHeight > screenHeight
-                                        ? pickerLayout.y - maxHeight - spacing // show above if near bottom
-                                        : pickerLayout.y + pickerLayout.height + spacing, // show below normally
+                                top: pickerLayout.y + pickerLayout.height + spacing + maxHeight > screenHeight
+                                    ? pickerLayout.y - maxHeight - spacing
+                                    : pickerLayout.y + pickerLayout.height + spacing,
                                 left: pickerLayout.x,
                                 width: pickerLayout.width,
                                 maxHeight: maxHeight,
@@ -100,7 +98,7 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
                                         <Text
                                             style={[
                                                 dropdownStyles.optionText,
-                                                selected === opt && { fontWeight: "bold" },
+                                                String(selected).trim() === String(opt).trim() && { fontWeight: "bold" },
                                             ]}
                                         >
                                             {opt}

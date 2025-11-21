@@ -40,7 +40,33 @@ export const fuelUnit = [
     "(Kilogram/hour)",
     "(Litre/hour)"
 ]
-
+export const ranks = [
+    "Captain (Master)",
+    "Chief Officer (CO)",
+    "Second Officer (2O)",
+    "Third Officer (3O)",
+    "Chief Engineer (CE)",
+    "First Engineer (1E)",
+    "Second Engineer (2E)",
+    "Third Engineer (3E)",
+    "Fourth Engineer (4E)",
+    "Electrical Officer (ETO)",
+    "Bosun (BSN)",
+    "Fitter (FTR)",
+    "Able Seaman (AB)",
+    "Ordinary Seaman (OS)",
+    "Pumpman (PUM)",
+    "Wiper (WPR)",
+    "Oiler (OIL)",
+    "Electrical Rating (ETR)",
+    "Chief Cook (CK)",
+    "Deck Cadet (DC)",
+    "Engine Cadet (EC)",
+    "Deck Rating (DR)",
+    "Engine Rating (ER)",
+    "Steward (SD)",
+    "MessMan (MM)"
+];
 export const shackleLengthOptions = [
     "15 meters",
     "20 meters",
