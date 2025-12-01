@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, Alert } from "react-native";
+import { View, Text, Pressable, Alert, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../style/styles";
+import { menuItems } from "../utils/constants";
+import Card from "../components/Card";
 export default function UserScreen({ navigation }) {
     const [userExists, setUserExists] = useState(false);
     useEffect(() => {
         const checkUser = async () => {
-            const data = await AsyncStorage.getItem("userProfile"); //  ✅ your key
-            setUserExists(!!data);
+            const data = await AsyncStorage.getItem("userProfile");
+
+            if (!data) {
+                // ❌ No saved user → go to Profile Setup Automatically
+                navigation.navigate("Profile Setup");
+                return;
+            }
+
+            // ✅ Data exists → show user screen UI
+            setUserExists(true);
         };
 
-        // Refresh every time screen comes into focus
         const focusSubscription = navigation.addListener("focus", checkUser);
 
         return focusSubscription;
@@ -41,59 +50,43 @@ export default function UserScreen({ navigation }) {
         <View
             style={{
                 flex: 1,
-                backgroundColor: "#3C78AD",
+                backgroundColor: "#477DAD",
                 justifyContent: "center",
                 alignItems: "center",
+                alignContent: "center",
             }}
         >
-
-            {!userExists ? (
-                // ❌ No profile → show setup option
-                <Pressable onPress={() => navigation.navigate("Setup Profile")}>
-                    {({ pressed }) => (
-                        <Text
-                            style={[
-                                styles.linkText,
-                                { textDecorationLine: pressed ? "underline" : "none" },
-                            ]}
-                        >
-                            Set up Profile{"\n"}
-                            <Text>Get a Curriculum Vitae</Text>
-                        </Text>
-                    )}
-                </Pressable>
-            ) : (
-                // ✅ Profile exists → show view + delete
+            {userExists && (
                 <>
-                    <Pressable onPress={() => navigation.navigate("Profile Setup")}>
-                        {({ pressed }) => (
-                            <Text
-                                style={[
-                                    styles.linkText,
-                                    { textDecorationLine: pressed ? "underline" : "none" },
-                                ]}
-                            >
-                                View Your Profile
-                            </Text>
-                        )}
-                    </Pressable>
+                    {menuItems(navigation, deleteProfile, exportCV).map((item, index) => (
+                        <Pressable key={index} onPress={item.onPress} style={styles.profileBtn}>
+                            {({ pressed }) => (
+                                <Card
+                                    style={{
+                                        backgroundColor: pressed ? "#3C78AD" : "#fff", // Blue while pressing
+                                    }}
+                                >
+                                    <Image
+                                        source={item.image}
+                                        style={[
+                                            styles.cardImage,
+                                            { tintColor: pressed ? "#fff" : "#3C78AD" }, // Change image color while pressing
+                                        ]}
+                                        resizeMode="contain"
+                                    />
+                                    <Text
 
-                    <Pressable
-
-                        onPress={deleteProfile}
-                    >
-                        <Text style={[styles.linkText,]}>
-                            Delete Your Profile
-                        </Text>
-                    </Pressable>
-                    <Pressable
-
-                        onPress={exportCV}
-                    >
-                        <Text style={[styles.linkText,]}>
-                            Export Curriculum Vitae
-                        </Text>
-                    </Pressable>
+                                        style={[
+                                            styles.cardText,
+                                            { color: pressed ? "#fff" : "#3C78AD" }, // Change text color while pressing
+                                        ]}
+                                    >
+                                        {item.label}
+                                    </Text>
+                                </Card>
+                            )}
+                        </Pressable>
+                    ))}
                 </>
             )}
         </View>

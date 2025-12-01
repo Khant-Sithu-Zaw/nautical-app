@@ -14,6 +14,7 @@ import { useFonts } from "expo-font";
 import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
 import styles from "./src/style/styles";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import CVPreviewScreen from "./src/screens/CVPreviewScreen";
 
 // import TimeZoneScreen from "./src/screens/TimeZoneScreen";
 const Stack = createNativeStackNavigator();
@@ -90,6 +91,7 @@ export default function App() {
           <Stack.Screen name="Turning Circle Method" component={AnchorDragScreen} />
           <Stack.Screen name="Fuel Cost Estimation" component={FuelConsumptionScreen} />
           <Stack.Screen name="Profile Setup" component={ProfileScreen} />
+          <Stack.Screen name="Preview CV" component={CVPreviewScreen} />
           {/* <Stack.Screen name="TimeZone Calculator" component={TimeZoneScreen} /> */}
         </Stack.Navigator>
       </NavigationContainer>

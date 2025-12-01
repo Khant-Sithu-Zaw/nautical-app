@@ -92,6 +92,13 @@ export const countOptions = [
 ];
 export const signNumberRegex = /^-?\d*\.?\d*$/;
 export const numberRegex = /^\d*\.?\d*$/;
+
+export const menuItems = (navigation, deleteProfile, exportCV) => [
+    { label: "Edit Profile", onPress: () => navigation.navigate("Profile Setup"), image: require("../../assets/images/edit.png"), },
+    { label: "Delete Profile", onPress: deleteProfile, image: require("../../assets/images/delete.png"), },
+    { label: "Preview CV", onPress: () => navigation.navigate("Preview CV"), image: require("../../assets/images/preview.png"), },
+    { label: "Export CV", onPress: exportCV, image: require("../../assets/images/export.png"), },
+];
 export const safetyTips = [
     // ⚙️ General Safety
     "Always wear appropriate PPE (Personal Protective Equipment) before starting any job.",

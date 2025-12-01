@@ -24,6 +24,7 @@ export default function ProfileScreen({ navigation }) {
     const [certificates, setCertificates] = useState([]);
     const [skills, setSkills] = useState([]);
     const [seaTimeRecords, setSeaTimeRecords] = useState([]);
+    // const [hobbies, setHobbies] = useState([]);
     const openPicker = (fieldName) => {
         setActiveField(fieldName);
         setPickerVisible(true);
@@ -32,16 +33,34 @@ export default function ProfileScreen({ navigation }) {
     useEffect(() => {
         loadUser();
     }, []);
+    // const pickImage = async () => {
+    //     let result = await ImagePicker.launchImageLibraryAsync({
+    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //         allowsEditing: true,
+    //         aspect: [1, 1],
+    //         quality: 1,
+    //     });
+
+    //     if (result.canceled) return;
+    //     setUser({ ...user, image: result.assets[0].uri });
+    // };
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            quality: 1,
             allowsEditing: true,
             aspect: [1, 1],
-            quality: 1,
+            base64: true
         });
 
-        if (result.canceled) return;
-        setUser({ ...user, image: result.assets[0].uri });
+        if (!result.canceled) {
+            const base64 = result.assets[0].base64;
+
+            setUser((prev) => ({
+                ...prev,
+                image: `data:image/jpeg;base64,${base64}`
+            }));
+        }
     };
     const loadUser = async () => {
         try {
@@ -192,6 +211,30 @@ export default function ProfileScreen({ navigation }) {
         setSeaTimeRecords(updated);
         setUser({ ...user, seaTimeRecords: updated });
     };
+    const addHobby = () => {
+        const hobbyList = user.hobbies || [];
+
+        // If last hobby is empty, prevent adding another
+        if (hobbyList.length > 0 && hobbyList[hobbyList.length - 1].trim() === "") {
+            alert("Please fill the hobby before adding another.");
+            return;
+        }
+
+        setUser((prev) => ({
+            ...prev,
+            hobbies: [...prev.hobbies, ""],
+        }));
+    };
+
+    const updateHobby = (index, value) => {
+        const updated = [...user.hobbies];
+        updated[index] = value;
+
+        setUser((prev) => ({
+            ...prev,
+            hobbies: updated,
+        }));
+    };
     const removeItem = (type, index) => {
         let updatedList = [];
         switch (type) {
@@ -212,6 +255,15 @@ export default function ProfileScreen({ navigation }) {
                 updatedList.splice(index, 1);
                 setSeaTimeRecords(updatedList);
                 setUser({ ...user, seaTimeRecords: updatedList });
+                break;
+            case "hobby":
+                updatedList = [...user.hobbies];
+                updatedList.splice(index, 1);
+
+                setUser({
+                    ...user,
+                    hobbies: updatedList,
+                });
                 break;
             default:
                 break;
@@ -336,7 +388,7 @@ export default function ProfileScreen({ navigation }) {
             <ClearableInput
                 value={user.objective}
                 onChangeText={(text) => setUser({ ...user, objective: text })}
-                placeholder="Objective in Maritime Career"
+                placeholder="Overview about yourself"
                 inputStyle={[styles.profileInput, {
                     textAlignVertical: "top",
                     height: verticalScale(120),
@@ -473,7 +525,6 @@ export default function ProfileScreen({ navigation }) {
                             onChangeText={(text) => updateSeaTime(index, "vesselName", text)}
                             placeholder="Enter Vessel Name"
                             inputStyle={styles.profileInput}
-
                             validate="none"
                             maxLength={35}
                         />
@@ -502,6 +553,20 @@ export default function ProfileScreen({ navigation }) {
                                 {record.toDate || "Select To Date"}
                             </Text>
                         </TouchableOpacity>
+                        <ClearableInput
+                            value={record.workDetail}
+                            onChangeText={(text) => updateSeaTime(index, "workDetail", text)}
+                            placeholder="Enter Duties onBoard(Optional)"
+                            inputStyle={styles.profileInput}
+                            validate="none"
+                            maxLength={300}
+                            multiline
+                            numberOfLines={8}
+                            inputStyle={[styles.profileInput, {
+                                textAlignVertical: "top",
+                                height: verticalScale(150),
+                            }]}
+                        />
                         <TouchableOpacity
                             style={[styles.removeBtn, { marginRight: "auto" }]}
                             onPress={() => removeItem("seaTime", index)}
@@ -513,7 +578,42 @@ export default function ProfileScreen({ navigation }) {
                 ))}
             </View>
 
+            <View style={[styles.section, styles.sectionContainer]}>
+                <Text style={styles.sectionTitle}>Hobbies/Interests</Text>
+                <TouchableOpacity onPress={addHobby} >
+                    <Image
+                        source={
 
+                            require("../../assets/images/addIcon.png")
+                        }
+                        style={styles.addIcon}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.listContainer}>
+
+                {user.hobbies.map((hobby, index) => (
+                    <View key={index}>
+                        <ClearableInput
+                            value={hobby}
+                            onChangeText={(text) => updateHobby(index, text)}
+                            placeholder="Enter your Hobby"
+                            inputStyle={styles.profileInput}
+                            validate="none"
+                            maxLength={50}
+                        />
+                        <TouchableOpacity
+                            style={[styles.removeBtn, { marginRight: "auto" }]}
+                            onPress={() => removeItem("hobby", index)}
+                        >
+                            <Text style={[styles.btnText, { textAlign: "center", fontSize: moderateScale(13), }]}>
+                                Remove
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                ))}
+
+            </View>
             <View style={[styles.sectionContainer]}>
                 <TouchableOpacity style={styles.userBtn} onPress={saveUser}>
                     <Text style={styles.btnText}>

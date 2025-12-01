@@ -3,10 +3,10 @@ export const formatNumber = (value) => {
     if (isNaN(num)) return "";
 
     if (Math.abs(num) >= 1e6 || (Math.abs(num) > 0 && Math.abs(num) < 1e-2)) {
-        return num.toExponential(2);
+        return num.toExponential(3);
     }
 
-    return num.toFixed(2);
+    return num.toFixed(3);
 };
 export const handleNumberChange = (text, fieldName = "Value") => {
     // Allow only numbers

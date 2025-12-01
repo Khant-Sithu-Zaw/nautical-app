@@ -517,7 +517,7 @@ const styles = StyleSheet.create({
         color: "#fff", fontWeight: "600"
     },
     userBtn: {
-        marginTop: verticalScale(20), backgroundColor: "#3C78AD", padding: moderateScale(15), borderRadius: moderateScale(18), alignItems: "center", marginBottom: verticalScale(180), width: "46%"
+        marginTop: verticalScale(20), backgroundColor: "#3C78AD", padding: moderateScale(15), borderRadius: moderateScale(18), alignItems: "center", marginBottom: verticalScale(215), width: "46%"
     },
     btnText: {
         color: "#fff", fontWeight: "600", fontSize: moderateScale(16)
@@ -537,6 +537,11 @@ const styles = StyleSheet.create({
     },
     closeIcon: {
         fontSize: moderateScale(10),
+    },
+    profileBtn: {
+        width: "45%",
+        marginBottom: verticalScale(25),
+        marginHorizontal: scale(10),
     }
 });
 
