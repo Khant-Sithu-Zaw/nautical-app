@@ -26,26 +26,6 @@ export default function CVPreviewScreen() {
         }
     };
 
-    const exportPDF = async () => {
-        try {
-            if (!htmlContent) {
-                Alert.alert("Nothing to export");
-                return;
-            }
-
-            // Convert HTML → PDF
-            const { uri } = await Print.printToFileAsync({
-                html: htmlContent,
-            });
-
-            // Open system share/save dialog
-            await Sharing.shareAsync(uri, { dialogTitle: "Share your CV (PDF)" });
-        } catch (error) {
-            console.log("PDF Error:", error);
-            Alert.alert("Export Failed", String(error));
-        }
-    };
-
     return (
         <View style={{ flex: 1 }}>
             {htmlContent !== "" && (

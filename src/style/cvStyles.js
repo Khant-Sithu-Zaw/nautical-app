@@ -1,33 +1,41 @@
 export const cvStyles = `
+html, body {
+  height: 100%;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 body {
     font-family: sans-serif;
     font-size: 12px;
 
 }
+.container{
+  display:flex;
+  min-height:100vh;   /* VERY IMPORTANT */
+}
 
 .container {
     display: flex;
     flex-direction: row;
-    
-    
 }
 
 .leftColumn {
     width: 40%;
     background-color: #205E95;
     text-align: center;
-        color: #fff;
+    color: #fff;
+    min-height:100vh;
 }
 
 .rightColumn {
     width: 60%;
-    padding-left: 12px;
+    padding-left: 40px;
     padding-top: 16px;
 }
 
 .profilePic {
-    width: 110px;
-    height: 110px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
     margin: 16px auto;
@@ -42,12 +50,12 @@ body {
 }
 
 .text {
-    margin: 4px 0;
+    margin: 5px 0;
 }
 
 .rightColumn .text {
     color: #205E95;
-    text
+    text-align: left;
 }
 
 .leftText {
@@ -58,12 +66,12 @@ body {
 }
 
 .userName {
-    font-size: 17px;
+    font-size: 22px;
     font-weight: bolder;
 }
 
 .smallTitle {
-    font-size: 12px;
+    font-size: 17px;
     color: #205E95;
 }
 
@@ -72,7 +80,7 @@ body {
 }
 
 .title {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
     width: 90%;
     padding-bottom: 6px;
@@ -80,22 +88,22 @@ body {
 }
 
 .subTitle {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 4px;
     color: #205E95;
 }
 
 .paragraph {
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.5;
     width: 100%;
     word-wrap: break-word;
     word-break: break-all;
     
 }
-    .smallText{
-    font-size: 10px;}
+.smallText{
+    font-size: 12px;}
 .iconContainer {
     margin-top: 0.3px;
     width: 5%;
@@ -103,7 +111,7 @@ body {
 }
 
 .leftColumn .section {
-    padding:7px;
+    padding:7px 23px;
 }
 
 .leftColumn .title {

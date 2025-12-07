@@ -70,37 +70,7 @@ export default function ProfileScreen({ navigation }) {
         }
     };
 
-    // const saveUser = async () => {
-    //     if (!validateRequiredFields(user)) return;
-    //     if (certificates.length === 0) {
-    //         alert("Please add at least one certificate before saving.");
-    //         return;
-    //     }
 
-    //     if (skills.length === 0) {
-    //         alert("Please add at least one skill before saving.");
-    //         return;
-    //     }
-    //     if (!user?.hobbies || user.hobbies.length === 0) {
-    //         alert("Please add at least one hobby before saving.");
-    //         return;
-    //     }
-    //     // All good → proceed to save
-    //     try {
-    //         const fullUser = {
-    //             ...user,
-    //             certificates,
-    //             skills,
-    //             seaTimeRecords
-    //         };
-
-    //         await AsyncStorage.setItem("userProfile", JSON.stringify(fullUser));
-    //         alert("Profile saved successfully!");
-    //         navigation.goBack();
-    //     } catch (e) {
-    //         console.log("Failed to save user:", e);
-    //     }
-    // };
     const saveUser = async () => {
         // Existing validation checks...
         if (!validateRequiredFields(user)) return;

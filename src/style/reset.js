@@ -192,4 +192,6 @@ a:focus {
 
 * {
   box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }`;

@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, Alert, Image } from "react-native";
+import { View, Text, Pressable, Alert, Image, Platform, ToastAndroid } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as IntentLauncher from "expo-intent-launcher";
 import styles from "../style/styles";
 import { menuItems } from "../utils/constants";
 import Card from "../components/Card";
+import generateCVHtml from "../utils/generateCVHtml";
+import * as Sharing from "expo-sharing";
+import * as Print from "expo-print";
+// import * as FileSystem from "expo-file-system";
+import * as FileSystem from "expo-file-system/legacy";
+
 export default function UserScreen({ navigation }) {
     const [userExists, setUserExists] = useState(false);
+    const [user, setUser] = useState(null);
     useEffect(() => {
+
         const checkUser = async () => {
             const data = await AsyncStorage.getItem("userProfile");
 
@@ -18,6 +27,7 @@ export default function UserScreen({ navigation }) {
 
             // ✅ Data exists → show user screen UI
             setUserExists(true);
+            setUser(JSON.parse(data));
         };
 
         const focusSubscription = navigation.addListener("focus", checkUser);
@@ -25,9 +35,96 @@ export default function UserScreen({ navigation }) {
         return focusSubscription;
     }, [navigation]);
 
-    const exportCV = () => {
+    // const exportCV = async () => {
+    //     if (!user) {
+    //         Alert.alert('Error', 'User data not loaded yet');
+    //         return;
+    //     }
 
+    //     try {
+    //         const html = generateCVHtml(user);
+
+    //         // Generate PDF
+    //         const { uri } = await Print.printToFileAsync({ html });
+    //         console.log('Temporary PDF URI:', uri);
+
+    //         // Ask user to share/save PDF
+    //         await Sharing.shareAsync(uri);
+
+    //         Alert.alert('Success', 'PDF exported successfully!');
+    //     } catch (err) {
+    //         console.log('PDF Error', err);
+    //         Alert.alert('Error', 'Could not export PDF');
+    //     }
+    // };
+    const exportCV = async () => {
+        if (!user) return;
+
+        try {
+            const html = generateCVHtml(user);
+
+            const { uri: tempUri } = await Print.printToFileAsync({ html });
+
+            // ---------- iOS ----------
+            if (Platform.OS === "ios") {
+                await Sharing.shareAsync(tempUri);
+                Alert.alert("Exported!");
+                return;
+            }
+
+            // ---------- ANDROID ----------
+            // build filename = date + username
+            // ---------- ANDROID ----------
+            const today = new Date().toISOString().slice(0, 10);
+
+            const safeName = (user?.name ?? "CV").replace(/\s+/g, "_");
+
+            const fileName = `${today}_${safeName}.pdf`;
+
+
+            const downloads = FileSystem.documentDirectory + "CVs/";
+
+            const finalPath = downloads + fileName;
+
+            // make sure folder exists
+            await FileSystem.makeDirectoryAsync(downloads, { intermediates: true }).catch(() => { });
+
+            // read PDF and save manually
+            const base64 = await FileSystem.readAsStringAsync(tempUri, {
+                encoding: "base64",
+            });
+
+            await FileSystem.writeAsStringAsync(finalPath, base64, {
+                encoding: "base64",
+            });
+
+
+            // Save to storage for viewing later
+            await AsyncStorage.setItem("latestPDF", finalPath);
+
+
+
+            // open pdf
+            // await IntentLauncher.startActivityAsync("android.intent.action.VIEW", {
+            //     data: finalPath,
+            //     flags: 1,
+            //     type: "application/pdf",
+            // });
+
+
+            // open viewer safely
+            await Sharing.shareAsync(finalPath, {
+                mimeType: "application/pdf",
+                dialogTitle: "Open CV",
+            });
+        } catch (err) {
+            console.log("PDF Error", err);
+            Alert.alert("Error exporting file");
+        }
+        ToastAndroid.show("Saved to Downloads", ToastAndroid.SHORT);
     };
+
+
     const deleteProfile = () => {
         Alert.alert(
             "Delete Profile",
