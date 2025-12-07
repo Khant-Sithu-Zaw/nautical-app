@@ -11,7 +11,7 @@ body {
 }
 .container{
   display:flex;
-  min-height:100vh;   /* VERY IMPORTANT */
+  min-height:100vh;   
 }
 
 .container {
@@ -34,8 +34,8 @@ body {
 }
 
 .profilePic {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
     object-fit: cover;
     margin: 16px auto;
@@ -66,7 +66,7 @@ body {
 }
 
 .userName {
-    font-size: 22px;
+    font-size: 23px;
     font-weight: bolder;
 }
 
