@@ -13,9 +13,9 @@ import { scale, moderateScale, verticalScale } from '../utils/scale';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropdownPicker from '../components/DropdownPicker';
 import dropdownStyles from "../style/pickupstyle";
-import { levels, ranks } from "../utils/constants";
+import { levels, levelMap, ranks } from "../utils/constants";
 import ClearableInput from "../components/ClearableInput";
-import { validateEmail } from "../utils/methods";
+import { validateEmail, validateRequiredFields } from "../utils/methods";
 export default function ProfileScreen({ navigation }) {
     const [isUpdate, setIsUpdate] = useState(false); // <-- new state
     const [user, setUser] = useState(new User());
@@ -23,7 +23,8 @@ export default function ProfileScreen({ navigation }) {
     const [activeField, setActiveField] = useState(null);
     const [certificates, setCertificates] = useState([]);
     const [skills, setSkills] = useState([]);
-    const [seaTimeRecords, setSeaTimeRecords] = useState([]);
+    // const [seaTimeRecords, setSeaTimeRecords] = useState([]);
+    const [seaTimeRecords, setSeaTimeRecords] = useState([new SeaTimeRecord()]);
     // const [hobbies, setHobbies] = useState([]);
     const openPicker = (fieldName) => {
         setActiveField(fieldName);
@@ -33,17 +34,7 @@ export default function ProfileScreen({ navigation }) {
     useEffect(() => {
         loadUser();
     }, []);
-    // const pickImage = async () => {
-    //     let result = await ImagePicker.launchImageLibraryAsync({
-    //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //         allowsEditing: true,
-    //         aspect: [1, 1],
-    //         quality: 1,
-    //     });
 
-    //     if (result.canceled) return;
-    //     setUser({ ...user, image: result.assets[0].uri });
-    // };
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -79,14 +70,92 @@ export default function ProfileScreen({ navigation }) {
         }
     };
 
+    // const saveUser = async () => {
+    //     if (!validateRequiredFields(user)) return;
+    //     if (certificates.length === 0) {
+    //         alert("Please add at least one certificate before saving.");
+    //         return;
+    //     }
+
+    //     if (skills.length === 0) {
+    //         alert("Please add at least one skill before saving.");
+    //         return;
+    //     }
+    //     if (!user?.hobbies || user.hobbies.length === 0) {
+    //         alert("Please add at least one hobby before saving.");
+    //         return;
+    //     }
+    //     // All good → proceed to save
+    //     try {
+    //         const fullUser = {
+    //             ...user,
+    //             certificates,
+    //             skills,
+    //             seaTimeRecords
+    //         };
+
+    //         await AsyncStorage.setItem("userProfile", JSON.stringify(fullUser));
+    //         alert("Profile saved successfully!");
+    //         navigation.goBack();
+    //     } catch (e) {
+    //         console.log("Failed to save user:", e);
+    //     }
+    // };
     const saveUser = async () => {
-        if (certificates.length === 0) {
-            alert("Please add at least one certificate before saving.");
+        // Existing validation checks...
+        if (!validateRequiredFields(user)) return;
+
+        // --- 1. FILTERING LOGIC ---
+
+        // Define conditions for completeness based on typical required fields:
+
+        // Sea Time Records: Must have vesselName, rank, and at least one date.
+        const cleanedSeaTimeRecords = seaTimeRecords.filter(record => {
+            return (
+                record.companyName &&
+                record.workDescription &&
+                (record.fromDate || record.toDate)
+
+            );
+        });
+
+        // Certificates: Must have a title and an issued date.
+        const cleanedCertificates = certificates.filter(cert => {
+            return (
+                cert.title &&
+                cert.issuedDate
+            );
+        });
+
+        // Skills: Must have a skillName and a level.
+        const cleanedSkills = skills.filter(skill => {
+            return (
+                skill.skillName &&
+                skill.level
+            );
+        });
+
+        // --- 2. RE-VALIDATION BASED ON CLEANED ARRAYS ---
+
+        // Re-check minimum requirements using the CLEANED arrays:
+        if (cleanedCertificates.length === 0) {
+            alert("Please add and complete at least one certificate before saving.");
             return;
         }
 
-        if (skills.length === 0) {
-            alert("Please add at least one skill before saving.");
+        if (cleanedSkills.length === 0) {
+            alert("Please add and complete at least one skill before saving.");
+            return;
+        }
+
+        // If you enforce a minimum of one sea time record:
+        // if (cleanedSeaTimeRecords.length === 0) {
+        //     alert("Please add and complete at least one sea time record before saving.");
+        //     return;
+        // }
+
+        if (!user?.hobbies || user.hobbies.length === 0) {
+            alert("Please add at least one hobby before saving.");
             return;
         }
 
@@ -94,9 +163,10 @@ export default function ProfileScreen({ navigation }) {
         try {
             const fullUser = {
                 ...user,
-                certificates,
-                skills,
-                seaTimeRecords
+                // 3. Use the CLEANED arrays for saving
+                certificates: cleanedCertificates,
+                skills: cleanedSkills,
+                seaTimeRecords: cleanedSeaTimeRecords
             };
 
             await AsyncStorage.setItem("userProfile", JSON.stringify(fullUser));
@@ -184,7 +254,7 @@ export default function ProfileScreen({ navigation }) {
     const addSeaTime = () => {
         if (seaTimeRecords.length > 0) {
             const last = seaTimeRecords[seaTimeRecords.length - 1];
-            if (!last.vesselName || !last.rank || !last.fromDate || !last.toDate) {
+            if (!last.companyName || !last.fromDate || !last.toDate || !last.workDescription) {
                 alert("All fields must be filled before adding another sea time record.");
                 return;
             }
@@ -192,25 +262,14 @@ export default function ProfileScreen({ navigation }) {
         setSeaTimeRecords([...seaTimeRecords, new SeaTimeRecord()]);
     };
 
-    // Update sea time record
     const updateSeaTime = (index, field, value) => {
         const updated = [...seaTimeRecords];
         updated[index][field] = value;
-
-        // Automatically calculate duration if both dates exist
-        if (field === "fromDate" || field === "toDate") {
-            const from = new Date(updated[index].fromDate);
-            const to = new Date(updated[index].toDate);
-            if (!isNaN(from) && !isNaN(to)) {
-                const diffTime = to - from; // milliseconds
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                updated[index].duration = `${diffDays} days`;
-            }
-        }
-
         setSeaTimeRecords(updated);
         setUser({ ...user, seaTimeRecords: updated });
     };
+
+
     const addHobby = () => {
         const hobbyList = user.hobbies || [];
 
@@ -322,7 +381,14 @@ export default function ProfileScreen({ navigation }) {
                 inputStyle={styles.profileInput}
                 validate="text"
             />
-
+            <ClearableInput
+                value={user.edu}
+                onChangeText={(text) => setUser({ ...user, edu: text })}
+                placeholder="Your Highest Education"
+                inputStyle={[styles.profileInput]}
+                validate="none"
+                multiline
+            />
             <DropdownPicker
                 options={ranks}
                 selected={user.rank}
@@ -485,14 +551,13 @@ export default function ProfileScreen({ navigation }) {
                         />
                         <DropdownPicker
                             options={levels}
-                            selected={skil.level}
-                            viewStyle={
-                                { marginTop: verticalScale(10) }
-                            }
+                            selected={skil.level} // this should already hold a string like "Beginner"
+                            viewStyle={{ marginTop: verticalScale(10) }}
                             textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
                             placeholder="Select Your Level"
-                            onSelect={(value) => updateSkill(index, "level", value)}
+                            onSelect={(value) => updateSkill(index, "level", value)} // just save the string
                         />
+
                         <TouchableOpacity
                             style={[styles.removeBtn, { marginRight: "auto" }]}
                             onPress={() => removeItem("skill", index)}
@@ -505,7 +570,7 @@ export default function ProfileScreen({ navigation }) {
             </View>
 
             <View style={[styles.section, styles.sectionContainer]}>
-                <Text style={styles.sectionTitle}>SeaTime Records</Text>
+                <Text style={styles.sectionTitle}>Work Experience</Text>
                 <TouchableOpacity onPress={addSeaTime} >
                     <Image
                         source={
@@ -521,20 +586,12 @@ export default function ProfileScreen({ navigation }) {
                     <View key={index} >
 
                         <ClearableInput
-                            value={record.vesselName}
-                            onChangeText={(text) => updateSeaTime(index, "vesselName", text)}
-                            placeholder="Enter Vessel Name"
+                            value={record.companyName}
+                            onChangeText={(text) => updateSeaTime(index, "companyName", text)}
+                            placeholder="Enter Company Name"
                             inputStyle={styles.profileInput}
                             validate="none"
                             maxLength={35}
-                        />
-                        <DropdownPicker
-                            options={ranks}
-                            selected={record.rank} // use record.rank, not user.rank
-                            onSelect={(opt) => updateSeaTime(index, "rank", opt)} // update the specific sea time record
-                            viewStyle={{ marginTop: verticalScale(10) }}
-                            textboxStyle={{ width: "97%", fontSize: moderateScale(14) }}
-                            placeholder="Select Your Rank"
                         />
                         <TouchableOpacity
                             style={styles.profileInput}
@@ -554,9 +611,16 @@ export default function ProfileScreen({ navigation }) {
                             </Text>
                         </TouchableOpacity>
                         <ClearableInput
-                            value={record.workDetail}
-                            onChangeText={(text) => updateSeaTime(index, "workDetail", text)}
-                            placeholder="Enter Duties onBoard(Optional)"
+                            value={record.workDescription}
+                            onChangeText={(text) => {
+                                if (text.length > 300) {
+                                    alert("You can type maximum 300 characters.");
+                                    return;
+                                }
+                                updateSeaTime(index, "workDescription", text);
+                            }}
+
+                            placeholder="About Your Work Onboard"
                             inputStyle={styles.profileInput}
                             validate="none"
                             maxLength={300}

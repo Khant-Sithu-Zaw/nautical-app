@@ -1,8 +1,7 @@
 export class SeaTimeRecord {
-    constructor({ vesselName = "", rank = "", fromDate = "", toDate = "", workDetail = "" } = {}) {
-        this.vesselName = vesselName;
-        this.rank = rank;
-        this.workDetail = workDetail;
+    constructor({ companyName = "", fromDate = "", toDate = "", workDescription = "", } = {}) {
+        this.companyName = companyName;
+        this.workDescription = workDescription;
         this.fromDate = fromDate;
         this.toDate = toDate;
     }

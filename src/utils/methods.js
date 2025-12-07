@@ -35,7 +35,59 @@ export const formatDate = (date) => {
     const minutes = String(date.getMinutes()).padStart(2, "0");
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
-const validateEmail = (email) => {
+export const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|jp|mm)$/i;
     return emailRegex.test(email);
 };
+export const validateRequiredFields = (user) => {
+    let errors = [];
+
+    if (!user.name?.trim()) errors.push("Full Name");
+    if (!user.birthday?.trim()) errors.push("Birthday");
+    if (!user.nationality?.trim()) errors.push("Nationality");
+    if (!user.rank?.trim()) errors.push("Rank");
+    if (!user.passport?.trim()) errors.push("Passport Number");
+    if (!user.sirb?.trim()) errors.push("SIRB/CDC Number");
+    if (!user.address?.trim()) errors.push("Home Address");
+    if (!user.email?.trim()) errors.push("Email Address");
+    if (!user.phone?.trim()) errors.push("Phone Number");
+    if (!user.objective?.trim()) errors.push("Objective");
+
+    if (errors.length > 0) {
+        Alert.alert(
+            "Missing Required Fields",
+            "Please fill: \n\n" + errors.join("\n")
+        );
+        return false;
+    }
+
+    return true;
+};
+export const formatShortDate = (dateStr) => {
+    if (!dateStr) return "";
+
+    // Try to parse "September 22, 2025" manually
+    const date = new Date(dateStr);
+    if (isNaN(date)) {
+        // fallback: split manually if format is "Month DD, YYYY"
+        const parts = dateStr.replace(",", "").split(" "); // ["September", "22", "2025"]
+        if (parts.length === 3) {
+            const monthNames = {
+                January: "01", February: "02", March: "03", April: "04",
+                May: "05", June: "06", July: "07", August: "08",
+                September: "09", October: "10", November: "11", December: "12"
+            };
+            const day = parts[1].padStart(2, "0");
+            const month = monthNames[parts[0]] || "01";
+            const year = parts[2];
+            return `${day}.${month}.${year}`;
+        }
+        return dateStr; // fallback: return as-is
+    }
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
+

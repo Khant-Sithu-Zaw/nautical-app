@@ -16,7 +16,16 @@ import dropdownStyles from "../style/pickupstyle";
 
 const screenHeight = Dimensions.get("window").height;
 
-export default function DropdownPicker({ label, options, selected, onSelect, placeholder = "Select", viewStyle = {}, textboxStyle = {} }) {
+export default function DropdownPicker({
+    label,
+    options,
+    selected = [],
+    onSelect,
+    placeholder = "Select",
+    viewStyle = {},
+    textboxStyle = {},
+    multiSelect = false, // new prop
+}) {
     const [showModal, setShowModal] = useState(false);
     const [pickerLayout, setPickerLayout] = useState(null);
     const pickerRef = useRef(null);
@@ -35,6 +44,19 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
     const maxHeight = verticalScale(200);
     const spacing = Platform.OS === "ios" ? verticalScale(0) : verticalScale(32);
 
+    const handleSelect = (opt) => {
+        if (!multiSelect) {
+            onSelect(opt);
+            closeDropdown();
+        } else {
+            // toggle selection
+            const newSelected = selected.includes(opt)
+                ? selected.filter(s => s !== opt)
+                : [...selected, opt];
+            onSelect(newSelected);
+        }
+    };
+
     return (
         <View style={[viewStyle]}>
             {label && <Text style={{ fontWeight: "bold", marginBottom: 5 }}>{label}</Text>}
@@ -50,11 +72,11 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
                 <Text
                     style={[
                         dropdownStyles.pickerText,
-                        { color: selected ? "black" : "gray" },
+                        { color: Array.isArray(selected) && selected.length ? "black" : "gray" },
                         textboxStyle
                     ]}
                 >
-                    {selected || placeholder}
+                    {Array.isArray(selected) && selected.length ? selected.join(", ") : placeholder}
                 </Text>
                 <Text style={{ fontSize: moderateScale(9) }}>▼</Text>
             </TouchableOpacity>
@@ -90,15 +112,12 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
                                             dropdownStyles.option,
                                             i === options.length - 1 && { borderBottomWidth: 0 },
                                         ]}
-                                        onPress={() => {
-                                            onSelect(opt);
-                                            closeDropdown();
-                                        }}
+                                        onPress={() => handleSelect(opt)}
                                     >
                                         <Text
                                             style={[
                                                 dropdownStyles.optionText,
-                                                String(selected).trim() === String(opt).trim() && { fontWeight: "bold" },
+                                                selected.includes(opt) && { fontWeight: "bold" },
                                             ]}
                                         >
                                             {opt}

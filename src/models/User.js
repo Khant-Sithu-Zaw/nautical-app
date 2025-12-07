@@ -3,6 +3,7 @@ export default class User {
         name = "",
         birthday = null,
         nationality = "",
+        edu = "",
         passport = "",
         sirb = "",
         rank = "",
@@ -18,6 +19,7 @@ export default class User {
     } = {}) {
         this.name = name;
         this.birthday = birthday;
+        this.edu = edu;
         this.nationality = nationality;
         this.passport = passport;
         this.sirb = sirb;

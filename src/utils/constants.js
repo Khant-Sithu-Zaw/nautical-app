@@ -21,8 +21,16 @@ export const levels = [
     "Beginner",
     "Intermediate",
     "Advanced",
-    "Expert"
+    "Expert",
 ];
+
+export const levelMap = {
+    Beginner: 1,
+    Intermediate: 2,
+    Advanced: 3,
+    Expert: 4,
+};
+
 export const weatherOptions = [
     { label: "Calm", loss: 0 },
     { label: "Light breeze", loss: 2 },
@@ -41,31 +49,30 @@ export const fuelUnit = [
     "(Litre/hour)"
 ]
 export const ranks = [
-    "Captain (Master)",
-    "Chief Officer (CO)",
-    "Second Officer (2O)",
-    "Third Officer (3O)",
-    "Chief Engineer (CE)",
-    "First Engineer (1E)",
-    "Second Engineer (2E)",
-    "Third Engineer (3E)",
-    "Fourth Engineer (4E)",
-    "Electrical Officer (ETO)",
-    "Bosun (BSN)",
-    "Fitter (FTR)",
-    "Able Seaman (AB)",
-    "Ordinary Seaman (OS)",
-    "Pumpman (PUM)",
-    "Wiper (WPR)",
-    "Oiler (OIL)",
-    "Electrical Rating (ETR)",
-    "Chief Cook (CK)",
-    "Deck Cadet (DC)",
-    "Engine Cadet (EC)",
-    "Deck Rating (DR)",
-    "Engine Rating (ER)",
-    "Steward (SD)",
-    "MessMan (MM)"
+    "Captain",
+    "Chief Officer",
+    "Second Officer",
+    "Third Officer",
+    "Chief Engineer",
+    "First Engineer",
+    "Second Engineer",
+    "Third Engineer",
+    "Fourth Engineer",
+    "Electrical Officer",
+    "Bosun",
+    "Fitter",
+    "Able Seaman",
+    "Ordinary Seaman",
+    "Pumpman",
+    "Wiper",
+    "Oiler",
+    "Electrical Rating",
+    "Chief Cook",
+    "Deck Cadet",
+    "Engine Cadet",
+    "Deck Rating",
+    "Engine Rating",
+    "MessMan"
 ];
 export const shackleLengthOptions = [
     "15 meters",

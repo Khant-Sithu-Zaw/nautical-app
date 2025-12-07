@@ -49,7 +49,7 @@ export default function CVPreviewScreen() {
     return (
         <View style={{ flex: 1 }}>
             {htmlContent !== "" && (
-                <WebView source={{ html: htmlContent }} style={{ flex: 1 }} />
+                <WebView source={{ html: htmlContent }} />
             )}
         </View>
     );
