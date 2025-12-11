@@ -8,7 +8,7 @@ import generateCVHtml from "../utils/generateCVHtml";
 import * as Sharing from "expo-sharing";
 import * as Print from "expo-print";
 import * as FileSystem from "expo-file-system/legacy";
-
+import Layout from "../components/Layout";
 export default function UserScreen({ navigation }) {
     const [userExists, setUserExists] = useState(false);
     const [user, setUser] = useState(null);
@@ -20,13 +20,14 @@ export default function UserScreen({ navigation }) {
 
             if (!data) {
                 // ❌ No saved user → go to Profile Setup Automatically
-                navigation.navigate("Profile Setup");
-                return;
+                setUserExists(false);
+
+            } else {
+                setUserExists(true);
+                setUser(JSON.parse(data));
             }
 
-            // ✅ Data exists → show user screen UI
-            setUserExists(true);
-            setUser(JSON.parse(data));
+
         };
 
         const focusSubscription = navigation.addListener("focus", checkUser);
@@ -76,7 +77,6 @@ export default function UserScreen({ navigation }) {
 
     return (
 
-
         <View
             style={{
                 flex: 1,
@@ -86,29 +86,38 @@ export default function UserScreen({ navigation }) {
                 alignContent: "center",
             }}
         >
-            {userExists && (
+
+
+            {userExists ? (
                 <>
                     {menuItems(navigation, deleteProfile, exportCV).map((item, index) => (
-                        <Pressable key={index} onPress={item.onPress} style={styles.profileBtn}>
+                        <Pressable
+                            key={index}
+                            onPress={item.onPress}
+                            style={styles.profileBtn}
+                        >
                             {({ pressed }) => (
                                 <Card
                                     style={{
-                                        backgroundColor: pressed ? "#3C78AD" : "#fff", // Blue while pressing
+                                        backgroundColor: pressed ? "#3C78AD" : "#fff",
                                     }}
                                 >
                                     <Image
                                         source={item.image}
                                         style={[
-                                            styles.cardImage,
-                                            { tintColor: pressed ? "#fff" : "#3C78AD" }, // Change image color while pressing
+                                            styles.cardIcon,
+                                            {
+                                                tintColor: pressed ? "#fff" : "#3C78AD",
+                                            },
                                         ]}
                                         resizeMode="contain"
                                     />
                                     <Text
-
                                         style={[
                                             styles.cardText,
-                                            { color: pressed ? "#fff" : "#3C78AD" }, // Change text color while pressing
+                                            {
+                                                color: pressed ? "#fff" : "#3C78AD",
+                                            },
                                         ]}
                                     >
                                         {item.label}
@@ -118,21 +127,52 @@ export default function UserScreen({ navigation }) {
                         </Pressable>
                     ))}
                 </>
+            ) : (
+                <Pressable onPress={() => navigation.navigate("Profile Setup")}>
+                    {({ pressed }) => (
+                        <Text
+                            style={[
+                                styles.linkText,
+                                {
+                                    textDecorationLine: pressed ? "underline" : "none",
+                                },
+                            ]}
+                        >
+                            Set up Profile{"\n"}
+                            <Text>Get a Curriculum Vitae</Text>
+                        </Text>
+                    )}
+                </Pressable>
             )}
+
+
             {loading && (
-                <View style={{
-                    position: "absolute",
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    backgroundColor: "rgba(0,0,0,0.5)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    zIndex: 1000,
-                }}>
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 1000,
+                    }}
+                >
                     <ActivityIndicator size="large" color="#fff" />
-                    <Text style={{ color: "#fff", marginTop: 10 }}>Processing...</Text>
+                    <Text style={{ color: "#fff", marginTop: 10 }}>
+                        Processing...
+                    </Text>
                 </View>
             )}
         </View>
+
+
+
+
+
+
     );
 }
 

@@ -235,6 +235,10 @@ const styles = StyleSheet.create({
         width: scale(50),
         height: verticalScale(50)
     },
+    cardIcon: {
+        width: scale(25),
+        height: verticalScale(25)
+    },
     cardText: {
         fontSize: moderateScale(15),
         textAlign: "center",
@@ -433,6 +437,7 @@ const styles = StyleSheet.create({
     ,
     anchorLogo: {
         marginVertical: verticalScale(30),
+
         width: scale(70)
     },
     contentTitle: {
@@ -539,7 +544,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(10),
     },
     profileBtn: {
-        width: "45%",
+        width: "40%",
         marginBottom: verticalScale(25),
         marginHorizontal: scale(10),
     }

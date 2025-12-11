@@ -39,9 +39,8 @@ export default function AnchorDragScreen() {
         }
 
         const chainLength = shackleNum * length;
-        const halfLOA = lengthNum / 2;
 
-        const totalMeters = chainLength + halfLOA;
+        const totalMeters = chainLength + lengthNum;
 
         setRadius(totalMeters.toFixed(3));
         setRadiusNm((totalMeters.toFixed(3) / NAUTICAL_MILE).toFixed(3));

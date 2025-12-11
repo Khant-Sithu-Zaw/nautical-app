@@ -265,7 +265,7 @@ export default function RequiredSpeedScreen() {
 
 							]}
 						>
-							Required Speed to reach on time
+							Approximate Speed to reach on time
 						</Text>
 						<Text style={[
 							styles.resultText,

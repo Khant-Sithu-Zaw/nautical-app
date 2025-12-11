@@ -8,8 +8,8 @@ import { fuelUnit, numberRegex } from '../utils/constants';
 import Card from "../components/Card";
 import DropdownPicker from '../components/DropdownPicker';
 export default function FuelConsumptionScreen() {
-    const [speed, setSpeed] = useState("");
-    const [distance, setDistance] = useState("");
+
+    const [duration, setDuration] = useState("");
     const [rate, setRate] = useState("");
     const [price, setPrice] = useState("");
     const [selectedUnit, setSelectedUnit] = useState("(Kilogram/hour)");
@@ -24,20 +24,18 @@ export default function FuelConsumptionScreen() {
     };
     const calculateCost = () => {
         Keyboard.dismiss();
-        if (speed === "" || distance === "" || rate === "" || price === "" || speed.trim() === "" || distance.trim() === "" || rate.trim() === "" || price.trim() === "") {
+        if (duration === "" || rate === "" || price === "" || duration.trim() === "" || rate.trim() === "" || price.trim() === "") {
             alert("Please fill all the inputs.");
             return;
         }
-        const dist = parseFloat(distance);
-        const spd = parseFloat(speed);
+
         const rateVal = parseFloat(rate);
         const priceVal = parseFloat(price);
-
-        if (isNaN(dist) || isNaN(spd) || isNaN(rateVal) || isNaN(priceVal) || spd <= 0 || dist <= 0 || rateVal <= 0 || priceVal <= 0) {
+        const durationVal = parseFloat(duration);
+        if (isNaN(durationVal) || isNaN(rateVal) || isNaN(priceVal) || durationVal <= 0 || rateVal <= 0 || priceVal <= 0) {
             alert("Please enter only numeric value greater than 0.");
             return;
         }
-        const timeHours = dist / spd; // voyage time in hours
 
         let fuelConsumed = 0; // unit depends on selectedUnit
         let totalCost = 0;
@@ -45,15 +43,15 @@ export default function FuelConsumptionScreen() {
         // 🔹 Conversion and calculation logic
         if (selectedUnit === "(Kilogram/hour)") {
             // Convert kg → metric tons for display, but cost is based on kg
-            fuelConsumed = rateVal * timeHours; // in kg
+            fuelConsumed = rateVal * durationVal; // in kg
             totalCost = fuelConsumed * priceVal; // price per kg
         }
         else if (selectedUnit === "(MetricTon/day)") {
-            fuelConsumed = (rateVal / 24) * timeHours; // in metric tons
+            fuelConsumed = (rateVal / 24) * durationVal; // in metric tons
             totalCost = fuelConsumed * priceVal; // price per metric ton
         }
         else if (selectedUnit === "(Litre/hour)") {
-            fuelConsumed = rateVal * timeHours; // in liters
+            fuelConsumed = rateVal * durationVal; // in liters
             totalCost = fuelConsumed * priceVal; // price per litre
         }
         else {
@@ -73,17 +71,17 @@ export default function FuelConsumptionScreen() {
                     {/* Distance Input */}
 
                     <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Distance (NM)</Text>
+                        <Text style={styles.label}>Voyage Time</Text>
                     </View>
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Enter nautical miles"
+                            placeholder="Rough Duration in hours"
                             keyboardType="decimal-pad"
-                            value={distance}
+                            value={duration}
                             onChangeText={(text) => {
                                 if (numberRegex.test(text)) {
-                                    setDistance(text);
+                                    setDuration(text);
                                 }
 
                             }}
@@ -91,38 +89,13 @@ export default function FuelConsumptionScreen() {
                             maxLength={8}
                             textContentType="none"
                         />
-                        {distance && distance.toString().length > 0 && (
-                            <TouchableOpacity onPress={() => setDistance("")}>
+                        {duration && duration.toString().length > 0 && (
+                            <TouchableOpacity onPress={() => setDuration("")}>
                                 <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
                             </TouchableOpacity>
                         )}
                     </View>
-                    <View style={[styles.leftItem, styles.inputLabel]}>
-                        <Text style={styles.label}>Speed (knots)</Text>
-                    </View>
-                    <View style={[styles.rightItem, styles.inputContainer]}>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="Enter vessel speed"
-                            keyboardType="decimal-pad"
-                            value={speed}
-                            onChangeText={(text) => {
-                                if (numberRegex.test(text)) {
-                                    setSpeed(text);
-                                }
 
-                            }}
-
-                            placeholderTextColor="#9b9898ff"
-                            maxLength={8}
-                            textContentType="none"
-                        />
-                        {speed && speed.toString().length > 0 && (
-                            <TouchableOpacity onPress={() => setSpeed("")}>
-                                <Text style={[styles.crossEmoji, styles.clrBtn]}>❌</Text>
-                            </TouchableOpacity>
-                        )}
-                    </View>
                     <View style={[styles.leftItem, styles.inputLabel]}>
                         <Text style={styles.label}>Unit of Rate</Text>
                     </View>
