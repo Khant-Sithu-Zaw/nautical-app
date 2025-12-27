@@ -491,6 +491,12 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
 
     },
+    groupedInput: {
+        flexDirection: "row",
+        width: '100%',
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+    },
     profileContainer: {
         flex: 1, padding: moderateScale(20), backgroundColor: "#fff", marginBottom: verticalScale(40),
     },

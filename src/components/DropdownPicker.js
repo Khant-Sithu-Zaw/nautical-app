@@ -16,7 +16,7 @@ import dropdownStyles from "../style/pickupstyle";
 
 const screenHeight = Dimensions.get("window").height;
 
-export default function DropdownPicker({ label, options, selected, onSelect, placeholder = "Select", viewStyle = {}, textboxStyle = {} }) {
+export default function DropdownPicker({ label, options, selected, onSelect, fromParents, placeholder = "Select", viewStyle = {}, textboxStyle = {} }) {
     const [showModal, setShowModal] = useState(false);
     const [pickerLayout, setPickerLayout] = useState(null);
     const pickerRef = useRef(null);
@@ -43,6 +43,7 @@ export default function DropdownPicker({ label, options, selected, onSelect, pla
                 ref={pickerRef}
                 style={[
                     dropdownStyles.customPicker,
+                    fromParents,
                     { flexDirection: "row", alignItems: "center", justifyContent: "space-between" }
                 ]}
                 onPress={openDropdown}

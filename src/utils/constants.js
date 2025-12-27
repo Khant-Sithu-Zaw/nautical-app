@@ -23,7 +23,49 @@ export const levels = [
     "Advanced",
     "Expert",
 ];
-
+export const martialSts = [
+    "Single",
+    "Married",
+    "Widowed",
+];
+export const genders = [
+    "Male",
+    "Female"
+];
+export const vesselTypeOptions = [
+    'Bulk Carrier',
+    'Container Ship',
+    'Crude Oil Tanker',
+    'Chemical Tanker',
+    'LNG Carrier',
+    'LPG Carrier',
+    'General Cargo',
+    'Ro-Ro/Car Carrier',
+    'Passenger / Cruise',
+    'Offshore (PSV/AHTS)',
+    'FPSO/FSO',
+    'Tug/Workboat',
+    'Livestock Carrier',
+    'Other'
+];
+export const kins = [
+    "Father",
+    "Mother",
+    "Brother",
+    "Sister",
+    "Uncle",
+    "Aunt",
+    "Cousin",
+    "Grandfather",
+    "Grandmother",
+    "Husband",
+    "Wife",
+    "Son",
+    "Daughter",
+    "Other",
+    "Friend",
+    "Colleague",
+];
 export const levelMap = {
     Beginner: 1,
     Intermediate: 2,

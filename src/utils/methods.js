@@ -39,30 +39,7 @@ export const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|jp|mm)$/i;
     return emailRegex.test(email);
 };
-export const validateRequiredFields = (user) => {
-    let errors = [];
 
-    if (!user.name?.trim()) errors.push("Full Name");
-    if (!user.birthday?.trim()) errors.push("Birthday");
-    if (!user.nationality?.trim()) errors.push("Nationality");
-    if (!user.rank?.trim()) errors.push("Rank");
-    if (!user.passport?.trim()) errors.push("Passport Number");
-    if (!user.sirb?.trim()) errors.push("SIRB/CDC Number");
-    if (!user.address?.trim()) errors.push("Home Address");
-    if (!user.email?.trim()) errors.push("Email Address");
-    if (!user.phone?.trim()) errors.push("Phone Number");
-    if (!user.objective?.trim()) errors.push("Objective");
-
-    if (errors.length > 0) {
-        Alert.alert(
-            "Missing Required Fields",
-            "Please fill: \n\n" + errors.join("\n")
-        );
-        return false;
-    }
-
-    return true;
-};
 export const formatShortDate = (dateStr) => {
     if (!dateStr) return "";
 
