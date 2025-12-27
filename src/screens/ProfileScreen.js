@@ -124,7 +124,7 @@ export default function ProfileScreen({ navigation }) {
                 edu.eduToDate
             );
         });
-        console.log("Cleaned Educations:", cleanedEducations);
+
 
         // Sea Time Records: Must have vesselName, rank, and at least one date.
         const cleanedSeaTimeRecords = seaTimeRecords.filter(record => {
@@ -147,7 +147,8 @@ export default function ProfileScreen({ navigation }) {
             return (
                 cert.title &&
                 cert.issuedDate &&
-                cert.expiredDate
+                cert.expiredDate &&
+                cert.country
             );
         });
 
@@ -714,7 +715,7 @@ export default function ProfileScreen({ navigation }) {
                     <ClearableInput
                         value={user.kin.kinAddr}
                         onChangeText={(text) => setUser({ ...user, kin: { ...user.kin, kinAddr: text } })}
-                        placeholder="Enter Address"
+                        placeholder="Enter Full Address"
                         maxLength={80}
                         multiline
                         numberOfLines={4}
@@ -812,6 +813,16 @@ export default function ProfileScreen({ navigation }) {
                                     updateCertificate(index, "title", text)
                                 }
                                 placeholder="Enter Certificate Title"
+                                inputStyle={styles.profileInput}
+                                validate="none"
+                                maxLength={35}
+                            />
+                            <ClearableInput
+                                value={cert.country}
+                                onChangeText={(text) =>
+                                    updateCertificate(index, "country", text)
+                                }
+                                placeholder="Enter Issued Country"
                                 inputStyle={styles.profileInput}
                                 validate="none"
                                 maxLength={35}

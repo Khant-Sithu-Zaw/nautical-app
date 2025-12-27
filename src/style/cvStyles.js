@@ -1,3 +1,4 @@
+
 export const cvStyles = `
 html, body {
   height: 100%;
@@ -11,7 +12,8 @@ body {
 }
 .container{
   display:flex;
-  min-height:100vh;   
+  alignItems: 'stretch';
+  
 }
 
 .container {
@@ -24,13 +26,14 @@ body {
     background-color: #205E95;
     text-align: center;
     color: #fff;
-    min-height:100vh;
+
 }
 
 .rightColumn {
     width: 60%;
     padding-left: 40px;
     padding-top: 16px;
+    border-bottom: 3px solid #205E95;
 }
 
 .profilePic {
@@ -38,7 +41,7 @@ body {
     height: 170px;
     border-radius: 50%;
     object-fit: cover;
-    margin: 16px auto;
+    margin: 25px auto 10px;
     overflow: hidden;
 }
 
@@ -66,12 +69,12 @@ body {
 }
 
 .userName {
-    font-size: 23px;
+    font-size: 28px;
     font-weight: bolder;
 }
 
 .smallTitle {
-    font-size: 17px;
+    font-size: 18px;
     color: #205E95;
 }
 
@@ -80,7 +83,7 @@ body {
 }
 
 .title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     width: 90%;
     padding-bottom: 6px;
@@ -88,14 +91,14 @@ body {
 }
 
 .subTitle {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 4px;
     color: #205E95;
 }
 
 .paragraph {
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.5;
     width: 100%;
     word-wrap: break-word;
@@ -103,7 +106,8 @@ body {
     
 }
 .smallText{
-    font-size: 12px;}
+    font-size: 15px;
+    }
 .iconContainer {
     margin-top: 0.3px;
     width: 5%;
@@ -117,7 +121,9 @@ body {
 .leftColumn .title {
     text-align: left;
 }
-
+.edu {
+margin :10px 0;
+}
 .list {
     color: #205E95;
     margin: 4px 0;
@@ -130,8 +136,8 @@ body {
     content: "";
     position: absolute;
     left: 0%;
-    top: 25%;
-    // transform: translateY(-50%);
+    top: 40%;
+    transform: translateY(-30%);
     width: 6px;
     height: 6px;
     background-color: #0e64af;
@@ -147,6 +153,64 @@ text-align: left;}
 }
 .leftInner {
     margin : 2px 0;
+    }
+.tableContainer{
+padding-top: 15px;
+    width: 100%;
+    color: #205E95;
+    }
+.tableContainer .title {
+    padding-left: 6px;
+    }
+.certTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  table-layout: fixed;
+}
+
+.certTable th, .certTable td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 0;
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.certTable th {
+  background-color: #205E95;
+  color: #fff;
+   border: 1px solid #fff;
+}
+
+.certTable td {
+  background-color: #f2f2f2;
+  color: #205E95;
+   border: 1px solid #205E95;
+}
+.additionalInfo{
+    display: flex;
+    justifyContents: space-between;
+    width: 100%;
+    
+}
+
+.additionalInfo .leftInfo{
+    width: 45%;
+    padding:0 5px;
+    }
+    .additionalInfo p {
+    font-size: 16px;
+    font-weight: 500;
+    }
+    .additionalInfo p span {
+    font-weight: 700;
+    }
+.additionalInfo .rightInfo{
+    width: 50%;
+ padding:0 5px;
     }
 `;
 export default cvStyles;

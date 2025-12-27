@@ -10,6 +10,8 @@ export default function CVPreviewScreen() {
     const [htmlContent, setHtmlContent] = useState("");
 
     useEffect(() => {
+
+
         loadUser();
     }, []);
 

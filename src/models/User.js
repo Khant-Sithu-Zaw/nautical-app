@@ -7,7 +7,7 @@ export default class User {
         name = "",
         birthday = null,
         nationality = "",
-        passport = new Passport(),
+        passport = {},
         martialSts = "",
         rank = "",
         address = "",
@@ -18,8 +18,8 @@ export default class User {
         email = "",
         phone = "",
         image = null,
-        cdc = new CDC(),
-        kin = new Kin(),
+        cdc = {},
+        kin = {},
         educations = [],             // URI of profile image
         certificates = [],         // Array of Certificate objects
         seaTimeRecords = [],       // Array of SeaTimeRecord objects
@@ -29,13 +29,13 @@ export default class User {
         this.name = name;
         this.birthday = birthday;
         this.nationality = nationality;
-        this.passport = passport;
+        this.passport = new Passport(passport);
         this.martialSts = martialSts;
         this.rank = rank;
         this.gender = gender;
         this.address = address;
-        this.cdc = cdc;
-        this.kin = kin;
+        this.cdc = new CDC(cdc);
+        this.kin = new Kin(kin);
         this.objective = objective;
         this.email = email;
         this.height = height;
