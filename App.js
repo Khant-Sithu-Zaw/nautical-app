@@ -15,7 +15,7 @@ import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
 import styles from "./src/style/styles";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import CVPreviewScreen from "./src/screens/CVPreviewScreen";
-import StoppingDistanceScreen from "./src/screens/StoppingDistanceScreen";
+
 
 // import TimeZoneScreen from "./src/screens/TimeZoneScreen";
 const Stack = createNativeStackNavigator();

@@ -22,7 +22,7 @@ export default function ETAScreen() {
     const [arrivalTime, setArrivalTime] = useState("");
     const [currentSpeedSign, setCurrentSpeedSign] = useState("+");
     const [currentSpeed, setCurrentSpeed] = useState("");
-    const [trafficDelay, setTrafficDelay] = useState("0");
+    const [trafficDelay, setTrafficDelay] = useState("");
     const hintTimerRef = useRef(null);
     const [showHint, setShowHint] = useState(false);
     const [hintShown, setHintShown] = useState(false); // prevent showing again
@@ -66,21 +66,22 @@ export default function ETAScreen() {
             return;
         }
 
-        let spd = speedNum - currentSpeedNum; // handles both + and - currents
+
 
         if (selectedWeather.loss >= 100) {
             alert("Weather loss cannot be 100% or more!");
             return;
         }
 
-        spd = spd / (1 - selectedWeather.loss / 100);
+        let spd = speedNum * (1 - selectedWeather.loss / 100);
+        spd = spd + currentSpeedNum;
         const dist = parseFloat(distance);
-        const traffic = parseFloat(trafficDelay);
-        if (isNaN(Number(spd)) || isNaN(Number(dist)) || isNaN(Number(traffic)) || Number(spd) <= 0 || Number(dist) <= 0 || Number(traffic) < 0) {
-            alert(`Enter number greater than 0!`);
+
+        if (isNaN(Number(spd)) || isNaN(Number(dist)) || Number(spd) <= 0 || Number(dist) <= 0) {
+            alert(`Inputs cannot be less than 0!`);
             return;
         }
-
+        const traffic = parseFloat(trafficDelay) || 0;
         const etaHours = (dist / spd) + traffic;
         if (!isNaN(etaHours)) {
             const etaDays = Math.floor(etaHours / 24);
@@ -315,6 +316,7 @@ export default function ETAScreen() {
                     <DateTimePickerModal
                         isVisible={isPickerVisible}
                         mode="datetime"
+                        date={dateTime || new Date()}
                         onConfirm={handleDateTimeConfirm}
                         onCancel={hidePicker}
                     />

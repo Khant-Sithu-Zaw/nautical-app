@@ -76,7 +76,7 @@ export default function FuelConsumptionScreen() {
                     <View style={[styles.rightItem, styles.inputContainer]}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Rough Duration in hours"
+                            placeholder="Duration in hours"
                             keyboardType="decimal-pad"
                             value={duration}
                             onChangeText={(text) => {
