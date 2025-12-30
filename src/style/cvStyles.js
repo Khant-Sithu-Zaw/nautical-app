@@ -11,36 +11,40 @@ body {
 
 }
 .container{
-  display:flex;
-  alignItems: 'stretch';
+  width: 100%;
   
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-}
-
 .leftColumn {
-    width: 40%;
-    background-color: #205E95;
+    width: 100%;
+    display:flex;
+    color: #205E95;
+    justify-content: center;
+    align-items: center;
+}
+.imgContainer {
+    width: 30%;
     text-align: center;
-    color: #fff;
+    justify-content: center;
 
 }
-
 .rightColumn {
-    width: 60%;
-    padding-left: 40px;
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    align-items: stretch;
     padding-top: 16px;
-    border-bottom: 3px solid #205E95;
+    justify-content: space-between;
+    flex-wrap: wrap;    
+   
 }
 
 .profilePic {
-    width: 170px;
-    height: 170px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     object-fit: cover;
+    border: 4px solid #205E95;
     margin: 25px auto 10px;
     overflow: hidden;
 }
@@ -54,23 +58,37 @@ body {
 
 .text {
     margin: 5px 0;
+    color:#205E95;
 }
 
 .rightColumn .text {
-    color: #205E95;
+   
     text-align: left;
+   padding-right: 0;
+}
+.rightColumn .section {
+width:45%;
+}
+.leftText {
+    display: flex;
+    flex-direction: row;   /* key change */
+    align-items: center;   /* vertical alignment */
+    width: 100%;
+    margin: 1px 0;
+    color: #205E95;
+    flex-wrap: wrap;
 }
 
-.leftText {
-    
-    margin: 1px 0;
-    text-align: left;
-    width: 100%;
+.leftText .paragraph {
+    font-weight: 450;
+   line-height: 1;
+    display:inline-block;
 }
 
 .userName {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: bolder;
+  
 }
 
 .smallTitle {
@@ -81,11 +99,14 @@ body {
 .section {
     padding: 8px 0;
 }
+.section .subSec {
+    margin-bottom: 15px ;
+    }
 
 .title {
     font-size: 20px;
     font-weight: bold;
-    width: 90%;
+    width: 100%;
     padding-bottom: 6px;
     border-bottom: #205E95 2px solid;
 }
@@ -93,10 +114,12 @@ body {
 .subTitle {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 20px;
     color: #205E95;
 }
-
+.rightColumn .paragraph {
+    padding-left: 12px;
+}
 .paragraph {
     font-size: 17px;
     line-height: 1.5;
@@ -107,7 +130,8 @@ body {
 }
 .smallText{
     font-size: 15px;
-    }
+    margin-top: 6px;
+}
 .iconContainer {
     margin-top: 0.3px;
     width: 5%;
@@ -120,23 +144,26 @@ body {
 
 .leftColumn .title {
     text-align: left;
+    padding-left: 0;
+ border: none;
 }
 .edu {
 margin :10px 0;
+padding-left: 12px;
 }
 .list {
     color: #205E95;
     margin: 4px 0;
     position: relative;
-    padding: 0 12px;
+    padding: 0 20px!important;
 
 }
 
 .list::before {
     content: "";
     position: absolute;
-    left: 0%;
-    top: 40%;
+    left: 6px;
+    top: 45%;
     transform: translateY(-30%);
     width: 6px;
     height: 6px;
@@ -153,14 +180,17 @@ text-align: left;}
 }
 .leftInner {
     margin : 2px 0;
+    width:69%;
+
     }
-.tableContainer{
+.tableContainer {
 padding-top: 15px;
     width: 100%;
     color: #205E95;
     }
 .tableContainer .title {
     padding-left: 6px;
+    color: #205E95;
     }
 .certTable {
   width: 100%;

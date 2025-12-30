@@ -21,7 +21,7 @@ export default function HomeHeader() {
                 <Text style={styles.headerTitle}>Nautical Tools</Text>
                 {/* Search Box */}
             </View>
-            <View style={styles.searchWrapper}>
+            {/* <View style={styles.searchWrapper}>
                 <TextInput
                     style={
                         styles.searchBox
@@ -34,7 +34,7 @@ export default function HomeHeader() {
                     caretColor="#fff"          // For iOS
                     selectionColor="#fff"
                 />
-                {/* Fake ::after line */}
+
                 <View
                     style={
                         styles.searchBoxLine
@@ -53,9 +53,9 @@ export default function HomeHeader() {
                         style={styles.searchIcon}
                     />
                 )}
-            </View>
+            </View> */}
 
-        </View>
+        </View >
 
     );
 }

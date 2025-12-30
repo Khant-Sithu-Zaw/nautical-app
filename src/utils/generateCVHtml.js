@@ -20,70 +20,60 @@ export default function generateCVHtml(user) {
     <div>
       <div class="container">
         <div class="leftColumn">
-          <img src="${user.image}" class="profilePic" alt="profile picture"/>
-             <div class="section leftInner">
-                <h3 class="title">Personal Info</h3>
-                 
-                <div class="leftText">
-                  
-                </div>
-                <div class="leftText">
-                    <p class="paragraph"> 🎂 ${user.birthday}</p>
-                </div>
-                <div class="leftText">
-                    <p class="paragraph">🌐 ${user.nationality}</p>
-                </div>
-                <div class="leftText">
-                  <p class="paragraph">${user.gender?.toLowerCase() === "male" ? "♂️" : "♀️"} ${user.gender}</p>
-                 </div>
-                 <div class="leftText">
-                  <p class="paragraph">🧍${user.height} cm</p>
-                 </div>
-                 <div class="leftText">
-                  <p class="paragraph">⏲️ ${user.weight} kg</p>
-                 </div>
-                <div class="leftText">
-                  <p class="paragraph">👩🏻‍❤️‍👨🏻 ${user.martialSts}</p>
-                 </div>
-                <div class="leftText">
-                    <p class="paragraph">📞 ${user.phone}</p>
-                </div>
-                <div class="leftText">
-                    
-                    <p class="paragraph">✉️ ${user.email}</p>
-                </div>
-                
-                <div class="leftText">
-               
-                    <p class="paragraph">🏠 ${user.address}</p>
-                </div>
-              </div>
-          
-            
-        </div>
-
-        <div class="rightColumn">
-          <h2 class="text userName">${user.name || "Your Name"}</h2>
+        <div class="imgContainer">
+        <img src="${user.image}" class="profilePic" alt="profile picture"/>
+        </div> 
+         <div class="section leftInner">
+           <h2 class="text userName">${user.name || "Your Name"}</h2>
           <h4 class="text subTitle">Rank: ${user.rank || "Your Rank"}</h4>
-          <div class="section">
-            <h3 class="text title">Self-Description ✍</h3>
+       
+           <h3 class="text title">Self-Description</h3>
             <p class="text paragraph">${user.objective || "Your Description"}</p>
+         
+         </div>    
+        </div>
+          
+        <div class="rightColumn">
+         <div class="section">
+           <h3 class="text title">Personal Info</h3>
+            <div class="leftText">
+
+              <p class="paragraph"><strong>Birthdate :</strong> ${user.birthday}</p>
+
+                    <p class="paragraph"><strong>Nationality :</strong> ${user.nationality}</p>
+            
+               
+                  <p class="paragraph"><strong>Gender :</strong>  ${user.gender}</p>
+         
+                  <p class="paragraph"><strong>Height :</strong> ${user.height} cm</p>
+               
+                
+                  <p class="paragraph"><strong>Weight :</strong> ${user.weight} kg</p>
+         
+              <p class="paragraph"><strong>Marital Status :</strong> ${user.martialSts}</p>
+               <p class="paragraph"><strong>Phone :</strong> ${user.phone}</p>
+              <p class="paragraph"><strong>Email :</strong> ${user.email}</p>
+               <p class="paragraph"><strong>Address :</strong> ${user.address}</p>
+
+            </div>
+             
           </div>
-          ${educations.length > 0 ? `
-            <div class="section">
-              <h3 class="text title">Education 🎓</h3>
+          <div class="section">
+        ${educations.length > 0 ? `
+            <div class="subSec">
+              <h3 class="text title">Education</h3>
                 ${educations.map(edu => `
                 <div class="smallTitle edu">
                 <strong>${edu.eduName}</strong>
                   <br>
                 <span class="smallText"> (${formatShortDate(edu.eduFromDate)} - ${formatShortDate(edu.eduToDate)})</span>
-            </div>
+                </div>
           `).join("")}
             </div>
           ` : ""}
           ${skills.length > 0 ? `
-            <div class="section"> 
-              <h3 class="text title">Skills 🧠</h3>
+            <div class="subSec">
+              <h3 class="text title">Skills </h3>
              
                 ${skills.map(s => `
                   <div class="paragraph list">
@@ -93,8 +83,8 @@ export default function generateCVHtml(user) {
    
             </div>
           ` : ""}
-         ${user.hobbies && user.hobbies.length > 0 ? `
-            <div class="section">
+            ${user.hobbies && user.hobbies.length > 0 ? `
+            <div class="subSec">
             <h3 class="text title">Hobbies</h3>
              
                 ${user.hobbies.map(h => `
@@ -105,11 +95,18 @@ export default function generateCVHtml(user) {
    
             </div>
           ` : ""}
+          </div>
+
+       
+         
+   
         </div>
       </div>
       <div class="tableContainer">
+     
+          
       <div class="section">
-    <h3 class="text title">Seafarer Documents 📘</h3>
+    <h3 class="text title">Seafarer Documents</h3>
 
     <table class="certTable">
       <thead>
@@ -140,7 +137,7 @@ export default function generateCVHtml(user) {
   </div>
       ${certificates.length > 0 ? `
   <div class="section">
-    <h3 class="text title">Certificates 🏅</h3>
+    <h3 class="text title">Certificates</h3>
 
     <table class="certTable">
       <thead>
@@ -165,7 +162,7 @@ export default function generateCVHtml(user) {
 ` : ""}
       ${certificates.length > 0 ? `
   <div class="section">
-    <h3 class="text title">SeaTime Records 🚢</h3>
+    <h3 class="text title">SeaTime Records</h3>
 
     <table class="certTable">
       <thead>
@@ -197,7 +194,7 @@ export default function generateCVHtml(user) {
   </div>
 ` : ""}
  <div class="section">
-    <h3 class="text title">Additional Information 📃</h3>
+    <h3 class="text title">Additional Information</h3>
     <div class="additionalInfo">
           <div class="leftInfo">
           <p>Next of Kin : <span>  <td> ${user.kin.kinType}</td></span></p>

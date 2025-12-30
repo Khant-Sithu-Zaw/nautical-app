@@ -27,6 +27,7 @@ export const martialSts = [
     "Single",
     "Married",
     "Widowed",
+    "Divorced"
 ];
 export const genders = [
     "Male",
