@@ -109,13 +109,16 @@ export const ranks = [
     "Pumpman",
     "Wiper",
     "Oiler",
+    "Training ETO",
     "Electrical Rating",
     "Chief Cook",
     "Deck Cadet",
+    "Training Ordinary Seaman",
     "Engine Cadet",
     "Deck Rating",
     "Engine Rating",
-    "MessMan"
+    "MessMan",
+    "Steward",
 ];
 export const shackleLengthOptions = [
     "15 meters",

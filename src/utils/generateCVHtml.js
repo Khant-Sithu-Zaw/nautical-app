@@ -38,22 +38,22 @@ export default function generateCVHtml(user) {
            <h3 class="text title">Personal Info</h3>
             <div class="leftText">
 
-              <p class="paragraph"><strong>Birthdate :</strong> ${user.birthday}</p>
+              <p class="paragraph"><strong>Birthdate :</strong> ${user.birthday || "Your Birthdate"}</p>
 
-                    <p class="paragraph"><strong>Nationality :</strong> ${user.nationality}</p>
+                    <p class="paragraph"><strong>Nationality :</strong> ${user.nationality || "Your Nationality"}</p>
             
                
-                  <p class="paragraph"><strong>Gender :</strong>  ${user.gender}</p>
+                  <p class="paragraph"><strong>Gender :</strong>  ${user.gender || "Your Gender"}</p>
          
-                  <p class="paragraph"><strong>Height :</strong> ${user.height} cm</p>
+                  <p class="paragraph"><strong>Height :</strong> ${user.height || "Your Height"} cm</p>
                
                 
-                  <p class="paragraph"><strong>Weight :</strong> ${user.weight} kg</p>
+                  <p class="paragraph"><strong>Weight :</strong> ${user.weight || "Your Weight"} kg</p>
          
-              <p class="paragraph"><strong>Marital Status :</strong> ${user.martialSts}</p>
-               <p class="paragraph"><strong>Phone :</strong> ${user.phone}</p>
-              <p class="paragraph"><strong>Email :</strong> ${user.email}</p>
-               <p class="paragraph"><strong>Address :</strong> ${user.address}</p>
+              <p class="paragraph"><strong>Marital Status :</strong> ${user.martialSts || "Your Marital Status"}</p>
+               <p class="paragraph"><strong>Phone :</strong> ${user.phone || "Your Phone"}</p>
+              <p class="paragraph"><strong>Email :</strong> ${user.email || "Your Email"}</p>
+               <p class="paragraph"><strong>Address :</strong> ${user.address || "Your Address"}</p>
 
             </div>
              
@@ -160,7 +160,7 @@ export default function generateCVHtml(user) {
 
   </div>
 ` : ""}
-      ${certificates.length > 0 ? `
+      ${seaTimeRecords.length > 0 ? `
   <div class="section">
     <h3 class="text title">SeaTime Records</h3>
 

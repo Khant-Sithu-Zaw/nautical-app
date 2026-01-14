@@ -145,12 +145,13 @@ export default function ProfileScreen({ navigation }) {
         // Certificates: Must have a title and an issued date.
         const cleanedCertificates = certificates.filter(cert => {
             return (
-                cert.title &&
+                cert.title?.trim() &&
                 cert.issuedDate &&
-                cert.expiredDate &&
-                cert.country
+                cert.country?.trim()
+                // expiredDate is optional → do NOT validate here
             );
         });
+
 
         // Skills: Must have a skillName and a level.
         const cleanedSkills = skills.filter(skill => {
@@ -159,7 +160,9 @@ export default function ProfileScreen({ navigation }) {
                 skill.level
             );
         });
-
+        const cleanedHobbies = (user.hobbies || [])
+            .map(h => h?.trim())        // remove spaces
+            .filter(h => h);          // remove empty strings
         // --- 2. RE-VALIDATION BASED ON CLEANED ARRAYS ---
         if (cleanedEducations.length === 0) {
             alert("Please add and complete at least one education history before saving.");
@@ -182,7 +185,7 @@ export default function ProfileScreen({ navigation }) {
         //     return;
         // }
 
-        if (!user?.hobbies || user.hobbies.length === 0) {
+        if (cleanedHobbies.length === 0) {
             alert("Please add at least one hobby before saving.");
             return;
         }
@@ -195,15 +198,17 @@ export default function ProfileScreen({ navigation }) {
                 educations: cleanedEducations,
                 certificates: cleanedCertificates,
                 skills: cleanedSkills,
-                seaTimeRecords: cleanedSeaTimeRecords
+                seaTimeRecords: cleanedSeaTimeRecords,
+                hobbies: cleanedHobbies,
             };
 
             await AsyncStorage.setItem("userProfile", JSON.stringify(fullUser));
-            console.log(fullUser.educations);
+
             alert("Profile saved successfully!");
             navigation.goBack();
         } catch (e) {
             console.log("Failed to save user:", e);
+            alert("Failed to save user!");
         }
     };
 
@@ -299,8 +304,8 @@ export default function ProfileScreen({ navigation }) {
     const addCertificate = () => {
         if (certificates.length > 0) {
             const last = certificates[certificates.length - 1];
-            if (!last.title || !last.issuedDate) {
-                alert("Title & Issued Date must be filled before adding another certificate.");
+            if (!last.title || !last.issuedDate || !last.country) {
+                alert("Title,Issued Date & Country must be filled before adding another certificate.");
                 return;
             }
         }
@@ -454,9 +459,10 @@ export default function ProfileScreen({ navigation }) {
                     value={user.name}
                     onChangeText={(text) => setUser({ ...user, name: text })}
                     placeholder="Your Full Name"
-                    maxLength={40}
+                    maxLength={100}
                     inputStyle={styles.profileInput}
                     validate="text"
+                    multiline
                 />
                 <TouchableOpacity style={[styles.profileInput,]} onPress={() => openPicker("birthday")}>
                     <Text
@@ -473,9 +479,10 @@ export default function ProfileScreen({ navigation }) {
                     value={user.nationality}
                     onChangeText={(text) => setUser({ ...user, nationality: text })}
                     placeholder="Your Nationality"
-                    maxLength={30}
+                    maxLength={100}
                     inputStyle={styles.profileInput}
                     validate="text"
+                    multiline
                 />
                 <DropdownPicker
                     options={genders}
@@ -506,14 +513,11 @@ export default function ProfileScreen({ navigation }) {
                 <ClearableInput
                     value={user.email}
                     onChangeText={(text) => setUser({ ...user, email: text })}
-                    onBlur={() => {
-                        if (!validateEmail(user.email)) {
-                            Alert.alert("Invalid email format");
-                        }
-                    }}
+                    validate="none"
                     placeholder="Your Email Address"
                     inputStyle={[styles.profileInput]}
-                    validate="none"
+                    multiline
+                    maxLength={100}
                 />
 
                 <ClearableInput
@@ -522,7 +526,9 @@ export default function ProfileScreen({ navigation }) {
                     placeholder="Your Phone Number"
                     inputStyle={[styles.profileInput]}
                     validate="none"
-                    maxLength={15}
+                    maxLength={50}
+                    keyboardType="numeric"
+                    multiline
                 />
                 <ClearableInput
                     value={user.height}
@@ -531,7 +537,7 @@ export default function ProfileScreen({ navigation }) {
                     inputStyle={[styles.profileInput]}
                     validate="none"
                     keyboardType="numeric"
-                    maxLength={15}
+                    maxLength={4}
                 />
                 <ClearableInput
                     value={user.weight}
@@ -540,13 +546,13 @@ export default function ProfileScreen({ navigation }) {
                     inputStyle={[styles.profileInput]}
                     validate="none"
                     keyboardType="numeric"
-                    maxLength={15}
+                    maxLength={4}
                 />
                 <ClearableInput
                     value={user.address}
                     onChangeText={(text) => setUser({ ...user, address: text })}
                     placeholder="Your Home Address"
-                    maxLength={100}
+                    maxLength={150}
                     multiline
                     numberOfLines={4}
                     inputStyle={[styles.profileInput, {
@@ -579,6 +585,7 @@ export default function ProfileScreen({ navigation }) {
                             cdc: { ...user.cdc, sirb: text }
                         })}
                         placeholder="SIRB Number"
+                        keyboardType="numeric"
                         maxLength={20}
                         inputStyle={[styles.profileInput, { borderColor: '#f68700ff' }]}
                         validate="number"
@@ -593,7 +600,8 @@ export default function ProfileScreen({ navigation }) {
                             cdc: { ...user.cdc, issuedPlace: text }
                         })}
                         placeholder="Place of Issued"
-                        maxLength={20}
+                        maxLength={50}
+
                         inputStyle={[styles.profileInput, { borderColor: '#f68700ff' }]}
                         wrapperStyle={{ width: "49%", }}
                     />
@@ -633,7 +641,8 @@ export default function ProfileScreen({ navigation }) {
                             passport: { ...user.passport, pno: text }
                         })}
                         placeholder="Passport Number"
-                        maxLength={20}
+                        maxLength={50}
+                        multiline
                         inputStyle={[styles.profileInput, { borderColor: '#27a5f4ff' }]}
                         wrapperStyle={{ width: "49%" }}
                     />
@@ -646,7 +655,8 @@ export default function ProfileScreen({ navigation }) {
                             passport: { ...user.passport, issuedPlace: text }
                         })}
                         placeholder="Place of Issued"
-                        maxLength={20}
+                        maxLength={50}
+
                         inputStyle={[styles.profileInput, { borderColor: '#27a5f4ff' }]}
                         wrapperStyle={{ width: "49%" }}
                     />
@@ -698,7 +708,8 @@ export default function ProfileScreen({ navigation }) {
                             kin: { ...user.kin, kinName: text }
                         })}
                         placeholder="Enter Next of Kin Name"
-                        maxLength={25}
+                        maxLength={100}
+                        multiline
                         inputStyle={[styles.profileInput, { borderColor: '#c6b904ff' }]}
                     />
 
@@ -709,7 +720,9 @@ export default function ProfileScreen({ navigation }) {
                             kin: { ...user.kin, kinPhone: text }
                         })}
                         placeholder="Enter Phone Number"
-                        maxLength={20}
+                        maxLength={50}
+                        keyboardType="numeric"
+                        multiline
                         inputStyle={[styles.profileInput, { borderColor: '#c6b904ff' }]}
                     />
                     <ClearableInput
@@ -815,7 +828,8 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter Certificate Title"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={35}
+                                maxLength={80}
+                                multiline
                             />
                             <ClearableInput
                                 value={cert.country}
@@ -825,7 +839,8 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter Issued Country"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={35}
+                                maxLength={50}
+                                multiline
                             />
                             <View style={styles.groupedInput}>
                                 <TouchableOpacity
@@ -886,7 +901,8 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter Skill Title"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={40}
+                                maxLength={60}
+                                multiline
                             />
                             <DropdownPicker
                                 options={levels}
@@ -930,7 +946,8 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter Company Name"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={35}
+                                maxLength={100}
+                                multiline
                             />
                             <ClearableInput
                                 value={record.shipName}
@@ -938,15 +955,17 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter Vessel Name"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={35}
+                                maxLength={100}
+                                multiline
                             />
                             <ClearableInput
                                 value={record.imoNo}
                                 onChangeText={(text) => updateSeaTime(index, "imoNo", text)}
                                 placeholder="Enter IMO Number"
                                 inputStyle={styles.profileInput}
-                                validate="none"
-                                maxLength={35}
+                                validate="number"
+                                maxLength={50}
+                                multiline
                             />
                             <DropdownPicker
                                 options={vesselTypeOptions}
@@ -973,11 +992,13 @@ export default function ProfileScreen({ navigation }) {
                                     value={record.grt}
                                     onChangeText={(text) => updateSeaTime(index, "grt", text)}
                                     placeholder="Gross Tonnage"
-                                    maxLength={20}
+                                    maxLength={10}
+                                    multiline
                                     inputStyle={[styles.profileInput,]}
                                     validate="number"
                                     wrapperStyle={{ width: "49%" }}
                                     keyboardType="number"
+
                                 />
 
                                 {/* 2. Place of Issue */}
@@ -986,6 +1007,7 @@ export default function ProfileScreen({ navigation }) {
                                     onChangeText={(text) => updateSeaTime(index, "enginePowerKW", text)}
                                     placeholder="Engine Power(KW)"
                                     maxLength={20}
+                                    multiline
                                     inputStyle={[styles.profileInput,]}
                                     validate="number"
                                     wrapperStyle={{ width: "49%", }}
@@ -1044,7 +1066,8 @@ export default function ProfileScreen({ navigation }) {
                                 placeholder="Enter your Hobby"
                                 inputStyle={styles.profileInput}
                                 validate="none"
-                                maxLength={50}
+                                maxLength={80}
+                                multiline
                             />
                             <TouchableOpacity
                                 style={[styles.removeBtn, { marginRight: "auto" }]}
