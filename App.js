@@ -14,7 +14,6 @@ import { useFonts } from "expo-font";
 import FuelConsumptionScreen from "./src/screens/FuelConsumptionScreen";
 import styles from "./src/style/styles";
 import ProfileScreen from "./src/screens/ProfileScreen";
-import CVPreviewScreen from "./src/screens/CVPreviewScreen";
 
 
 // import TimeZoneScreen from "./src/screens/TimeZoneScreen";
@@ -94,7 +93,7 @@ export default function App() {
           {/* <Stack.Screen name="Stopping Distance" component={StoppingDistanceScreen} /> */
           }
           <Stack.Screen name="Profile Setup" component={ProfileScreen} />
-          <Stack.Screen name="Preview CV" component={CVPreviewScreen} />
+
 
         </Stack.Navigator>
       </NavigationContainer>

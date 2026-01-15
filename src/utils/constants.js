@@ -109,11 +109,11 @@ export const ranks = [
     "Pumpman",
     "Wiper",
     "Oiler",
-    "Training ETO",
+    "Trainee ETO",
     "Electrical Rating",
     "Chief Cook",
     "Deck Cadet",
-    "Training Ordinary Seaman",
+    "Trainee OS",
     "Engine Cadet",
     "Deck Rating",
     "Engine Rating",
@@ -150,7 +150,6 @@ export const numberRegex = /^\d*\.?\d*$/;
 export const menuItems = (navigation, deleteProfile, exportCV) => [
     { label: "Edit Profile", onPress: () => navigation.navigate("Profile Setup"), image: require("../../assets/images/edit.png"), },
     { label: "Delete Profile", onPress: deleteProfile, image: require("../../assets/images/delete.png"), },
-    { label: "Preview CV", onPress: () => navigation.navigate("Preview CV"), image: require("../../assets/images/preview.png"), },
     { label: "Export CV", onPress: exportCV, image: require("../../assets/images/export.png"), },
 ];
 export const safetyTips = [
